@@ -3,3 +3,6 @@ Simple skeleton with libgdx.
 
 
 ## Known bugs
+
+
+- Test denne skal brukes for board
