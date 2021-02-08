@@ -32,6 +32,20 @@ Utvikler: Sondre (
 
 
 Møter og hyppighet: mandag, torsdag og gruppetimer -
+Møtereferat gruppetime #1 (fredag 5. februar kl 10:15 - 12:15):
+Vi begynte med å sette opp nyttige hjelpmidler som Trello, Doodle, Google Docs og ikke minst github for å gjøre samarbeid mer effektivt.
+Vi fordelte også roller på grunnlag av kunnskap og innstilling. Vi kom også på et passende gruppenavn. 
+
+
+
+
+
+
+
+
+
+
+
 
 
 Diskuter i teamet hvordan dere skal organisere dere under prosjektet. Noen viktige elementer:
