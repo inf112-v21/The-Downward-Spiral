@@ -25,9 +25,8 @@ Kundekontakt: Simen (Kundekontakten skal samle spørsmål fra gruppen og snakke 
 
 ProgLeader: Kristian (Programmerings-leader er i teorien en teamleader, men for utviklerne. Jobben hen’s er å være tilgjengelig på spørsmål angående kode, og å lede diskusjoner på hvordan man bestemt skal implementere noe)
 
-Utvikler: Isabel
+Utvikler: Isabel, Sondre (En utvikler skal klare å tenke abstrakt og konseptuelt for å kunne løse problemer gjennom kode og utvikle ideene til kunden til et fungerende produkt.)
 
-Utvikler: Sondre (
 
 
 
