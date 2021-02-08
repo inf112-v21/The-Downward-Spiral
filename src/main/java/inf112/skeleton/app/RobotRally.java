@@ -13,7 +13,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import java.util.Random;
 
 public class RobotRally extends InputAdapter implements ApplicationListener {
 
