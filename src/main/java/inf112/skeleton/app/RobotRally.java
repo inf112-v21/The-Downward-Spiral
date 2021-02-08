@@ -33,7 +33,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     private Cell playerDiedCell;
 
     private Player localPlayer;
-    private Player[] onlinePlayers;
 
 
 
@@ -100,10 +99,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
-        for(Player player: onlinePlayers) {
-            player.render();
-        }
 
         localPlayer.render();
         render.render();

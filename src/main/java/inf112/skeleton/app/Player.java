@@ -17,7 +17,7 @@ public class Player {
     public Player(TiledMap tm) {
 
         playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
-        position = new Vector2(2, 2);
+        position = new Vector2(0, 0);
 
         TextureRegion tr = new TextureRegion(new Texture("player.png"));
         trSplit = tr.split(300, 300);
