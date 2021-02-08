@@ -2,20 +2,50 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class HelloWorld implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
 
+    private TiledMap tm;
+    float tileWidth;
+    private TiledMapTileLayer board;
+
+    private OrthographicCamera camera;
+    private OrthogonalTiledMapRenderer render;
+
     @Override
     public void create() {
-        batch = new SpriteBatch();
+
+     batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
+
+        TmxMapLoader loader = new TmxMapLoader();
+        tm = loader.load("example.tmx");
+        tileWidth = tm.getProperties().get("tilewidth", Integer.class);
+
+        board = (TiledMapTileLayer) tm.getLayers().get("Board");
+
+
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 5, 5);
+        camera.translate((float)0, 0);
+        camera.update();
+        render = new OrthogonalTiledMapRenderer(tm, 1/tileWidth);
+        render.setView(camera);
+
+
+
+
     }
 
     @Override
@@ -29,9 +59,7 @@ public class HelloWorld implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-        font.draw(batch, "Hello World", 200, 200);
-        batch.end();
+        render.render();
     }
 
     @Override
@@ -45,4 +73,5 @@ public class HelloWorld implements ApplicationListener {
     @Override
     public void resume() {
     }
+
 }
