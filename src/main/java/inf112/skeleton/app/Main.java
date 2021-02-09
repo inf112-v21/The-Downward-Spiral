@@ -9,6 +9,6 @@ public class Main {
         cfg.setTitle("Simple-Board");
         cfg.setWindowedMode(500, 500);
 
-        new Lwjgl3Application(new HelloWorld(), cfg);
+        new Lwjgl3Application(new RobotRally(), cfg);
     }
 }
