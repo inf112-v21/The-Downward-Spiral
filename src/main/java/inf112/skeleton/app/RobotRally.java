@@ -19,7 +19,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
 
-    float tileWidth;
     private TiledMapTileLayer board;
 
     private TiledMapTileLayer hole;
@@ -43,21 +42,18 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         font.setColor(Color.RED);
 
         TmxMapLoader loader = new TmxMapLoader();
-        TiledMap tm = loader.load("example.tmx");
-        tileWidth = tm.getProperties().get("tilewidth", Integer.class);
+        TiledMap tm = loader.load("Risky_Exchange.tmx");
 
         board = (TiledMapTileLayer) tm.getLayers().get("Board");
-
-
-        hole = (TiledMapTileLayer) tm.getLayers().get("Hole");
         flag = (TiledMapTileLayer) tm.getLayers().get("Flag");
+        hole = (TiledMapTileLayer) tm.getLayers().get("Hole");
 
 
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, 5, 5);
+        camera.setToOrtho(false, board.getWidth(), board.getHeight());
         camera.translate((float)0, 0);
         camera.update();
-        render = new OrthogonalTiledMapRenderer(tm, 1/tileWidth);
+        render = new OrthogonalTiledMapRenderer(tm, 1/board.getTileWidth());
         render.setView(camera);
 
 
