@@ -16,7 +16,7 @@ public class Player {
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
-    private boolean flagTreeConfirmed;
+    private boolean flagThreeConfirmed;
 
     public Player(TiledMap tm) {
 
@@ -58,7 +58,7 @@ public class Player {
                 System.out.println("2nd");
             }
             if (((flag.getCell(getX(), getY())).getTile().getId() == 71) && (flagTwoConfirmed)) {
-                flagTreeConfirmed = true;
+                flagThreeConfirmed = true;
                 playerCell.setTile(new StaticTiledMapTile(trSplit[0][2]));
                 System.out.println("Won");
 
