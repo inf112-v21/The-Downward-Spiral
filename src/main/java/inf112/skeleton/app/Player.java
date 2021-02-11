@@ -14,6 +14,10 @@ public class Player {
     private final TiledMapTileLayer.Cell playerCell;
     private final TextureRegion[][] trSplit;
 
+    private boolean flagOneConfirmed;
+    private boolean flagTwoConfirmed;
+    private boolean flagThreeConfirmed;
+
     public Player(TiledMap tm) {
 
         playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
@@ -42,9 +46,23 @@ public class Player {
     }
 
     public void checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
-        if ((flag.getCell(getX(), getY())) != null){
-            System.out.println("Won");
-            playerCell.setTile(new StaticTiledMapTile(trSplit[0][2]));
+
+        // Checks if player have won
+        if ((flag.getCell(getX(), getY())) != null) {
+            if ((flag.getCell(getX(), getY())).getTile().getId() == 55) {
+                flagOneConfirmed = true;
+                System.out.println("1st");
+            }
+            if (((flag.getCell(getX(), getY())).getTile().getId() == 63) && (flagOneConfirmed)) {
+                flagTwoConfirmed = true;
+                System.out.println("2nd");
+            }
+            if (((flag.getCell(getX(), getY())).getTile().getId() == 71) && (flagTwoConfirmed)) {
+                flagThreeConfirmed = true;
+                playerCell.setTile(new StaticTiledMapTile(trSplit[0][2]));
+                System.out.println("Won");
+
+            }
         }
         if ((hole.getCell(getX(), getY())) != null){
             System.out.println("Lost");
