@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -20,15 +19,10 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     private BitmapFont font;
 
     private TiledMapTileLayer board;
-
     private TiledMapTileLayer hole;
     private TiledMapTileLayer flag;
 
     private OrthogonalTiledMapRenderer render;
-
-    private Texture texture;
-    private Cell playerWonCell;
-    private Cell playerDiedCell;
 
     private Player localPlayer;
 
