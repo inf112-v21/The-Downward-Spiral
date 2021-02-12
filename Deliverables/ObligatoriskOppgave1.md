@@ -24,7 +24,7 @@ Alle medlemmene av teamet har kunnskaper fra INF101 og INF102
     - Programmeringsansvarlig er i teorien en lag-leder, men for utviklerne.
       Jobben hans er å være tilgjengelig på spørsmål angående kode, og å lede diskusjoner på hvordan man bestemt skal implementere noe
 
-- **Utviklere:** Isabel og Sondre
+- **Utviklere:** Isabel og Sondre 
     - En utvikler skal klare å tenke abstrakt og konseptuelt for å kunne løse problemer gjennom kode og utvikle ideene til kunden til et fungerende produkt
 
 ## Deloppgave 2: Velg og tilpass en prosess for laget
@@ -53,14 +53,14 @@ Dette blir fordelt i trello og blir diskutert på møter underveis:
 
 Vi har organisert trello på følgende måte:
 - Backlog fanen er for kort som ikke har en fullstendig beskrivelse og ikke er diskutert ferdig,
-  denne må bearbeides og få en ordentlig beskrivelse før den kan bli flyttet til "Todo" fanen
-
+denne må bearbeides og få en ordentlig beskrivelse før den kan bli flyttet til "Todo" fanen
+  
 - Todo fanen er kort som er ferdig bearbeidet og man kan sette seg opp på kortet for å begynne å jobbe
   (eventuelt sette opp flere personer om man skal jobbe sammen)
-
+  
 - Needs Feedback fanen skal i teorien brukes for alle kommits som endrer fuksjonalitet eller utseende
-  her burde man lage en pull request og få andre på laget og helst Programmeringsansvarlig for å se over.
-
+her burde man lage en pull request og få andre på laget og helst Programmeringsansvarlig for å se over.
+  
 - Paused er for kort som har blitt påbegynt, men som man måtte avvente til senere av forskjellige grunner.
 
 - Til slutt er done for kort som er helt ferdig og prosessen kan starte på nytt med et nytt kort.
@@ -130,7 +130,7 @@ Målet for applikasjonen er å ha et plattformuavhengig spill som gir brukeren e
     - Arbeidsoppgaver:
         - Logikk som sjekker om en spiller har alle flaggene
         - En skjerm som kommer opp når en spiller har vunnet som spør de andre spillerne om de vil fortsette
-
+    
 ## Deloppgave 4: Kode
 
 Viser til github repository for gruppen.
@@ -143,12 +143,12 @@ For spillbrett og spiller har vi kjørt applikasjonen og bekreftet at det visuel
 
 Vi kommuniserte bra med hverandre og fikk delegert oppgavene effektivt, her hjalp det at alle var aktiv på Discord.
 Det viste seg å være enklerer å bestemme tidspunkt for neste møte under hvert møte i stede for å benytte doodle. Vi har
-stort sett benyttet parprogrammering når vi har jobber med spillet, derfor er commitene på github litt ugjevn, men vi har
+stort sett benyttet parprogrammering når vi har jobber med spillet, derfor er commitene på github litt ugjevn, men vi har 
 skrever på trello hvem som har vært med på å gjøre hva.
-Det var litt vanskelig å komme inn i en gruppe mentalitet og oppdatere Trello slik at alle har oversikt over hvem som gjør hva.
-Dette er noe vi håper vi kommer til å forbedre over tid. Det var ikke noe stort som vi ikke fikk til.
-Vi fant ut at Doodle ikke fungerte så bra som vi trodde det ville, det var mye lettere å bare planlegge møter via dialog siden vi er kun et team på fem stykker.
-Vi opplever at vi er kommet godt i gang med oppgaven og har en klar oversikt over arbeidsoppgavene fram mot neste innlevering.
+Det var litt vanskelig å komme inn i en gruppe mentalitet og oppdatere Trello slik at alle har oversikt over hvem som gjør hva. 
+Dette er noe vi håper vi kommer til å forbedre over tid. Det var ikke noe stort som vi ikke fikk til. 
+Vi fant ut at Doodle ikke fungerte så bra som vi trodde det ville, det var mye lettere å bare planlegge møter via dialog siden vi er kun et team på fem stykker. 
+Vi opplever at vi er kommet godt i gang med oppgaven og har en klar oversikt over arbeidsoppgavene fram mot neste innlevering. 
 Som et team arbeider vi bra sammen og er klar over hvilke utfordringer vi må jobbe mer med. Fremover har vi tenkt å ha en “dev” branch som vi pusher til også merger vi den tilslutt med master før vi skal levere en obligatorisk oppgave.
 
 ## Møtereferat #1 (fredag 5. februar kl 10:15 - 12:15):
@@ -175,8 +175,6 @@ Neste møte blir på gruppetimen fredag 12. februar kl 10.15.
 
 ## Møtereferat #4 (fredag 12. februar kl 10:15 - 12:00):
 
-issues / mangler:
+Vi har arbeidet med kommentarer i koden og å ferdigstille readme før første innlevering.
 
-Koden skal være plattformuavhengig, altså skal den fungere uavhengig av operativsystem.
-
-Dokumentert kode
+Bestemte oss for at vi planlegger neste møte på et senere tidspunkt.
