@@ -143,7 +143,8 @@ For spillbrett og spiller har vi kjørt applikasjonen og bekreftet at det visuel
 
 Vi kommuniserte bra med hverandre og fikk delegert oppgavene effektivt, her hjalp det at alle var aktiv på Discord.
 Det viste seg å være enklerer å bestemme tidspunkt for neste møte under hvert møte i stede for å benytte doodle. Vi har
-stort sett benyttet parprogrammering når vi har jobber med spillet, derfor er commitene på github 
+stort sett benyttet parprogrammering når vi har jobber med spillet, derfor er commitene på github litt ugjevn, men vi har 
+skrever på trello hvem som har vært med på å gjøre hva.
 Det var litt vanskelig å komme inn i en gruppe mentalitet og oppdatere Trello slik at alle har oversikt over hvem som gjør hva. 
 Dette er noe vi håper vi kommer til å forbedre over tid. Det var ikke noe stort som vi ikke fikk til. 
 Vi fant ut at Doodle ikke fungerte så bra som vi trodde det ville, det var mye lettere å bare planlegge møter via dialog siden vi er kun et team på fem stykker. 
