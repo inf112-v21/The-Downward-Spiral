@@ -175,8 +175,6 @@ Neste møte blir på gruppetimen fredag 12. februar kl 10.15.
 
 ## Møtereferat #4 (fredag 12. februar kl 10:15 - 12:00):
 
-issues / mangler:
+Vi har arbeidet med kommentarer i koden og å ferdigstille readme før første innlevering.
 
-Koden skal være plattformuavhengig, altså skal den fungere uavhengig av operativsystem.
-
-Dokumentert kode
+Bestemte oss for at vi planlegger neste møte på et senere tidspunkt.
