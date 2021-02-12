@@ -74,9 +74,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             localPlayer.move(board, -1, 0);
+        } else {
+            localPlayer.checkStatus(flag, hole);
+            return false;
         }
         localPlayer.checkStatus(flag, hole);
-        return false;
+        return true;
     }
 
     @Override
