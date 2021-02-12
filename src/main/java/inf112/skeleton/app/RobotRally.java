@@ -26,8 +26,10 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     private Player localPlayer;
 
-
-
+    /**
+     * Creates all the necessary objects for the game
+     * to later be displayed.
+     */
     @Override
     public void create() {
 
@@ -43,7 +45,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         flag = (TiledMapTileLayer) tm.getLayers().get("Flag");
         hole = (TiledMapTileLayer) tm.getLayers().get("Hole");
 
-
+        //Creates a bird's eye view of the board/game
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, board.getWidth(), board.getHeight());
         camera.translate((float)0, 0);
@@ -56,10 +58,15 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
 
         Gdx.input.setInputProcessor(this);
-
-
-
     }
+
+    /**
+     * Checks a keystroke input from the user and moves the
+     * robot in the respective direction.
+     *
+     * @param keycode keystroke from player
+     * @return boolean whether the input was processed
+     */
     @Override
     public boolean keyUp(int keycode) {
 
@@ -88,6 +95,10 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         font.dispose();
     }
 
+    /**
+     * Displays the objects that were previously created
+     * for the user to see.
+     */
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -96,6 +107,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         localPlayer.render();
         render.render();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -108,5 +120,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     @Override
     public void resume() {
     }
+
 
 }

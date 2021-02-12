@@ -17,6 +17,10 @@ public class Player {
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
 
+    /**
+     * Constructor
+     * @param tm
+     */
     public Player(TiledMap tm) {
 
         playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
@@ -30,6 +34,15 @@ public class Player {
 
     }
 
+    /**
+     * Moves the robot on an initialized board
+     * on the x-axis and y-axis. Also makes sure
+     * the robot doesn't move outside of the board
+     *
+     * @param board
+     * @param dx
+     * @param dy
+     */
     public void move(TiledMapTileLayer board, int dx, int dy) {
 
         playerLayer.setCell(getX(), getY(), null);
@@ -42,6 +55,14 @@ public class Player {
 
     }
 
+    /**
+     * Checks the status of the game at the end of a move,
+     * whether a player has won, picked up a flag or fallen
+     * in a hole
+     *
+     * @param flag
+     * @param hole
+     */
     public void checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
 
         // Checks if player have won
@@ -66,13 +87,25 @@ public class Player {
         }
     }
 
+    /**
+     * Gets the position of a robot on the x-axis
+     * @return x coordinate
+     */
     public int getX() {
         return (int) position.x;
     }
+
+    /**
+     * Gets the position of a robot on the y-axis
+     * @return y coordinate
+     */
     public int getY() {
         return (int) position.y;
     }
 
+    /**
+     * Displays a player at their current position.
+     */
     public void render() {
         playerLayer.setCell(getX(), getY(), playerCell);
     }
