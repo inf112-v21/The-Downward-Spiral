@@ -12,7 +12,7 @@ public class Player {
     private final Vector2 position;
     private final TiledMapTileLayer playerLayer;
     private final TiledMapTileLayer.Cell playerCell;
-    private final TextureRegion[][] trSplit;
+    private final TextureRegion[][] trRegions;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
@@ -23,20 +23,18 @@ public class Player {
         position = new Vector2(0, 0);
 
         TextureRegion tr = new TextureRegion(new Texture("player.png"));
-        trSplit = tr.split(300, 300);
+        trRegions = tr.split(300, 300);
 
         playerCell = new TiledMapTileLayer.Cell();
-        playerCell.setTile(new StaticTiledMapTile(trSplit[0][0]));
+        playerCell.setTile(new StaticTiledMapTile(trRegions[0][0]));
 
     }
 
     public void move(TiledMapTileLayer board, int dx, int dy) {
-        int x = (int) position.x;
-        int y = (int) position.y;
 
-        playerLayer.setCell(x, y, null);
+        playerLayer.setCell(getX(), getY(), null);
 
-        if(board.getCell(x + dx, y+ dy) == null){
+        if(board.getCell(getX() + dx, getY()+ dy) == null){
             System.out.println("You can't go outside the map");
         }else{
             position.add(dx, dy);
@@ -57,14 +55,14 @@ public class Player {
                 System.out.println("2nd");
             }
             if (((flag.getCell(getX(), getY())).getTile().getId() == 71) && (flagTwoConfirmed)) {
-                playerCell.setTile(new StaticTiledMapTile(trSplit[0][2]));
+                playerCell.setTile(new StaticTiledMapTile(trRegions[0][2]));
                 System.out.println("Won");
 
             }
         }
         if ((hole.getCell(getX(), getY())) != null){
             System.out.println("Lost");
-            playerCell.setTile(new StaticTiledMapTile(trSplit[0][1]));
+            playerCell.setTile(new StaticTiledMapTile(trRegions[0][1]));
         }
     }
 

@@ -38,6 +38,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         TmxMapLoader loader = new TmxMapLoader();
         TiledMap tm = loader.load("Risky_Exchange.tmx");
 
+        // Initialize the different layers
         board = (TiledMapTileLayer) tm.getLayers().get("Board");
         flag = (TiledMapTileLayer) tm.getLayers().get("Flag");
         hole = (TiledMapTileLayer) tm.getLayers().get("Hole");
