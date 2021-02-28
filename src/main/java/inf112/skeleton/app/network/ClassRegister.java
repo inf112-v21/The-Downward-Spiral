@@ -10,6 +10,7 @@ public class ClassRegister {
             PacketAddPlayer.class,
             NetworkPlayer.class,
             PacketNewConnectionResponse.class,
-            PacketUpdatePosition.class
+            PacketUpdatePosition.class,
+            PacketRemovePlayer.class
     };
 }

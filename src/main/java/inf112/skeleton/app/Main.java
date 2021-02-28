@@ -22,7 +22,7 @@ public class Main {
             cfg.setTitle("RobotRally");
             cfg.setWindowedMode(600, 800);
 
-            new Lwjgl3Application(new RobotRally(), cfg);
+            new Lwjgl3Application(game, cfg);
         }
     }
 }

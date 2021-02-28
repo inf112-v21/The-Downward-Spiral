@@ -112,6 +112,10 @@ public class Player {
         position.set(x, y);
     }
 
+    public void removePlayer() {
+        playerLayer.setCell(getX(), getY(), null);
+    }
+
     /**
      * Displays a player at their current position.
      */

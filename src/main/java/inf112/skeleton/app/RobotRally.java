@@ -16,6 +16,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
+import inf112.skeleton.app.network.PacketRemovePlayer;
 import inf112.skeleton.app.network.RRServer;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
@@ -120,6 +121,9 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 } else if (object instanceof PacketUpdatePosition) {
                     PacketUpdatePosition packet = (PacketUpdatePosition)object;
                     networkPlayers.get(packet.playerID).setPosition(packet.posX, packet.posY);
+                } else if (object instanceof PacketRemovePlayer) {
+                    PacketRemovePlayer packet = (PacketRemovePlayer)object;
+                    removePlayer(packet.playerID);
                 }
             }
         });
@@ -217,6 +221,16 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         networkPlayers.put(playerID, networkPlayerQueue.remove(networkPlayerQueue.size()-1));
         // Position new player on board
         networkPlayers.get(playerID).setPosition(xPos, yPos);
+    }
+
+    /**
+     * Removes given player from the board, and removes it from list of network players.
+     *
+     * @param playerID ID of the client that disconnected.
+     */
+    public void removePlayer(int playerID) {
+        networkPlayers.get(playerID).removePlayer();
+        networkPlayers.remove(playerID);
     }
 
     /**

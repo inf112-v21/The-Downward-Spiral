@@ -84,6 +84,14 @@ public class RRServer extends Listener {
                 players.put(c.getID(), player);
 
             }
+
+            // When a client disconnects
+            public void disconnected(Connection c) {
+                players.remove(c.getID());
+                PacketRemovePlayer packet = new PacketRemovePlayer();
+                packet.playerID = c.getID();
+                server.sendToAllExceptTCP(c.getID(), packet);
+            }
         });
     }
 
