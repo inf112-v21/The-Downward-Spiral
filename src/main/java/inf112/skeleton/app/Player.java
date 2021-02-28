@@ -42,16 +42,20 @@ public class Player {
      * @param board
      * @param dx
      * @param dy
+     *
+     * @return true if player is moved
      */
-    public void move(TiledMapTileLayer board, int dx, int dy) {
+    public boolean move(TiledMapTileLayer board, int dx, int dy) {
 
         playerLayer.setCell(getX(), getY(), null);
 
         if(board.getCell(getX() + dx, getY()+ dy) == null){
             System.out.println("You can't go outside the map");
+            return false;
         }else{
             position.add(dx, dy);
         }
+        return true;
 
     }
 
@@ -101,6 +105,11 @@ public class Player {
      */
     public int getY() {
         return (int) position.y;
+    }
+
+    public void setPosition(int x, int y) {
+        playerLayer.setCell(getX(), getY(), null);
+        position.set(x, y);
     }
 
     /**
