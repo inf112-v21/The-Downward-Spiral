@@ -14,14 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RRServer extends Listener {
-    static Server server;
+    public static Server server;
     public static final int port = 27960;
-    static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
+    public static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
 
     static RobotRally game = new RobotRally();
-
-
-
 
     public RRServer() {
         server = new Server();
