@@ -11,6 +11,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.skeleton.app.ProgramCards.Card;
+import inf112.skeleton.app.ProgramCards.Deck;
+
+import java.util.ArrayList;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -47,6 +51,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     Client client;
 
+    public Deck currentDeck;
+    public ArrayList<Card> hand;
+    public int handSize = 5; // should be 9. 5 for testing
+
+
+
     /**
      * Creates all the necessary objects for the game
      * to later be displayed.
@@ -77,6 +87,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
         Gdx.input.setInputProcessor(this);
 
+        currentDeck = new Deck();
         // NETWORKING
         localPlayer = new Player(tm);
         networkPlayerQueue = new HashMap<>();
@@ -93,7 +104,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         for (Class aClass: ClassRegister.classes) {
             client.getKryo().register(aClass);
         }
-
 
         // Connect to server
         client.start();
@@ -112,12 +122,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                     NetworkPlayer p = packet.player;
                     addPlayer(p.playerID, p.xPos, p.yPos);
 
-                // Server initial response to client
+                    // Server initial response to client
                 } else if (object instanceof PacketNewConnectionResponse) {
                     PacketNewConnectionResponse packet = (PacketNewConnectionResponse)object;
                     localPlayer.setPosition(packet.xPos, packet.yPos);
 
-                // A network player moved
+                    // A network player moved
                 } else if (object instanceof PacketUpdatePosition) {
                     PacketUpdatePosition packet = (PacketUpdatePosition)object;
                     networkPlayers.get(packet.playerID).setPosition(packet.posX, packet.posY);
@@ -129,6 +139,47 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         });
 
     }
+
+    public void dealHand(){
+        hand = currentDeck.deal(handSize);
+        showHand();
+    }
+    // temporary
+    public void showHand() {
+        for (int i = 0; i < hand.size(); i++) {
+            System.out.println(i + 1 + ": " + hand.get(i).toString());
+        }
+
+    }
+
+
+    public void movePlayer(int index){
+        try {
+            int moves = hand.get(index).getMoves();
+            String type = hand.get(index).toString();
+            int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
+            for (int i = 0; i < moves; i++) {
+                localPlayer.move(board, dir[0], dir[1]);
+                localPlayer.checkStatus(flag, hole);
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
+            // move back (should only be 1 type?)
+            if (moves < 0){
+                localPlayer.move(board, -1*dir[0], -1*dir[1]);
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
+
+            if (moves == 0){
+                localPlayer.turn(hand.get(index).toString());
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
+
+            System.out.println("you moved " + moves + " towards " + localPlayer.direction);
+            showHand();
+
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("You don't have that many cards");
+        }
+    }
+
+
 
 
 
@@ -142,26 +193,43 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
      */
     @Override
     public boolean keyUp(int keycode) {
-
+        // press enter to deal cards
+        if (keycode == Input.Keys.ENTER) {
+            dealHand();}
+        // use 1-9 to pick which card
+        for (int i=0; i<9;i++) {
+            if (keycode == (i+8))
+                movePlayer(i);
+        }
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
+            //localPlayer.move(board, 0, 1);
+            localPlayer.rotate(Direction.NORTH);
             if (localPlayer.move(board, 0, 1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
+            //localPlayer.move(board, 0, -1);
+            localPlayer.rotate(Direction.SOUTH);
             if (localPlayer.move(board, 0, -1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
+            //localPlayer.move(board, 1, 0);
+            localPlayer.rotate(Direction.EAST);
             if (localPlayer.move(board, 1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
+            //localPlayer.move(board, -1, 0);
+            localPlayer.rotate(Direction.WEST);
             if (localPlayer.move(board, -1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
-            }
+        }
+        localPlayer.checkStatus(flag, hole);
+
         } else {
             localPlayer.checkStatus(flag, hole);
             return false;

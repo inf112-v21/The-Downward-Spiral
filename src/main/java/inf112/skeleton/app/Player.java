@@ -13,9 +13,12 @@ public class Player {
     private final TiledMapTileLayer playerLayer;
     private final TiledMapTileLayer.Cell playerCell;
     private final TextureRegion[][] trRegions;
+    private final TextureRegion[][] trRegions2;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
+
+    public Direction direction;
 
     /**
      * Constructor
@@ -26,11 +29,16 @@ public class Player {
         playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0, 0);
 
-        TextureRegion tr = new TextureRegion(new Texture("player.png"));
+        // temporary texture showing direction
+        TextureRegion tr = new TextureRegion(new Texture("player_1.png"));
         trRegions = tr.split(300, 300);
+        TextureRegion tr2 = new TextureRegion(new Texture("player_2.png"));
+        trRegions2 = tr2.split(300, 300);
 
         playerCell = new TiledMapTileLayer.Cell();
         playerCell.setTile(new StaticTiledMapTile(trRegions[0][0]));
+
+        direction = Direction.NORTH; // starting direction
 
     }
 
@@ -49,14 +57,50 @@ public class Player {
 
         playerLayer.setCell(getX(), getY(), null);
 
-        if(board.getCell(getX() + dx, getY()+ dy) == null){
+        if (board.getCell(getX() + dx, getY() + dy) == null) {
             System.out.println("You can't go outside the map");
             return false;
-        }else{
+        } else {
             position.add(dx, dy);
         }
         return true;
+    }
 
+    /**
+     * Rotated the player based on card type
+     * @param type name of card
+     */
+    public void turn(String type){
+        if (type == "left_turn")
+            direction = direction.rotateLeft(direction);
+        if (type == "right_turn")
+            direction = direction.rotateRight(direction);
+        if (type == "u_turn")
+            direction = direction.uTurn(direction);
+        updateDirection();
+    }
+
+    /**
+     * Change player direction
+     * @param dir new direction
+     */
+    public void rotate(Direction dir) {
+        direction = dir; }
+
+    // updates texture for robot based on direction (temp)
+    public void updateDirection() {
+        if (direction == Direction.NORTH) {
+            playerCell.setTile(new StaticTiledMapTile(trRegions[0][0]));
+        }
+        if (direction == Direction.EAST) {
+            playerCell.setTile(new StaticTiledMapTile(trRegions2[0][0]));
+        }
+        if (direction == Direction.WEST) {
+            playerCell.setTile(new StaticTiledMapTile(trRegions2[0][1]));
+        }
+        if (direction == Direction.SOUTH) {
+            playerCell.setTile(new StaticTiledMapTile(trRegions2[0][2]));
+        }
     }
 
     /**
@@ -68,7 +112,7 @@ public class Player {
      * @param hole
      */
     public void checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
-
+        updateDirection();
         // Checks if player have won
         if ((flag.getCell(getX(), getY())) != null) {
             if ((flag.getCell(getX(), getY())).getTile().getId() == 55) {
