@@ -69,7 +69,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         font.setColor(Color.RED);
 
         TmxMapLoader loader = new TmxMapLoader();
-        tm = loader.load("src/assets/Risky_Exchange.tmx");
+        tm = loader.load("assets/Risky_Exchange.tmx");
 
 
         // Initialize the different layers
