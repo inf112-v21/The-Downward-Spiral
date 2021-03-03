@@ -52,8 +52,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     Client client;
 
     public Deck currentDeck;
-    public ArrayList<Card> hand;
-    public int handSize = 5; // should be 9. 5 for testing
+    public ArrayList<Card> cardMoves;
+    public ArrayList<Card> pickHand;
+    public int handSize = 9; // should be 9. 5 for testing
+
+
+    public static final TimeUnit SECONDS = null;
 
 
 
@@ -83,6 +87,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         camera.translate((float)0, 0);
         camera.update();
         render = new OrthogonalTiledMapRenderer(tm, 1/board.getTileWidth());
+
         render.setView(camera);
 
         Gdx.input.setInputProcessor(this);
@@ -153,11 +158,24 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     }
 
+    private void pickHand(int index) {
+
+        if (pickHand == null || pickHand.size() <= 4) {
+            pickHand.add(cardMoves.remove(index));
+            System.out.println("move " + (index +1) + " added to hand");
+            System.out.println("Your hand: " + pickHand);
+            showCardMoves();
+        } else {
+            System.out.println("Full hand");
+        }
+
+    }
+
 
     public void movePlayer(int index){
         try {
-            int moves = hand.get(index).getMoves();
-            String type = hand.get(index).toString();
+            int moves = pickHand.get(index).getMoves();
+            String type = cardMoves.get(index).toString();
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
                 localPlayer.move(board, dir[0], dir[1]);
@@ -169,7 +187,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             if (moves == 0){
-                localPlayer.turn(hand.get(index).toString());
+                localPlayer.turn(pickHand.get(index).toString());
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
@@ -196,12 +214,23 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     public boolean keyUp(int keycode) {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
-            dealHand();}
-        // use 1-9 to pick which card
-        for (int i=0; i<9;i++) {
-            if (keycode == (i+8))
-                movePlayer(i);
+            dealCardMoves();
         }
+        // use 1-9 to pick which card
+        final int cardOptions = cardMoves.size();
+        for (int i = 0; i< cardMoves.size(); i++){
+            if (keycode == (i+8)) {
+                pickHand(i);
+            }
+        }
+        final int cardSize = pickHand.size();
+        if (keycode == Input.Keys.H) {
+            for (int i=0; i < cardSize; i++) {
+                movePlayer(0);
+                pickHand.remove(0);
+            }
+        }
+
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             //localPlayer.move(board, 0, 1);
             localPlayer.rotate(Direction.NORTH);
