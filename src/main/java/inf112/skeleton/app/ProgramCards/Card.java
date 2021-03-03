@@ -22,6 +22,9 @@ public class Card extends Actor {
 
     public void setTexture(Texture texture) {
     }
+    public String toString() {
+        return type;
+    }
 
 
     public void add(int priority, String type) {
