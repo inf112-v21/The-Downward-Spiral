@@ -21,13 +21,13 @@ import com.esotericsoftware.kryonet.Listener;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
 import inf112.skeleton.app.network.PacketRemovePlayer;
-import inf112.skeleton.app.network.RRServer;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 
 public class RobotRally extends InputAdapter implements ApplicationListener {
@@ -88,6 +88,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         Gdx.input.setInputProcessor(this);
 
         currentDeck = new Deck();
+        pickHand = new ArrayList<>();
         // NETWORKING
         localPlayer = new Player(tm);
         networkPlayerQueue = new HashMap<>();
@@ -140,14 +141,14 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     }
 
-    public void dealHand(){
-        hand = currentDeck.deal(handSize);
-        showHand();
+    public void dealCardMoves(){
+        cardMoves = currentDeck.deal(handSize);
+        showCardMoves();
     }
     // temporary
-    public void showHand() {
-        for (int i = 0; i < hand.size(); i++) {
-            System.out.println(i + 1 + ": " + hand.get(i).toString());
+    public void showCardMoves() {
+        for (int i = 0; i < cardMoves.size(); i++) {
+            System.out.println(i + 1 + ": " + cardMoves.get(i).toString());
         }
 
     }
@@ -172,7 +173,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
-            showHand();
+            showCardMoves();
 
         }catch (IndexOutOfBoundsException e){
             System.out.println("You don't have that many cards");
