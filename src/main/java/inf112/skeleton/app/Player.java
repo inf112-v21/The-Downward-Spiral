@@ -65,8 +65,6 @@ public class Player {
         }
         return true;
 
-    }
-
     /**
      * Rotated the player based on card type
      * @param type name of card
