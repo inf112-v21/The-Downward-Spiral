@@ -159,16 +159,20 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
                 localPlayer.move(board, dir[0], dir[1]);
-                localPlayer.checkStatus(flag, hole); }
+                localPlayer.checkStatus(flag, hole);
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
             // move back (should only be 1 type?)
-            if (moves < 0)
+            if (moves < 0){
                 localPlayer.move(board, -1*dir[0], -1*dir[1]);
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
 
-            if (moves == 0)
+            if (moves == 0){
                 localPlayer.turn(hand.get(index).toString());
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
             showHand();
+
         }catch (IndexOutOfBoundsException e){
             System.out.println("You don't have that many cards");
         }
@@ -197,35 +201,34 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 movePlayer(i);
         }
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
-            localPlayer.move(board, 0, 1);
+            //localPlayer.move(board, 0, 1);
             localPlayer.rotate(Direction.NORTH);
             if (localPlayer.move(board, 0, 1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
-            localPlayer.move(board, 0, -1);
+            //localPlayer.move(board, 0, -1);
             localPlayer.rotate(Direction.SOUTH);
             if (localPlayer.move(board, 0, -1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-            localPlayer.move(board, 1, 0);
+            //localPlayer.move(board, 1, 0);
             localPlayer.rotate(Direction.EAST);
             if (localPlayer.move(board, 1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-            localPlayer.move(board, -1, 0);
+            //localPlayer.move(board, -1, 0);
             localPlayer.rotate(Direction.WEST);
-        }
-        localPlayer.checkStatus(flag, hole);
-        return false;
             if (localPlayer.move(board, -1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
-            }
+        }
+        localPlayer.checkStatus(flag, hole);
+
         } else {
             localPlayer.checkStatus(flag, hole);
             return false;
