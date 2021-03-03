@@ -105,17 +105,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
             client.getKryo().register(aClass);
         }
 
-    }
-
-    public void dealHand(){
-        hand = currentDeck.deal(handSize);
-        showHand();
-    }
-    // temporary
-    public void showHand() {
-        for (int i = 0; i < hand.size(); i++) {
-            System.out.println(i+1 +": " + hand.get(i).toString());
-        }
         // Connect to server
         client.start();
         try {
@@ -133,12 +122,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                     NetworkPlayer p = packet.player;
                     addPlayer(p.playerID, p.xPos, p.yPos);
 
-                // Server initial response to client
+                    // Server initial response to client
                 } else if (object instanceof PacketNewConnectionResponse) {
                     PacketNewConnectionResponse packet = (PacketNewConnectionResponse)object;
                     localPlayer.setPosition(packet.xPos, packet.yPos);
 
-                // A network player moved
+                    // A network player moved
                 } else if (object instanceof PacketUpdatePosition) {
                     PacketUpdatePosition packet = (PacketUpdatePosition)object;
                     networkPlayers.get(packet.playerID).setPosition(packet.posX, packet.posY);
@@ -148,6 +137,18 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 }
             }
         });
+
+    }
+
+    public void dealHand(){
+        hand = currentDeck.deal(handSize);
+        showHand();
+    }
+    // temporary
+    public void showHand() {
+        for (int i = 0; i < hand.size(); i++) {
+            System.out.println(i + 1 + ": " + hand.get(i).toString());
+        }
 
     }
 
