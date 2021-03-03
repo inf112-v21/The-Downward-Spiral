@@ -38,7 +38,7 @@ public class Player {
         playerCell = new TiledMapTileLayer.Cell();
         playerCell.setTile(new StaticTiledMapTile(trRegions[0][0]));
 
-        direction = Direction.NORTH;
+        direction = Direction.NORTH; // starting direction
 
     }
 
@@ -66,15 +66,29 @@ public class Player {
         return true;
 
     }
-    public void rotateLeft() {
-        direction = direction.rotateLeft(direction);
-    }
-    public void rotateRight() {
-        direction = direction.rotateRight(direction);
-    }
-    public void rotate(Direction dir) { direction = dir; }
 
-    // updates texture for robot based on direction
+    /**
+     * Rotated the player based on card type
+     * @param type name of card
+     */
+    public void turn(String type){
+        if (type == "left_turn")
+            direction = direction.rotateLeft(direction);
+        if (type == "right_turn")
+            direction = direction.rotateRight(direction);
+        if (type == "u_turn")
+            direction = direction.uTurn(direction);
+        updateDirection();
+    }
+
+    /**
+     * Change player direction
+     * @param dir new direction
+     */
+    public void rotate(Direction dir) {
+        direction = dir; }
+
+    // updates texture for robot based on direction (temp)
     public void updateDirection() {
         if (direction == Direction.NORTH) {
             playerCell.setTile(new StaticTiledMapTile(trRegions[0][0]));

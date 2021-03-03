@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.ProgramCards.Deck;
 
@@ -34,7 +33,7 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     public Deck currentDeck;
     public ArrayList<Card> hand;
-    public int handSize =5;
+    public int handSize = 5; // should be 9. 5 for testing
 
 
 
@@ -72,32 +71,31 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     public void dealHand(){
         hand = currentDeck.deal(handSize);
-        for (Card card : hand){
-            System.out.println(card.toString());
-            currentDeck.remove(card);
-        }
+        showHand();
     }
     // temporary
     public void showHand() {
-        for (Card card : hand) {
-            System.out.println(card.toString());
+        for (int i = 0; i < hand.size(); i++) {
+            System.out.println(i+1 +": " + hand.get(i).toString());
         }
     }
+
 
     public void movePlayer(int index){
         try {
             int moves = hand.get(index).getMoves();
+            String type = hand.get(index).toString();
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
-                localPlayer.move(board, 1*dir[0], 1*dir[1]);
-                localPlayer.checkStatus(flag, hole);
-                //hand.remove(index);
-                // todo: add rotation cards
-                }
-            // move back
-            if (hand.get(index).getMoves() < 0){
+                localPlayer.move(board, dir[0], dir[1]);
+                localPlayer.checkStatus(flag, hole); }
+            // move back (should only be 1 type?)
+            if (moves < 0)
                 localPlayer.move(board, -1*dir[0], -1*dir[1]);
-            }
+
+            if (moves == 0)
+                localPlayer.turn(hand.get(index).toString());
+
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
             showHand();
         }catch (IndexOutOfBoundsException e){
@@ -108,8 +106,10 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     @Override
     public boolean keyUp(int keycode) {
+        // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealHand();}
+        // use 1-9 to pick which card
         for (int i=0; i<9;i++) {
             if (keycode == (i+8))
                 movePlayer(i);
