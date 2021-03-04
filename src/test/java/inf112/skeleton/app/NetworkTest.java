@@ -18,7 +18,7 @@ public class NetworkTest {
     private static Client client;
     private static int port = 27960;
 
-    private static RobotRally game;
+    private static RoboRally game;
     private static RRServer RRServer;
 
     @BeforeClass

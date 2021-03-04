@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public class RobotRally extends InputAdapter implements ApplicationListener {
+public class RoboRally extends InputAdapter implements ApplicationListener {
 
     private SpriteBatch batch;
     private BitmapFont font;
@@ -140,36 +140,45 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
 
     }
 
+    /**
+     * deals cards to players
+     * amount equal to handSize
+     */
     public void dealHand(){
         hand = currentDeck.deal(handSize);
         showHand();
     }
-    // temporary
+
+    /**
+     * prints content of the hand to the terminal
+     * this is temporary until we have gui
+     */
     public void showHand() {
         for (int i = 0; i < hand.size(); i++) {
             System.out.println(i + 1 + ": " + hand.get(i).toString());
         }
-
     }
 
-
+    /**
+     * moves the player according to the card at index i of the current player hand
+     * @param index the cards index in the hand
+     */
     public void movePlayer(int index){
         try {
             int moves = hand.get(index).getMoves();
-            String type = hand.get(index).toString();
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
                 localPlayer.move(board, dir[0], dir[1]);
                 localPlayer.checkStatus(flag, hole);
-                sendPosition(localPlayer.getX(), localPlayer.getY());}
-            // move back (should only be 1 type?)
-            if (moves < 0){
-                localPlayer.move(board, -1*dir[0], -1*dir[1]);
-                sendPosition(localPlayer.getX(), localPlayer.getY());}
+            }
 
-            if (moves == 0){
+            if (moves < 0){ // back up
+                localPlayer.move(board, -1*dir[0], -1*dir[1]);
+            }
+
+            if (moves == 0){ // card is rotation card
                 localPlayer.turn(hand.get(index).toString());
-                sendPosition(localPlayer.getX(), localPlayer.getY());}
+            }
 
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
             showHand();
@@ -202,28 +211,24 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 movePlayer(i);
         }
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
-            //localPlayer.move(board, 0, 1);
             localPlayer.rotate(Direction.NORTH);
             if (localPlayer.move(board, 0, 1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
-            //localPlayer.move(board, 0, -1);
             localPlayer.rotate(Direction.SOUTH);
             if (localPlayer.move(board, 0, -1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-            //localPlayer.move(board, 1, 0);
             localPlayer.rotate(Direction.EAST);
             if (localPlayer.move(board, 1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-            //localPlayer.move(board, -1, 0);
             localPlayer.rotate(Direction.WEST);
             if (localPlayer.move(board, -1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());

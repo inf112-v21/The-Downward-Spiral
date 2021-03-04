@@ -19,7 +19,7 @@ public class Main {
             RRServer server = new RRServer();
         } else if (input.equals("c")){
 
-            RobotRally game = new RobotRally();
+            RoboRally game = new RoboRally();
             Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
             cfg.setTitle("RobotRally");
             cfg.setWindowedMode(600, 800);
