@@ -49,4 +49,8 @@ public class Deck {
     public void remove(Card card) {
         currentDeck.remove(card);
     }
+
+    public int size() {
+        return currentDeck.size();
+    }
 }
