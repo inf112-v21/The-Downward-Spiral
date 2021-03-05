@@ -57,14 +57,13 @@ public class Player {
 
         playerLayer.setCell(getX(), getY(), null);
 
-        if(board.getCell(getX() + dx, getY()+ dy) == null){
+        if (board.getCell(getX() + dx, getY() + dy) == null) {
             System.out.println("You can't go outside the map");
             return false;
-        }else{
+        } else {
             position.add(dx, dy);
         }
         return true;
-
     }
 
     /**
