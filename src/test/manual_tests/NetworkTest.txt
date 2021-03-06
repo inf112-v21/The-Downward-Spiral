@@ -1,0 +1,20 @@
+NETWORK MANUAL TESTS
+
+Since one thread can run only one instance of the game, it easier to write manual tests for this class.
+
+    * When a player moves, the server should update the position of the moving player for all other clients
+        * Start a new server and two new clients
+        * Try moving one of the players and confirm both clients are updating correctly
+        * If both clients update the position correctly, the test has passed.
+
+    * When a player connects, the position of already connected players should be rendered correctly
+        * Start a new server and one new client
+        * Move the client to a random position
+        * Start a new client
+        * The new client should display the position of the first client correctly
+
+    * When a player disconnects its sprite should be removed from all other clients boards
+        * Start a new server and two new clients
+        * Move both clients to a random position
+        * Disconnect one of the clients
+        * The remaining client should not display the disconnected client
