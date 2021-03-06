@@ -43,7 +43,12 @@ The player pick cards from a random collection to program the robot to move.
 ### Running the server error
 There is an error when starting the server. 
 This error seems like its kryonets faults, and is not harming the problem in any way.
-The error will be ignored for now.
+To fix this error:
+On intellij go to
+`Run -> Edit Configuration -> Modify options -> VM Options`.
+Then add "--illegal-access=deny".
+Hit apply.
+
 
 ### Error when trying to connect
 If you can't connect to the server, and you know that the portforwarding is correct or if you are on the same network,
@@ -61,6 +66,7 @@ Try to add -XstartOnFirstThread as a VM option.
 On intellij go to
 `Run -> Edit Configuration -> Modify options -> VM Options`.
 Then add "-XstartOnFirstThread".
+
 Hit apply.
 
 
