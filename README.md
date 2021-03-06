@@ -42,7 +42,7 @@ The player pick cards from a random collection to program the robot to move.
 
 ### Running the server error
 There is an error when starting the server. 
-This error seems like its kryonets faults, and is not harming the problem in any way.
+This error seems like its kryonets faults, and is not harming the program in any way.
 To fix this error:
 On intellij go to
 `Run -> Edit Configuration -> Modify options -> VM Options`.
