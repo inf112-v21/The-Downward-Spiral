@@ -144,6 +144,10 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
             }
         });
 
+        if (cardMoves == null){
+            System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
+        }
+
     }
 
     public void dealCardMoves(){
@@ -215,19 +219,25 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealCardMoves();
+            System.out.println("To program your robot hit the number corresponding to the move you want to add to your list of moves");
+            System.out.println("When you have selected up to 5 moves you can hit SPACE to execute your list of moves");
         }
         // use 1-9 to pick which card
-        final int cardOptions = cardMoves.size();
-        for (int i = 0; i< cardMoves.size(); i++){
-            if (keycode == (i+8)) {
-                pickHand(i);
+        if (cardMoves != null) {
+            for (int i = 0; i < cardMoves.size(); i++) {
+                if (keycode == (i + 8)) {
+                    pickHand(i);
+                }
             }
         }
-        final int cardSize = pickHand.size();
-        if (keycode == Input.Keys.H) {
-            for (int i=0; i < cardSize; i++) {
-                movePlayer(0);
-                pickHand.remove(0);
+
+        if (pickHand != null) {
+            final int cardSize = pickHand.size();
+            if (keycode == Input.Keys.SPACE) {
+                for (int i = 0; i < cardSize; i++) {
+                    movePlayer(0);
+                    pickHand.remove(0);
+                }
             }
         }
 
