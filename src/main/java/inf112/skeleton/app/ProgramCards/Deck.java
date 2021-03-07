@@ -1,8 +1,5 @@
 package inf112.skeleton.app.ProgramCards;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;

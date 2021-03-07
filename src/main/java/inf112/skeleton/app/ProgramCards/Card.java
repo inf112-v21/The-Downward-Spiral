@@ -1,5 +1,4 @@
 package inf112.skeleton.app.ProgramCards;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
