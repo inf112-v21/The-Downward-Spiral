@@ -27,10 +27,9 @@ import inf112.skeleton.app.network.packets.PacketUpdatePosition;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 
-public class RobotRally extends InputAdapter implements ApplicationListener {
+public class RoboRally extends InputAdapter implements ApplicationListener {
 
     private SpriteBatch batch;
     private BitmapFont font;
@@ -55,11 +54,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
     public ArrayList<Card> cardMoves;
     public ArrayList<Card> pickHand;
     public int handSize = 9; // should be 9. 5 for testing
-
-
-    public static final TimeUnit SECONDS = null;
-
-
 
     /**
      * Creates all the necessary objects for the game
@@ -87,7 +81,6 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         camera.translate((float)0, 0);
         camera.update();
         render = new OrthogonalTiledMapRenderer(tm, 1/board.getTileWidth());
-
         render.setView(camera);
 
         Gdx.input.setInputProcessor(this);
@@ -149,12 +142,19 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         }
 
     }
-
+    /**
+     * deals cards to players
+     * amount equal to handSize
+     */
     public void dealCardMoves(){
         cardMoves = currentDeck.deal(handSize);
         showCardMoves();
     }
-    // temporary
+
+    /**
+     * prints content of the hand to the terminal
+     * this is temporary until we have gui
+     */
     public void showCardMoves() {
         for (int i = 0; i < cardMoves.size(); i++) {
             System.out.println(i + 1 + ": " + cardMoves.get(i).toString());
@@ -176,10 +176,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
             System.out.println("Full hand");
             System.out.println("Hit SPACE to execute your list of moves");
         }
-
     }
 
-
+    /**
+     * moves the player according to the card at index i of the current player hand
+     * @param index the cards index in the hand
+     */
     public void movePlayer(int index){
         try {
             int moves = pickHand.get(index).getMoves();
@@ -189,11 +191,13 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
                 localPlayer.move(board, dir[0], dir[1]);
                 localPlayer.checkStatus(flag, hole);
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
-            // move back (should only be 1 type?)
-            if (moves < 0){
+
+            // back up
+            if (moves < 0) {
                 localPlayer.move(board, -1*dir[0], -1*dir[1]);
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
+            // card is rotation card
             if (moves == 0){
                 localPlayer.turn(pickHand.get(index).toString());
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
@@ -246,28 +250,24 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
         }
 
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
-            //localPlayer.move(board, 0, 1);
             localPlayer.rotate(Direction.NORTH);
             if (localPlayer.move(board, 0, 1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
-            //localPlayer.move(board, 0, -1);
             localPlayer.rotate(Direction.SOUTH);
             if (localPlayer.move(board, 0, -1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-            //localPlayer.move(board, 1, 0);
             localPlayer.rotate(Direction.EAST);
             if (localPlayer.move(board, 1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-            //localPlayer.move(board, -1, 0);
             localPlayer.rotate(Direction.WEST);
             if (localPlayer.move(board, -1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
