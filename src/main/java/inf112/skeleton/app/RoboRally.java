@@ -21,7 +21,6 @@ import com.esotericsoftware.kryonet.Listener;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
 import inf112.skeleton.app.network.PacketRemovePlayer;
-import inf112.skeleton.app.network.RRServer;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
@@ -52,10 +51,9 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     Client client;
 
     public Deck currentDeck;
-    public ArrayList<Card> hand;
-    public int handSize = 5; // should be 9. 5 for testing
-
-
+    public ArrayList<Card> cardMoves;
+    public ArrayList<Card> pickHand;
+    public int handSize = 9; // should be 9. 5 for testing
 
     /**
      * Creates all the necessary objects for the game
@@ -88,6 +86,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.input.setInputProcessor(this);
 
         currentDeck = new Deck();
+        pickHand = new ArrayList<>();
         // NETWORKING
         localPlayer = new Player(tm);
         networkPlayerQueue = new HashMap<>();
@@ -138,24 +137,44 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             }
         });
 
-    }
+        if (cardMoves == null){
+            System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
+        }
 
+    }
     /**
      * deals cards to players
      * amount equal to handSize
      */
-    public void dealHand(){
-        hand = currentDeck.deal(handSize);
-        showHand();
+    public void dealCardMoves(){
+        cardMoves = currentDeck.deal(handSize);
+        showCardMoves();
     }
 
     /**
      * prints content of the hand to the terminal
      * this is temporary until we have gui
      */
-    public void showHand() {
-        for (int i = 0; i < hand.size(); i++) {
-            System.out.println(i + 1 + ": " + hand.get(i).toString());
+    public void showCardMoves() {
+        for (int i = 0; i < cardMoves.size(); i++) {
+            System.out.println(i + 1 + ": " + cardMoves.get(i).toString());
+        }
+
+    }
+
+    private void pickHand(int index) {
+
+        if (pickHand == null || pickHand.size() <= 4) {
+            pickHand.add(cardMoves.remove(index));
+            System.out.println("move " + (index +1) + " added to hand");
+            System.out.println("Your hand: " + pickHand);
+            showCardMoves();
+            if (pickHand.size() == 5){
+                System.out.println("Hit SPACE to execute your list of moves");
+            }
+        } else {
+            System.out.println("Full hand");
+            System.out.println("Hit SPACE to execute your list of moves");
         }
     }
 
@@ -165,23 +184,26 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      */
     public void movePlayer(int index){
         try {
-            int moves = hand.get(index).getMoves();
+            int moves = pickHand.get(index).getMoves();
+            String type = cardMoves.get(index).toString();
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
                 localPlayer.move(board, dir[0], dir[1]);
                 localPlayer.checkStatus(flag, hole);
-            }
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
 
-            if (moves < 0){ // back up
+            // back up
+            if (moves < 0) {
                 localPlayer.move(board, -1*dir[0], -1*dir[1]);
-            }
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
 
-            if (moves == 0){ // card is rotation card
-                localPlayer.turn(hand.get(index).toString());
-            }
+            // card is rotation card
+            if (moves == 0){
+                localPlayer.turn(pickHand.get(index).toString());
+                sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
-            showHand();
+            showCardMoves();
 
         }catch (IndexOutOfBoundsException e){
             System.out.println("You don't have that many cards");
@@ -204,12 +226,29 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     public boolean keyUp(int keycode) {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
-            dealHand();}
-        // use 1-9 to pick which card
-        for (int i=0; i<9;i++) {
-            if (keycode == (i+8))
-                movePlayer(i);
+            dealCardMoves();
+            System.out.println("To program your robot hit the number corresponding to the move you want to add to your list of moves");
+            System.out.println("When you have selected up to 5 moves you can hit SPACE to execute your list of moves");
         }
+        // use 1-9 to pick which card
+        if (cardMoves != null) {
+            for (int i = 0; i < cardMoves.size(); i++) {
+                if (keycode == (i + 8)) {
+                    pickHand(i);
+                }
+            }
+        }
+
+        if (pickHand != null) {
+            final int cardSize = pickHand.size();
+            if (keycode == Input.Keys.SPACE) {
+                for (int i = 0; i < cardSize; i++) {
+                    movePlayer(0);
+                    pickHand.remove(0);
+                }
+            }
+        }
+
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             localPlayer.rotate(Direction.NORTH);
             if (localPlayer.move(board, 0, 1)) {
