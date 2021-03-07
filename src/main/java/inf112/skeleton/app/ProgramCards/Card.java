@@ -1,5 +1,4 @@
 package inf112.skeleton.app.ProgramCards;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
@@ -16,9 +15,7 @@ public class Card extends Actor {
         this.priority = priority;
         this.type = type;
         this.moves = moves;
-
     }
-
 
     public String toString() {
         return type;
@@ -32,7 +29,6 @@ public class Card extends Actor {
     public int getMoves() {
         return moves;
     }
-
 
 
 }

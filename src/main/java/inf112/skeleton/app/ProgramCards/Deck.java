@@ -1,8 +1,5 @@
 package inf112.skeleton.app.ProgramCards;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -52,5 +49,9 @@ public class Deck {
 
     public void remove(Card card) {
         currentDeck.remove(card);
+    }
+
+    public int size() {
+        return currentDeck.size();
     }
 }
