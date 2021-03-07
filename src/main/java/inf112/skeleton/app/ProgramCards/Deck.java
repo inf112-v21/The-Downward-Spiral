@@ -43,10 +43,6 @@ public class Deck {
         return hand;
     }
 
-    public ArrayList<Card> getCurrentDeck() {
-        return currentDeck;
-    }
-
     public void remove(Card card) {
         currentDeck.remove(card);
     }
