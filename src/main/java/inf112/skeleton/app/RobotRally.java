@@ -169,8 +169,12 @@ public class RobotRally extends InputAdapter implements ApplicationListener {
             System.out.println("move " + (index +1) + " added to hand");
             System.out.println("Your hand: " + pickHand);
             showCardMoves();
+            if (pickHand.size() == 5){
+                System.out.println("Hit SPACE to execute your list of moves");
+            }
         } else {
             System.out.println("Full hand");
+            System.out.println("Hit SPACE to execute your list of moves");
         }
 
     }
