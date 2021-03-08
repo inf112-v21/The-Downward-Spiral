@@ -29,7 +29,7 @@ It is reccomended to use two instances istead of this.
 
 From here you can run as many more main as you want to add more players.
 This should also work across all computers on the same network without any further instructions.
-If you can't connect then try looking at the errorhandling below.
+If you can't connect then try looking at the [errorhandling](#known-buggs-and-possible-solutions) below.
 
 If you want to play from multiple computers on different networks then you need to portforward port `27960`.
 Then you can change the local ip in `RoboRally` at string `serverIP` to the IP of the server.
