@@ -37,6 +37,9 @@ ___
 RoboRally is a board game where the aim is to collect flags to win the game.
 The board contains obstacles like walls, holes and lasers.
 The player pick cards from a random collection to program the robot to move.
+The cards can move the robot forwards, backwards or rotate the robot. Robots can also take damage, and their current
+health will affect how you can influence the robot. The fastest player to collect all flags wins.
+The classic board game can have 2-8 players.
 
 # Known buggs and possible solutions
 

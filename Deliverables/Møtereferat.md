@@ -1,0 +1,62 @@
+## Møtereferat #1 (fredag 5. februar kl 10:15 - 12:15):
+Deltakere: Alle
+Vi begynte med å sette opp nyttige hjelpemidler som Trello, Doodle, Google Docs og ikke minst github for å gjøre samarbeid mer effektivt.
+Vi fordelte også roller på grunnlag av kunnskap og innstilling. Vi kom også på et passende gruppenavn.
+Planla nytt møte onsdag 10. februar kl 18:30.
+
+## Møtereferat #2 (onsdag 10. februar kl 18:30 - 20:00):
+Deltakere: Alle
+Spillbrett og spiller klassen er implementert.
+Vi har ryddet delvis opp i dokumentasjonen. Har valgt prosjektmetodikk og begynt på å skrive litt brukerhistorier som vi skal ta opp igjen på neste møte.
+Planla nytt møte torsdag 11. februar kl 12:30.
+
+## Møtereferat #3 (torsdag 11. februar kl 12:30 - 15:00):
+Deltakere: Alle
+Vi har arbeidet videre med brukerhistorier og dokumentasjon. Under møtet diskuterte vi hvilke utfordringer vi har hatt så langt og hvordan disse kan forbedres. Vi ble også enig om at Doodle er et hjelpemiddel som vi ikke behøver å bruke allikevel.
+Neste møte blir på gruppetimen fredag 12. februar kl 10.15.
+
+## Møtereferat #4 (fredag 12. februar kl 10:15 - 12:00):
+Deltakere: Alle
+Vi har arbeidet med kommentarer i koden og å ferdigstille readme før første innlevering.
+Bestemte oss for at vi planlegger neste møte på et senere tidspunkt.
+
+## Møtereferat #5 (fredag 19. februar kl 10:15 - 12:00):
+Deltakere: Alle
+Jobbet med brukerhistorier for de resterende MVP-kravene (6-9).
+
+## Møtereferat #6 (fredag 26. februar kl 10:15 - 12:00):
+Deltakere: Alle
+Begynte på første deloppgave på innlevering 2 og diskuterte punktene på den. Vi så gjennom tilbakemeldingen fra første innlevering og etter det gikk møte i dass :)
+Planla nytt møte
+
+Møtereferat #7 (tirsdag 02. mars kl 16:15 - 18:00):
+Deltakere: Alle
+Hensikt med møte: Vise og forklare hvordan multiplayer fungerer
+Simen viste demo av multiplayeren og hvordan den er satt opp
+Thomas satt opp server slik at alle kunne koble seg til fra egen maskin
+Planla parprogrammerings økt onsdag 3. mars
+Planla neste møte 4. mars
+
+Møtereferat #8 (torsdag 04. mars kl 18:15 - 20:00):
+Deltakere: Thomas, Isabel og Sondre
+Hensikt med møte: Merge kode for kort og multiplayer inn i dev
+Isabel utførte en kort demo av kortene
+Vi merget kort og multiplayer sammen
+Vi testet om bevegelse med kort fungerte i multiplayer
+Minimumskrav for MVP ble merget inn i dev.
+Neste møte blir gruppetimen 5. mars
+
+Møtereferat #9 (fredag 05. mars kl 10:15 - 12:00):
+Deltakere: Sondre, Kristian, Isabel og Thomas
+Vi har gått punktvis gjennom retteskjema og oppgavetekst for oblig 2 og har laget en detaljert oversikt over manglende elementer vi må fikse før innleveringen.
+Ble enige om nytt møte 6 mars 12.00 for videre utvikling av dokumentasjon.
+
+Møtereferat #10 (lørdag 06. mars kl 12:00 - 14:15):
+Deltakere: Alle
+Hensikt med møte: Reflektere over arbeidet vi har gjort opp til nå (retrospektiv)
+Vi har startet å jobbe på listen av manglende elementer til innleveringen
+Vi fikk unnagjort store deler av dokumentasjonen for alle deloppgavene
+Diskutert hva slags tester vi bør implementere
+Videre forbedringer diskuteres på chat inntil neste møte
+Alle skal prøve å fikse problemet med Libgdx tester
+Neste møte blir 7. mars kl 13, sikkert ikke alle som kan møte opp men noen samler seg, kan bli brukt som arbeidsøkt for tester.
