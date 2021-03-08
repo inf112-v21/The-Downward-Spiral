@@ -109,6 +109,8 @@ Vi har ikke gjort noen endringer på MVP. Vi har ikke fått produktet til å se 
 Vi har fullført MVP i den prioriterte rekkefølgen som de ble utgitt til oss. Vi har fortsatt litt vi har lyst å få implementert, som GUI for kort og server. Dette har vi nedprioritert siden det ikke står spesifikt i MVP at dette er noe vi må ha.
 Vi har skrevet i README.md filen om “known bugs” og “possible solutions”. Så vi refererer til den seksjonen for bugs.
 
+![image](https://user-images.githubusercontent.com/1353611/110345255-a9c45780-802e-11eb-8cb7-23f9e20d9655.png)
+
 
 ## Deloppgave 3: Kode
 Vi har skrevet i README.md filen hvordan programmet bygges og kjøres så vi refererer til den seksjonen for bygging og kjøring av programmet.
