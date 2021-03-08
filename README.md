@@ -5,7 +5,7 @@ This project uses maven.
 The project should build when you pull it in intellij.
 
 But if it does not work properly you can build it in the terminal with:
-### `mvn clean build`
+### `mvn clean install`
 
 ### Running
 
