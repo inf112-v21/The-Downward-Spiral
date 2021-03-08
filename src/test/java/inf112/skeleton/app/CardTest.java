@@ -63,8 +63,27 @@ public class CardTest {
 
     @Test
     public void numberOfMoveNeg1Test() {
-        int amount = numberOfCardMoves("move_1");
+        int amount = numberOfCardMoves("move_-1");
+        assertEquals(6, amount);
+    }
+
+    @Test
+    public void numberOfMoveLeftTurnTest() {
+        int amount = numberOfCardMoves("left_turn");
         assertEquals(18, amount);
     }
+
+    @Test
+    public void numberOfMoveRightTurnTest() {
+        int amount = numberOfCardMoves("right_turn");
+        assertEquals(18, amount);
+    }
+
+    @Test
+    public void numberOfMoveUTurnTest() {
+        int amount = numberOfCardMoves("u_turn");
+        assertEquals(6, amount);
+    }
+
 
 }
