@@ -12,10 +12,13 @@ public class Player {
     private final Vector2 position;
     private final TiledMapTileLayer playerLayer;
     private final TiledMapTileLayer.Cell playerCell;
-    private final TextureRegion[][] trRegions;
+    private final TextureRegion[][] trRegionsPlayerStatus;
+    private final TextureRegion[][] trRegionsPlayerDir;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
+
+    public Direction direction;
 
     /**
      * Constructor
@@ -26,11 +29,15 @@ public class Player {
         playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0, 0);
 
-        TextureRegion tr = new TextureRegion(new Texture("player.png"));
-        trRegions = tr.split(300, 300);
+        TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
+        trRegionsPlayerStatus = trStatus.split(300, 300);
+        TextureRegion trDir = new TextureRegion(new Texture("player_Directions.png"));
+        trRegionsPlayerDir = trDir.split(300, 300);
 
         playerCell = new TiledMapTileLayer.Cell();
-        playerCell.setTile(new StaticTiledMapTile(trRegions[0][0]));
+        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+
+        direction = Direction.NORTH; // starting direction
 
     }
 
@@ -42,17 +49,57 @@ public class Player {
      * @param board
      * @param dx
      * @param dy
+     *
+     * @return true if player is moved
      */
-    public void move(TiledMapTileLayer board, int dx, int dy) {
+    public boolean move(TiledMapTileLayer board, int dx, int dy) {
 
         playerLayer.setCell(getX(), getY(), null);
 
-        if(board.getCell(getX() + dx, getY()+ dy) == null){
+        if (board.getCell(getX() + dx, getY() + dy) == null) {
             System.out.println("You can't go outside the map");
-        }else{
+            return false;
+        } else {
             position.add(dx, dy);
         }
+        return true;
+    }
 
+    /**
+     * Rotated the player based on card type
+     * @param type name of card
+     */
+    public void turn(String type){
+        if (type.equals("left_turn"))
+            direction = direction.rotateLeft(direction);
+        if (type.equals("right_turn"))
+            direction = direction.rotateRight(direction);
+        if (type.equals("u_turn"))
+            direction = direction.uTurn(direction);
+        updateDirection();
+    }
+
+    /**
+     * Change player direction
+     * @param dir new direction
+     */
+    public void rotate(Direction dir) {
+        direction = dir; }
+
+    // updates texture for robot based on direction (temp)
+    public void updateDirection() {
+        if (direction == Direction.NORTH) {
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+        }
+        if (direction == Direction.EAST) {
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][0]));
+        }
+        if (direction == Direction.WEST) {
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][1]));
+        }
+        if (direction == Direction.SOUTH) {
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][2]));
+        }
     }
 
     /**
@@ -64,7 +111,7 @@ public class Player {
      * @param hole
      */
     public void checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
-
+        updateDirection();
         // Checks if player have won
         if ((flag.getCell(getX(), getY())) != null) {
             if ((flag.getCell(getX(), getY())).getTile().getId() == 55) {
@@ -76,14 +123,14 @@ public class Player {
                 System.out.println("2nd");
             }
             if (((flag.getCell(getX(), getY())).getTile().getId() == 71) && (flagTwoConfirmed)) {
-                playerCell.setTile(new StaticTiledMapTile(trRegions[0][2]));
+                playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                 System.out.println("Won");
 
             }
         }
         if ((hole.getCell(getX(), getY())) != null){
             System.out.println("Lost");
-            playerCell.setTile(new StaticTiledMapTile(trRegions[0][1]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
         }
     }
 
@@ -101,6 +148,15 @@ public class Player {
      */
     public int getY() {
         return (int) position.y;
+    }
+
+    public void setPosition(int x, int y) {
+        playerLayer.setCell(getX(), getY(), null);
+        position.set(x, y);
+    }
+
+    public void removePlayer() {
+        playerLayer.setCell(getX(), getY(), null);
     }
 
     /**
