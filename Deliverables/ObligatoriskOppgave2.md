@@ -1,5 +1,6 @@
 #### NB! Readme er nå separert fra svar på oppgavene og inneholder nå kun viktig informasjon om programmet.
 #### Noen av spørsmålene kan ligge i readme hvis det egner seg.
+#### Readme inneholder bygging, kjøring, forklaring av kommandoer, etc..
 
 ## Deloppgave 1: Prosjekt og prosjektstruktur
 - Rollene i teamet har så langt fungert veldig bra.
