@@ -77,4 +77,8 @@ Then add "-XstartOnFirstThread".
 
 Hit apply.
 
+### Server does not update directions or won/loss graphics for other players
+Right now there is a bug where other players can't see the players real direction.
+Other players can't see the updated graphics if you win or lose.
+
 
