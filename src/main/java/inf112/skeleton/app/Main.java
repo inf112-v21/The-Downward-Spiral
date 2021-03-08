@@ -8,9 +8,6 @@ import inf112.skeleton.app.network.RRServer;
 import java.util.Scanner;
 
 public class Main {
-
-    // Når koden kjøres venter den på input. Trykk enter for å finne server, skriv "s" for å starte server, "c" for å starte client.
-    // Dersom du finner en server må IP-adressen endres i RobotRally. Bytt serverIP til adressen du fant.
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
@@ -19,7 +16,7 @@ public class Main {
             RRServer server = new RRServer();
         } else if (input.equals("c")){
 
-            RobotRally game = new RobotRally();
+            RoboRally game = new RoboRally();
             Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
             cfg.setTitle("RobotRally");
             cfg.setWindowedMode(600, 800);
