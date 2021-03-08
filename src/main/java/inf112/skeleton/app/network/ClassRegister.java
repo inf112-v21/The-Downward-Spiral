@@ -1,6 +1,5 @@
 package inf112.skeleton.app.network;
 
-import inf112.skeleton.app.Player;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;

@@ -3,7 +3,8 @@ package inf112.skeleton.app;
 /*
 All allowed directions
  */
-public enum Direction{
+
+public enum Direction {
     NORTH,
     WEST,
     EAST,
@@ -11,67 +12,67 @@ public enum Direction{
 
     /**
      * Returns direction to the left of given direction
-     * @param direction current direction
+     * @param dir current direction
      * @return new direction
      */
-    public Direction rotateLeft(Direction direction) {
-        if (direction == NORTH)
-            direction = WEST;
-        else if (direction == WEST)
-            direction = SOUTH;
-        else if (direction == SOUTH)
-            direction = EAST;
-        else if (direction == EAST)
-            direction = NORTH;
-        return direction;
+    public Direction rotateLeft(Direction dir) {
+        if (dir == NORTH)
+            dir = WEST;
+        else if (dir == WEST)
+            dir = SOUTH;
+        else if (dir == SOUTH)
+            dir = EAST;
+        else if (dir == EAST)
+            dir = NORTH;
+        return dir;
     }
     /**
      * Returns direction to the right of given direction
-     * @param direction current direction
+     * @param dir current direction
      * @return new direction
      */
-    public Direction rotateRight(Direction direction) {
-        if (direction == NORTH)
-            direction = EAST;
-        else if (direction == WEST)
-            direction = NORTH;
-        else if (direction == SOUTH)
-            direction = WEST;
-        else if (direction == EAST)
-            direction = SOUTH;
-        return direction;
+    public Direction rotateRight(Direction dir) {
+        if (dir == NORTH)
+            dir = EAST;
+        else if (dir == WEST)
+            dir = NORTH;
+        else if (dir == SOUTH)
+            dir = WEST;
+        else if (dir == EAST)
+            dir = SOUTH;
+        return dir;
     }
 
     /**
      * Returns direction opposite of given direction
-     * @param direction current direction
+     * @param dir current direction
      * @return new direction
      */
-    public Direction uTurn(Direction direction){
-        if (direction == NORTH)
-            direction = SOUTH;
-        else if (direction == WEST)
-            direction = EAST;
-        else if (direction == SOUTH)
-            direction = NORTH;
-        else if (direction == EAST)
-            direction = WEST;
-        return direction;
+    public Direction uTurn(Direction dir) {
+        if (dir == NORTH)
+            dir = SOUTH;
+        else if (dir == WEST)
+            dir = EAST;
+        else if (dir == SOUTH)
+            dir = NORTH;
+        else if (dir == EAST)
+            dir = WEST;
+        return dir;
     }
 
     /**
      * direction components used to move the player in the right direction
-     * @param direction player direction
+     * @param dir player direction
      * @return direction components
      */
-    public int[] dirComponents(Direction direction){
-        if (direction == NORTH)
+    public int[] dirComponents(Direction dir) {
+        if (dir == NORTH)
             return new int[] {0, 1};
-        if (direction == SOUTH)
+        if (dir == SOUTH)
             return new int[] {0, -1};
-        if (direction == WEST)
+        if (dir == WEST)
             return new int[] {-1, 0};
-        if (direction == EAST)
+        if (dir == EAST)
             return new int[] {1, 0};
         return null;
     }
