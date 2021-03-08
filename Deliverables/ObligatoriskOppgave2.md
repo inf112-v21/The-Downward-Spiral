@@ -54,7 +54,7 @@ Vi har skrevet i README.md filen om “known bugs” og “possible solutions”
 
 
 ## Deloppgave 3: Kode
-Vi har skrevet i README.md filen hvordan programmet bygges og kjøres så vi refererer til den seksjonen for bygging og kjøring av programmet.
+Vi har skrevet i [README.md](../README.md) filen hvordan programmet bygges og kjøres så vi refererer til den seksjonen for bygging og kjøring av programmet.
 Vi hadde problemer med automatiske tester for Libgdx og måtte se oss nødt til å fjerne disse derfor er det inntil videre kun manuelle tester.
 Vi har Junit tester på for eksempel oppsett av server og kryonet.
 Vi har laget klassediagram for de viktigste klassene i programmet, dette ligger som en drawio fil eller et screenshot i Deliverables
