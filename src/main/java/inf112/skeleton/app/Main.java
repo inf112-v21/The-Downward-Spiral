@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("Commands for the game is written in README.md");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
