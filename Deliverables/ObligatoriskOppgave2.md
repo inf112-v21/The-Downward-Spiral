@@ -10,8 +10,8 @@
   Teamleaderen styrer hva vi skal diskutere i møtet og er knutepunktet av kommunikasjon mellom alle medlemmene.
   Alle andre rollene føler vi ikke har så stor betydning enda siden vi er så tidlig i prosessen.
   
-- Vi har bestemt oss for å prøve en litt annerledes prosjektmetodikk enn vi har brukt tidligere. 
-  Vi skal prøve “sprint” metoden, siden vi har mye å gjøre på kort tid.
+- Vi synes at Kanban har fungert bra så langt mtp at vi er et team med få personer, så friheten vi får med å ta ting litt som det kommer har vi erfart som veldig bra. 
+  Vi burde bli mye bedre på å bruke Trello tavlen fortløpende slik at oppgaver som krever at noe er ferdig kan bli startet på så fort som mulig.
   
 - Så langt er gruppedynamikken ganske bra. Vi har ikke møtt så mye motstand så langt i prosjektet, 
   så det har hjulpet med at det har vært god stemning i gruppen.
@@ -19,6 +19,7 @@
 - Kommunikasjonen i teamet er ganske bra og vi kommer godt overens. 
   Det hjelper veldig at vi har et ukentlig møte som alle må komme på slik at vi kan planlegge flere møter fremover. 
   Store deler av kommunikasjonen skjer på møtene.
+  Kommunikasjonen i teamet er ganske bra, alle svarer på meldinger på discord når de kan og alle er behjelpelig og forståelig.
   
 - Snakke sammen før vi begynner å jobbe, flinkere med å sette opp trello kort, 
   planlegge arbeidsoppgavene på en slik måte at ingen må vente på at en annen del av koden er ferdig før de kan begynne på sin oppgave. 
@@ -83,5 +84,8 @@ Det er også noen kriterier som vi føler ikke er så viktig å få gjort enda. 
 - Vi har laget klassediagram for de viktigste klassene i programmet, dette ligger som en drawio fil som du finner i Deliverables: [klassediagram.drawio](klassediagramOblig2.drawio)
   ![img.png](Klassediagram.png)
 - Vi har dessverre måtte kun skrive manuelle tester for bevegelse av robot og diverse spill funksjoner. 
-Dette er fordi vi har hatt problemer med JUnit tester ikke får tilgang til textures og dermed mislykkes testene. Vi prøvde å få hjelp med dette problemet fra gruppeleder men kom dessverre ikke til noe løsning. Fikk beskjed om å bare skrive manuelle tester inntil videre. Vi håper å få ordnet opp i dette problemet og få til skikkelige automatiske tester. 
+  Dette er fordi vi har hatt problemer med JUnit tester ikke får tilgang til textures og dermed mislykkes testene. 
+  Vi prøvde å få hjelp med dette problemet fra gruppeleder men kom dessverre ikke til noe løsning. 
+  Fikk beskjed om å bare skrive manuelle tester inntil videre. 
+  Vi håper å få ordnet opp i dette problemet og få til skikkelige automatiske tester. 
 
