@@ -22,6 +22,11 @@ Remember to hit `Apply` in the bottom right corner.
 Now you can run another main and choose to play as a client instead.
 Run main and write `c` then hit enter.
 
+If you don't want to have to instances of main on the computer that is hosting you can:
+Write `sc` to start a server and connect.
+One thing to note is that the console wil get very cluttered in this mode because you get information and prints from both server and client. 
+It is reccomended to use two instances istead of this. 
+
 From here you can run as many more main as you want to add more players.
 This should also work across all computers on the same network without any further instructions.
 If you can't connect then try looking at the errorhandling below.
