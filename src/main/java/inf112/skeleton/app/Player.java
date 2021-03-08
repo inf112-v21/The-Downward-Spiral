@@ -70,11 +70,11 @@ public class Player {
      * @param type name of card
      */
     public void turn(String type){
-        if (type == "left_turn")
+        if (type.equals("left_turn"))
             direction = direction.rotateLeft(direction);
-        if (type == "right_turn")
+        if (type.equals("right_turn"))
             direction = direction.rotateRight(direction);
-        if (type == "u_turn")
+        if (type.equals("u_turn"))
             direction = direction.uTurn(direction);
         updateDirection();
     }

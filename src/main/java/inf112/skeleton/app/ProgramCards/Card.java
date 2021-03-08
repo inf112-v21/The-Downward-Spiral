@@ -21,11 +21,6 @@ public class Card extends Actor {
         return type;
     }
 
-
-    public void add(int priority, String type) {
-        cards.add(new Card(priority, type, moves));
-    }
-
     public int getMoves() {
         return moves;
     }

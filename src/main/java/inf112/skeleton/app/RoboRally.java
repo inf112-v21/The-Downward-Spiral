@@ -51,8 +51,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     Client client;
 
     public Deck currentDeck;
-    public ArrayList<Card> cardMoves;
-    public ArrayList<Card> pickHand;
+    public ArrayList<Card> hand;
+    public ArrayList<Card> program;
     public int handSize = 9; // should be 9. 5 for testing
 
     /**
@@ -86,7 +86,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.input.setInputProcessor(this);
 
         currentDeck = new Deck();
-        pickHand = new ArrayList<>();
+        program = new ArrayList<>();
         // NETWORKING
         localPlayer = new Player(tm);
         networkPlayerQueue = new HashMap<>();
@@ -137,7 +137,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             }
         });
 
-        if (cardMoves == null){
+        if (hand == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
         }
 
@@ -146,30 +146,34 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      * deals cards to players
      * amount equal to handSize
      */
-    public void dealCardMoves(){
-        cardMoves = currentDeck.deal(handSize);
-        showCardMoves();
+    public void dealCards(){
+        hand = currentDeck.deal(handSize);
+        showHand();
     }
 
     /**
      * prints content of the hand to the terminal
      * this is temporary until we have gui
      */
-    public void showCardMoves() {
-        for (int i = 0; i < cardMoves.size(); i++) {
-            System.out.println(i + 1 + ": " + cardMoves.get(i).toString());
+    public void showHand() {
+        for (int i = 0; i < hand.size(); i++) {
+            System.out.println(i + 1 + ": " + hand.get(i).toString());
         }
 
     }
 
-    private void pickHand(int index) {
+    /**
+     * Adds card to the players program
+     * @param index of the requested card
+     */
+    private void chooseProgram(int index) {
 
-        if (pickHand == null || pickHand.size() <= 4) {
-            pickHand.add(cardMoves.remove(index));
+        if (program == null || program.size() <= 4) {
+            program.add(hand.remove(index));
             System.out.println("move " + (index +1) + " added to hand");
-            System.out.println("Your hand: " + pickHand);
-            showCardMoves();
-            if (pickHand.size() == 5){
+            System.out.println("Your hand: " + program);
+            showHand();
+            if (program.size() == 5){
                 System.out.println("Hit SPACE to execute your list of moves");
             }
         } else {
@@ -184,8 +188,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      */
     public void movePlayer(int index){
         try {
-            int moves = pickHand.get(index).getMoves();
-            String type = cardMoves.get(index).toString();
+            int moves = program.get(index).getMoves();
+            String type = hand.get(index).toString();
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
                 localPlayer.move(board, dir[0], dir[1]);
@@ -199,11 +203,11 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
             // card is rotation card
             if (moves == 0){
-                localPlayer.turn(pickHand.get(index).toString());
+                localPlayer.turn(program.get(index).toString());
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             System.out.println("you moved " + moves + " towards " + localPlayer.direction);
-            showCardMoves();
+            showHand();
 
         }catch (IndexOutOfBoundsException e){
             System.out.println("You don't have that many cards");
@@ -226,29 +230,30 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     public boolean keyUp(int keycode) {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
-            dealCardMoves();
+            dealCards();
             System.out.println("To program your robot hit the number corresponding to the move you want to add to your list of moves");
             System.out.println("When you have selected up to 5 moves you can hit SPACE to execute your list of moves");
         }
         // use 1-9 to pick which card
-        if (cardMoves != null) {
-            for (int i = 0; i < cardMoves.size(); i++) {
+        if (hand != null) {
+            for (int i = 0; i < hand.size(); i++) {
                 if (keycode == (i + 8)) {
-                    pickHand(i);
+                    chooseProgram(i);
                 }
             }
         }
-
-        if (pickHand != null) {
-            final int cardSize = pickHand.size();
+        // Use space to execute your program
+        if (program != null) {
+            final int cardSize = program.size();
             if (keycode == Input.Keys.SPACE) {
                 for (int i = 0; i < cardSize; i++) {
                     movePlayer(0);
-                    pickHand.remove(0);
+                    program.remove(0);
                 }
             }
         }
 
+        // You can move with Arrows or WASD
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             localPlayer.rotate(Direction.NORTH);
             if (localPlayer.move(board, 0, 1)) {
