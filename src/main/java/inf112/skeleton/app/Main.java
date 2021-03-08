@@ -12,19 +12,32 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
-        if (input.equals("s")) {
-            RRServer server = new RRServer();
-        } else if (input.equals("c")){
-
-            RoboRally game = new RoboRally();
-            Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
-            cfg.setTitle("RobotRally");
-            cfg.setWindowedMode(600, 800);
-
-            new Lwjgl3Application(game, cfg);
-        } else {
-            Client client = new Client();
-            System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
+        switch (input) {
+            case "s": {
+                RRServer server = new RRServer();
+                break;
+            }
+            case "c":
+                runGame();
+                break;
+            case "sc": {
+                RRServer server = new RRServer();
+                runGame();
+                break;
+            }
+            default:
+                Client client = new Client();
+                System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
+                break;
         }
+    }
+
+    static private void runGame() {
+        RoboRally game = new RoboRally();
+        Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
+        cfg.setTitle("RobotRally");
+        cfg.setWindowedMode(600, 800);
+
+        new Lwjgl3Application(game, cfg);
     }
 }
