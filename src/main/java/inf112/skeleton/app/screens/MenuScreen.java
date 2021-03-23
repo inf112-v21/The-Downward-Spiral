@@ -115,10 +115,7 @@ public class MenuScreen extends ScreenAdapter {
         buttonHover(activeConnectButton, inactiveConnectButton, CONNECT_Y);
         buttonHover(activeHostButton, inactiveHostButton, HOST_Y);
 
-        game.font.draw(game.batch, "Title Screen!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .90f);
-        game.font.draw(game.batch, "Click to host and play", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .65f);
-        game.font.draw(game.batch, "Click to connect to a server", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .40f);
-        game.font.draw(game.batch, "Click to host a server", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .15f);
+
         game.batch.end();
     }
 
