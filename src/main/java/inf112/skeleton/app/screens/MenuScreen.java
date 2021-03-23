@@ -75,12 +75,21 @@ public class MenuScreen extends ScreenAdapter {
             // TODO change to buttons
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
-                if ((x < 300 && x > 135) && (y < 306 && y > 220)){
+                if (x < 600/2 - BUTTON_WIDTH / 2 + BUTTON_WIDTH && x > 600/2 - BUTTON_WIDTH / 2 && 800 - y < PLAY_Y + BUTTON_HEIGHT && 800 - y > PLAY_Y){
                     System.out.println("Host & Play");
                     RRServer server = new RRServer();
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
+                }
+                if (x < 600/2 - BUTTON_WIDTH / 2 + BUTTON_WIDTH && x > 600/2 - BUTTON_WIDTH / 2 && 800 - y < CONNECT_Y + BUTTON_HEIGHT && 800 - y > CONNECT_Y){
+                    Client client = new Client();
+                    System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
+                    game.setScreen(new GameScreen(game));
+                }
+                if (x < 600/2 - BUTTON_WIDTH / 2 + BUTTON_WIDTH && x > 600/2 - BUTTON_WIDTH / 2 && 800 - y < HOST_Y + BUTTON_HEIGHT && 800 - y > HOST_Y){
+                    RRServer server = new RRServer();
+                    dispose();
                 }
                 return true;
             }
