@@ -18,6 +18,8 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void show(){
+
+        // Checks for input and create server and client accordingly
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyUp(int keyCode) {
@@ -45,9 +47,10 @@ public class MenuScreen extends ScreenAdapter {
                 }
                 return true;
             }
+            // This is temporary, only for testing purposes
+            // TODO change to buttons
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
-                System.out.println(x + " " + y);
                 if ((x < 300 && x > 135) && (y < 306 && y > 220)){
                     System.out.println("Host & Play");
                     RRServer server = new RRServer();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+// This class creates a window and send the user to the MenuScreen
 public class RoboRallyGame extends Game {
 
     SpriteBatch batch;
