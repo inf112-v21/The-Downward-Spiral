@@ -20,10 +20,12 @@ public class MenuScreen extends ScreenAdapter {
     Texture activeHostButton;
     Texture inactiveHostButton;
 
+    Texture titleScreen;
+
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 150;
-    private static final int PLAY_Y = 350;
-    private static final int CONNECT_Y = 200;
+    private static final int PLAY_Y = 450;
+    private static final int CONNECT_Y = 250;
     private static final int HOST_Y = 50;
 
 
@@ -35,6 +37,8 @@ public class MenuScreen extends ScreenAdapter {
         inactiveConnectButton = new Texture("Menu/buttonConnectInactive.png");
         activeHostButton = new Texture("Menu/buttonHostActive.png");
         inactiveHostButton = new Texture("Menu/buttonHostInactive.png");
+
+        titleScreen = new Texture("Menu/Menu.png");
     }
 
     @Override
@@ -108,14 +112,11 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, .25f, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
+        game.batch.draw(titleScreen,0,0);
         buttonHover(activePlayButton, inactivePlayButton, PLAY_Y);
         buttonHover(activeConnectButton, inactiveConnectButton, CONNECT_Y);
         buttonHover(activeHostButton, inactiveHostButton, HOST_Y);
-
-
         game.batch.end();
     }
 
