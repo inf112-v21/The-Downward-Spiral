@@ -1,4 +1,4 @@
-package inf112.skeleton.app.Screens;
+package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -41,6 +41,9 @@ public class MenuScreen extends ScreenAdapter {
                         Client client = new Client();
                         System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                         game.setScreen(new GameScreen(game));
+                        break;
+                    }
+                    default: {
                         break;
                     }
 

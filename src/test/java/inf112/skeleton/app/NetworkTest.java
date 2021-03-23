@@ -1,7 +1,6 @@
 package inf112.skeleton.app;
 
 import com.esotericsoftware.kryonet.Client;
-import inf112.skeleton.app.Screens.GameScreen;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import inf112.skeleton.app.network.RRServer;

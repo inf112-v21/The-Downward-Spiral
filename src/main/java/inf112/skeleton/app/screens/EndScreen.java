@@ -1,4 +1,4 @@
-package inf112.skeleton.app.Screens;
+package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class EndScreen extends ScreenAdapter {
 
-    RoboRallyGame game;
+    public RoboRallyGame game;
 
     public EndScreen(RoboRallyGame game) {
         this.game = game;

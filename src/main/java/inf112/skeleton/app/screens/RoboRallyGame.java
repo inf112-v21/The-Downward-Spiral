@@ -1,4 +1,4 @@
-package inf112.skeleton.app.Screens;
+package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

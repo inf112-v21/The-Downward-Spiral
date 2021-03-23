@@ -2,7 +2,7 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import inf112.skeleton.app.Screens.RoboRallyGame;
+import inf112.skeleton.app.screens.RoboRallyGame;
 
 
 //TODO Create new readme after rework.
