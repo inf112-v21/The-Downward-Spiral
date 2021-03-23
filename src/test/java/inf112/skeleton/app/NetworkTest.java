@@ -19,9 +19,6 @@ public class NetworkTest {
     private static Client client;
     private static int port = 27960;
 
-    private static GameScreen game;
-    private static RRServer RRServer;
-
     @BeforeClass
     public static void init() {
         server = new RRServer();
