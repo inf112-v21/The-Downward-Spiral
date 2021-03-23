@@ -1,23 +1,22 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.screens;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.ProgramCards.Card;
-import inf112.skeleton.app.ProgramCards.Deck;
 
-import java.util.ArrayList;
+// Network imports
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
+// Project imports
+import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.Player;
+import inf112.skeleton.app.ProgramCards.Card;
+import inf112.skeleton.app.ProgramCards.Deck;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
 import inf112.skeleton.app.network.PacketRemovePlayer;
@@ -25,14 +24,15 @@ import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.util.HashMap;
 
 
-public class RoboRally extends InputAdapter implements ApplicationListener {
 
-    private SpriteBatch batch;
-    private BitmapFont font;
+public class GameScreen extends ScreenAdapter {
+
+    RoboRallyGame game;
     private TiledMap tm;
 
     private TiledMapTileLayer board;
@@ -55,16 +55,17 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     public ArrayList<Card> program;
     public int handSize = 9; // should be 9. 5 for testing
 
+    public GameScreen(RoboRallyGame game) {
+        this.game = game;
+    }
+
+
     /**
      * Creates all the necessary objects for the game
      * to later be displayed.
      */
     @Override
-    public void create() {
-
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.RED);
+    public void show() {
 
         TmxMapLoader loader = new TmxMapLoader();
         tm = loader.load("assets/Risky_Exchange.tmx");
@@ -83,7 +84,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         render = new OrthogonalTiledMapRenderer(tm, 1/board.getTileWidth());
         render.setView(camera);
 
-        Gdx.input.setInputProcessor(this);
 
         currentDeck = new Deck();
         program = new ArrayList<>();
@@ -140,6 +140,15 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         if (hand == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
         }
+
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean keyUp(int keyCode) {
+                GameScreen.this.keyMovement(keyCode);
+                return true;
+            }
+        });
+
 
     }
     /**
@@ -226,8 +235,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      * @param keycode keystroke from player
      * @return boolean whether the input was processed
      */
-    @Override
-    public boolean keyUp(int keycode) {
+
+    public boolean keyMovement(int keycode) {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealCards();
@@ -277,39 +286,31 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             if (localPlayer.move(board, -1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
         }
-        localPlayer.checkStatus(flag, hole);
 
-        } else {
-            localPlayer.checkStatus(flag, hole);
-            return false;
         }
         localPlayer.checkStatus(flag, hole);
+        if (localPlayer.checkStatus(flag, hole)) {
+            game.setScreen(new EndScreen(game));
+        }
         return true;
     }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-        font.dispose();
-    }
-
     /**
      * Displays the objects that were previously created
      * for the user to see.
      */
     @Override
-    public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+    public void render(float delta) {
+            Gdx.gl.glClearColor(1, 1, 1, 1);
+            Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        localPlayer.render();
+            localPlayer.render();
 
-        if (!networkPlayers.isEmpty()) {
-            for (Player player : networkPlayers.values()) {
-                player.render();
+            if (!networkPlayers.isEmpty()) {
+                for (Player player : networkPlayers.values()) {
+                    player.render();
+                }
             }
-        }
-        render.render();
+            render.render();
     }
 
 

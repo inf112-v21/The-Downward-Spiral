@@ -20,6 +20,7 @@ public class Player {
 
     public Direction direction;
 
+
     /**
      * Constructor
      * @param tm
@@ -106,11 +107,11 @@ public class Player {
      * Checks the status of the game at the end of a move,
      * whether a player has won, picked up a flag or fallen
      * in a hole
-     *
-     * @param flag
+     *  @param flag
      * @param hole
+     * @return
      */
-    public void checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
+    public boolean checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
         updateDirection();
         // Checks if player have won
         if ((flag.getCell(getX(), getY())) != null) {
@@ -125,13 +126,14 @@ public class Player {
             if (((flag.getCell(getX(), getY())).getTile().getId() == 71) && (flagTwoConfirmed)) {
                 playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                 System.out.println("Won");
-
+                return true;
             }
         }
         if ((hole.getCell(getX(), getY())) != null){
             System.out.println("Lost");
             playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
         }
+        return false;
     }
 
     /**
