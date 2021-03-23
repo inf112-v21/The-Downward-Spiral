@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import com.esotericsoftware.kryonet.Client;
+import inf112.skeleton.app.Screens.GameScreen;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import inf112.skeleton.app.network.RRServer;
@@ -18,7 +19,7 @@ public class NetworkTest {
     private static Client client;
     private static int port = 27960;
 
-    private static RoboRally game;
+    private static GameScreen game;
     private static RRServer RRServer;
 
     @BeforeClass
