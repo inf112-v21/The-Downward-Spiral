@@ -20,7 +20,7 @@ public class MenuScreen extends ScreenAdapter {
     public void show(){
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
-            public boolean keyDown(int keyCode) {
+            public boolean keyUp(int keyCode) {
                 switch (keyCode) {
                     case Input.Keys.SPACE: {
                         RRServer server = new RRServer();
@@ -43,20 +43,33 @@ public class MenuScreen extends ScreenAdapter {
                     }
 
                 }
-
                 return true;
             }
+            @Override
+            public boolean touchUp(int x, int y, int pointer, int button) {
+                System.out.println(x + " " + y);
+                if ((x < 300 && x > 135) && (y < 306 && y > 220)){
+                    System.out.println("Host & Play");
+                    RRServer server = new RRServer();
+                    Client client = new Client();
+                    System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
+                    game.setScreen(new GameScreen(game));
+                }
+                return true;
+            }
+
         });
-    }
+        }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, .25f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-        game.font.draw(game.batch, "Title Screen!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
-        game.font.draw(game.batch, "Click the circle to win.", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .5f);
-        game.font.draw(game.batch, "Press space to play.", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
+        game.font.draw(game.batch, "Title Screen!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .90f);
+        game.font.draw(game.batch, "Click to host and play", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .65f);
+        game.font.draw(game.batch, "Click to connect to a server", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .40f);
+        game.font.draw(game.batch, "Click to host a server", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .15f);
         game.batch.end();
     }
 

@@ -14,27 +14,5 @@ public class Main {
 
         new Lwjgl3Application(game, cfg);
 
-        /*
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        switch (input) {
-            case "s": {
-                RRServer server = new RRServer();
-                break;
-            }
-            case "c":
-                runGame();
-                break;
-            case "sc": {
-                RRServer server = new RRServer();
-                runGame();
-                break;
-            }
-            default:
-                Client client = new Client();
-                System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                break;
-        }
-         */
     }
 }

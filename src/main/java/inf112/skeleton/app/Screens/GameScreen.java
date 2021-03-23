@@ -6,15 +6,17 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
+// Network imports
+import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+
+// Project imports
 import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.ProgramCards.Deck;
-
-import java.util.ArrayList;
-import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
 import inf112.skeleton.app.network.PacketRemovePlayer;
@@ -22,6 +24,7 @@ import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -64,7 +67,6 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
 
-        System.out.println("her");
         TmxMapLoader loader = new TmxMapLoader();
         tm = loader.load("assets/Risky_Exchange.tmx");
 
@@ -82,7 +84,6 @@ public class GameScreen extends ScreenAdapter {
         render = new OrthogonalTiledMapRenderer(tm, 1/board.getTileWidth());
         render.setView(camera);
 
-        // Gdx.input.setInputProcessor(this);
 
         currentDeck = new Deck();
         program = new ArrayList<>();
@@ -142,8 +143,8 @@ public class GameScreen extends ScreenAdapter {
 
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
-            public boolean keyDown(int keyCode) {
-                GameScreen.this.keyUp(keyCode);
+            public boolean keyUp(int keyCode) {
+                GameScreen.this.keyMovement(keyCode);
                 return true;
             }
         });
@@ -235,7 +236,7 @@ public class GameScreen extends ScreenAdapter {
      * @return boolean whether the input was processed
      */
 
-    public boolean keyUp(int keycode) {
+    public boolean keyMovement(int keycode) {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealCards();
@@ -286,10 +287,8 @@ public class GameScreen extends ScreenAdapter {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
         }
 
-        } else {
-            localPlayer.checkStatus(flag, hole);
-            return false;
         }
+        localPlayer.checkStatus(flag, hole);
         if (localPlayer.checkStatus(flag, hole)) {
             game.setScreen(new EndScreen(game));
         }
