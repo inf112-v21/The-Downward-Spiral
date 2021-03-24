@@ -106,7 +106,7 @@ public class Player {
      * whether a player has won, picked up a flag or fallen
      * in a hole
      */
-    public void checkStatus() {
+    public boolean checkStatus() {
         updateDirection();
 
         // Checks if player have won
@@ -125,13 +125,14 @@ public class Player {
             if ((tileId == 71) && (flagTwoConfirmed)) {
                 playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                 System.out.println("Won");
-
+                return true;
             }
         }
         if ((this.board.getHoleLayer().getCell(getX(), getY())) != null){
             System.out.println("Lost");
             playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
         }
+        return false;
     }
 
     /**
@@ -145,7 +146,6 @@ public class Player {
     /**
      * Gets the position of a robot on the y-axis
      * @return y coordinate
-     *
      */
     public int getY() {
         return (int) position.y;
