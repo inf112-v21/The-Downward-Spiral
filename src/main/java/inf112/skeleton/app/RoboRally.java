@@ -34,10 +34,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
     private TiledMap tm;
-
-    private TiledMapTileLayer board;
-    private TiledMapTileLayer hole;
-    private TiledMapTileLayer flag;
+    public static Board boardTiledMap;
 
     private OrthogonalTiledMapRenderer render;
 
@@ -61,26 +58,18 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      */
     @Override
     public void create() {
-
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
 
-        TmxMapLoader loader = new TmxMapLoader();
-        tm = loader.load("assets/Risky_Exchange.tmx");
-
-
-        // Initialize the different layers
-        board = (TiledMapTileLayer) tm.getLayers().get("Board");
-        flag = (TiledMapTileLayer) tm.getLayers().get("Flag");
-        hole = (TiledMapTileLayer) tm.getLayers().get("Hole");
+        this.boardTiledMap = new Board("assets/Risky_Exchange.tmx");
 
         //Creates a bird's eye view of the board/game
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, board.getWidth(), board.getHeight());
+        camera.setToOrtho(false, boardTiledMap.getBoardLayer().getWidth(), boardTiledMap.getBoardLayer().getHeight());
         camera.translate((float)0, 0);
         camera.update();
-        render = new OrthogonalTiledMapRenderer(tm, 1/board.getTileWidth());
+        render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
 
         Gdx.input.setInputProcessor(this);
@@ -88,13 +77,13 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         currentDeck = new Deck();
         program = new ArrayList<>();
         // NETWORKING
-        localPlayer = new Player(tm);
+        localPlayer = new Player();
         networkPlayerQueue = new HashMap<>();
         networkPlayers = new HashMap<>();
 
         // Create players and store them in a queue, we do this since Players must be created by same thread which runs the game.
         for (int i = 0; i < maxPlayers; i++) {
-            networkPlayerQueue.put(i, new Player(tm));
+            networkPlayerQueue.put(i, new Player());
         }
 
         client = new Client();
@@ -192,13 +181,13 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             String type = hand.get(index).toString();
             int[] dir = localPlayer.direction.dirComponents(localPlayer.direction);
             for (int i = 0; i < moves; i++) {
-                localPlayer.move(board, dir[0], dir[1]);
-                localPlayer.checkStatus(flag, hole);
+                localPlayer.move(dir[0], dir[1]);
+                localPlayer.checkStatus();
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             // back up
             if (moves < 0) {
-                localPlayer.move(board, -1*dir[0], -1*dir[1]);
+                localPlayer.move(-1*dir[0], -1*dir[1]);
                 sendPosition(localPlayer.getX(), localPlayer.getY());}
 
             // card is rotation card
@@ -256,34 +245,34 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         // You can move with Arrows or WASD
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             localPlayer.rotate(Direction.NORTH);
-            if (localPlayer.move(board, 0, 1)) {
+            if (localPlayer.move(0, 1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
             localPlayer.rotate(Direction.SOUTH);
-            if (localPlayer.move(board, 0, -1)) {
+            if (localPlayer.move(0, -1)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             localPlayer.rotate(Direction.EAST);
-            if (localPlayer.move(board, 1, 0)) {
+            if (localPlayer.move(1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
             }
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             localPlayer.rotate(Direction.WEST);
-            if (localPlayer.move(board, -1, 0)) {
+            if (localPlayer.move(-1, 0)) {
                 sendPosition(localPlayer.getX(), localPlayer.getY());
         }
-        localPlayer.checkStatus(flag, hole);
+        localPlayer.checkStatus();
 
         } else {
-            localPlayer.checkStatus(flag, hole);
+            localPlayer.checkStatus();
             return false;
         }
-        localPlayer.checkStatus(flag, hole);
+        localPlayer.checkStatus();
         return true;
     }
 

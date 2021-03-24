@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Player {
 
     private final Vector2 position;
-    private final TiledMapTileLayer playerLayer;
+    private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
     private final TextureRegion[][] trRegionsPlayerStatus;
     private final TextureRegion[][] trRegionsPlayerDir;
@@ -22,11 +22,11 @@ public class Player {
 
     /**
      * Constructor
-     * @param tm
+     *
      */
-    public Player(TiledMap tm) {
-
-        playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
+    public Player() {
+        this.board = RoboRally.boardTiledMap;
+        //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0, 0);
 
         TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
@@ -46,17 +46,16 @@ public class Player {
      * on the x-axis and y-axis. Also makes sure
      * the robot doesn't move outside of the board
      *
-     * @param board
      * @param dx
      * @param dy
      *
      * @return true if player is moved
      */
-    public boolean move(TiledMapTileLayer board, int dx, int dy) {
+    public boolean move(int dx, int dy) {
 
-        playerLayer.setCell(getX(), getY(), null);
+        this.board.getPlayerLayer().setCell(getX(), getY(), null);
 
-        if (board.getCell(getX() + dx, getY() + dy) == null) {
+        if (this.board.getBoardLayer().getCell(getX() + dx, getY() + dy) == null) {
             System.out.println("You can't go outside the map");
             return false;
         } else {
@@ -106,29 +105,30 @@ public class Player {
      * Checks the status of the game at the end of a move,
      * whether a player has won, picked up a flag or fallen
      * in a hole
-     *
-     * @param flag
-     * @param hole
      */
-    public void checkStatus(TiledMapTileLayer flag, TiledMapTileLayer hole) {
+    public void checkStatus() {
         updateDirection();
+
         // Checks if player have won
-        if ((flag.getCell(getX(), getY())) != null) {
-            if ((flag.getCell(getX(), getY())).getTile().getId() == 55) {
+        if ((this.board.getFlagLayer().getCell(getX(), getY())) != null) {
+
+            int tileId = (this.board.getFlagLayer().getCell(getX(), getY())).getTile().getId();
+
+            if (tileId == 55) {
                 flagOneConfirmed = true;
                 System.out.println("1st");
             }
-            if (((flag.getCell(getX(), getY())).getTile().getId() == 63) && (flagOneConfirmed)) {
+            if ((tileId == 63) && (flagOneConfirmed)) {
                 flagTwoConfirmed = true;
                 System.out.println("2nd");
             }
-            if (((flag.getCell(getX(), getY())).getTile().getId() == 71) && (flagTwoConfirmed)) {
+            if ((tileId == 71) && (flagTwoConfirmed)) {
                 playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                 System.out.println("Won");
 
             }
         }
-        if ((hole.getCell(getX(), getY())) != null){
+        if ((this.board.getHoleLayer().getCell(getX(), getY())) != null){
             System.out.println("Lost");
             playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
         }
@@ -145,24 +145,25 @@ public class Player {
     /**
      * Gets the position of a robot on the y-axis
      * @return y coordinate
+     *
      */
     public int getY() {
         return (int) position.y;
     }
 
     public void setPosition(int x, int y) {
-        playerLayer.setCell(getX(), getY(), null);
+        this.board.getPlayerLayer().setCell(getX(), getY(), null);
         position.set(x, y);
     }
 
     public void removePlayer() {
-        playerLayer.setCell(getX(), getY(), null);
+        this.board.getPlayerLayer().setCell(getX(), getY(), null);
     }
 
     /**
      * Displays a player at their current position.
      */
     public void render() {
-        playerLayer.setCell(getX(), getY(), playerCell);
+        this.board.getPlayerLayer().setCell(getX(), getY(), playerCell);
     }
 }
