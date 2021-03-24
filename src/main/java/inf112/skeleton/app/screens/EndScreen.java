@@ -5,13 +5,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.esotericsoftware.kryonet.Client;
+import inf112.skeleton.app.GUI.Button;
+import inf112.skeleton.app.network.RRServer;
 
 public class EndScreen extends ScreenAdapter {
 
     public RoboRallyGame game;
+    Texture victoryScreen;
+    Button restartButton;
 
     public EndScreen(RoboRallyGame game) {
         this.game = game;
+        this.restartButton = new Button("Menu/buttonRestartActive.png", "Menu/buttonRestartInactive.png" , 300, 150, 300);
+        this.victoryScreen = new Texture("Menu/endScreen.png");
+
     }
 
     @Override
@@ -26,6 +35,17 @@ public class EndScreen extends ScreenAdapter {
                 }
                 return true;
             }
+
+            @Override
+            public boolean touchUp(int x, int y, int pointer, int button) {
+                int restartW = restartButton.getWIDTH();
+                int restartH = restartButton.getHEIGHT();
+                int restartY = restartButton.getY();
+                if (x < 600 / 2 - restartW / 2 + restartW && x > 600 / 2 - restartW / 2 && 800 - y < restartY + restartH && 800 - y > restartY) {
+                    game.setScreen(new MenuScreen(game));
+                }
+                return true;
+            }
         });
     }
 
@@ -35,8 +55,8 @@ public class EndScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.font.draw(game.batch, "You win!", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
-        game.font.draw(game.batch, "Press enter to restart.", Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
+        game.batch.draw(victoryScreen,0,0);
+        restartButton.buttonHover(game);
         game.batch.end();
 
     }

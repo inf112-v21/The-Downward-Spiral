@@ -26,4 +26,8 @@ public class RoboRallyGame extends Game {
         shapeRenderer.dispose();
         font.dispose();
     }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 }

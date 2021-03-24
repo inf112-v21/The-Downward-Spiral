@@ -7,36 +7,25 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Client;
+import inf112.skeleton.app.GUI.Button;
 import inf112.skeleton.app.network.RRServer;
 
 public class MenuScreen extends ScreenAdapter {
 
     RoboRallyGame game;
 
-    Texture activePlayButton;
-    Texture inactivePlayButton;
-    Texture activeConnectButton;
-    Texture inactiveConnectButton;
-    Texture activeHostButton;
-    Texture inactiveHostButton;
+    Button playButton;
+    Button connectButton;
+    Button hostButton;
 
     Texture titleScreen;
 
-    private static final int BUTTON_WIDTH = 300;
-    private static final int BUTTON_HEIGHT = 150;
-    private static final int PLAY_Y = 450;
-    private static final int CONNECT_Y = 250;
-    private static final int HOST_Y = 50;
-
-
     public MenuScreen(RoboRallyGame game) {
         this.game = game;
-        activePlayButton = new Texture("Menu/buttonPlayActive.png");
-        inactivePlayButton = new Texture("Menu/buttonPlayInactive.png");
-        activeConnectButton = new Texture("Menu/buttonConnectActive.png");
-        inactiveConnectButton = new Texture("Menu/buttonConnectInactive.png");
-        activeHostButton = new Texture("Menu/buttonHostActive.png");
-        inactiveHostButton = new Texture("Menu/buttonHostInactive.png");
+
+        playButton = new Button("Menu/buttonPlayActive.png", "Menu/buttonPlayInactive.png", 300, 150, 450);
+        connectButton = new Button("Menu/buttonConnectActive.png", "Menu/buttonConnectInactive.png", 300, 150, 250);
+        hostButton = new Button("Menu/buttonHostActive.png", "Menu/buttonHostInactive.png", 300, 150, 50);
 
         titleScreen = new Texture("Menu/Menu.png");
     }
@@ -79,19 +68,23 @@ public class MenuScreen extends ScreenAdapter {
             // TODO change to buttons
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
-                if (x < 600/2 - BUTTON_WIDTH / 2 + BUTTON_WIDTH && x > 600/2 - BUTTON_WIDTH / 2 && 800 - y < PLAY_Y + BUTTON_HEIGHT && 800 - y > PLAY_Y){
+                int playW = playButton.getWIDTH(); int playH = playButton.getHEIGHT(); int playY = playButton.getY();
+                int connectW = connectButton.getWIDTH(); int connectH = connectButton.getHEIGHT(); int connectY = connectButton.getY();
+                int hostW = hostButton.getWIDTH(); int hostH = hostButton.getHEIGHT(); int hostY = hostButton.getY();
+
+                if (x < 600/2 - playW / 2 + playW && x > 600/2 - playW / 2 && 800 - y < playY + playH && 800 - y > playY){
                     System.out.println("Host & Play");
                     RRServer server = new RRServer();
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
                 }
-                if (x < 600/2 - BUTTON_WIDTH / 2 + BUTTON_WIDTH && x > 600/2 - BUTTON_WIDTH / 2 && 800 - y < CONNECT_Y + BUTTON_HEIGHT && 800 - y > CONNECT_Y){
+                if (x < 600/2 - connectW / 2 + connectW && x > 600/2 - connectW / 2 && 800 - y < connectY + connectH && 800 - y > connectY){
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
                 }
-                if (x < 600/2 - BUTTON_WIDTH / 2 + BUTTON_WIDTH && x > 600/2 - BUTTON_WIDTH / 2 && 800 - y < HOST_Y + BUTTON_HEIGHT && 800 - y > HOST_Y){
+                if (x < 600/2 - hostW / 2 + hostW && x > 600/2 - hostW / 2 && 800 - y < hostY + hostH && 800 - y > hostY){
                     RRServer server = new RRServer();
                     dispose();
                 }
@@ -101,22 +94,13 @@ public class MenuScreen extends ScreenAdapter {
         });
         }
 
-    public void buttonHover(Texture activeButton, Texture inactiveButton, int y){
-        int x = 600/2 - BUTTON_WIDTH / 2;
-        if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && 800 - Gdx.input.getY() < y + BUTTON_HEIGHT && 800 - Gdx.input.getY() > y) {
-            game.batch.draw(activeButton, x, y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        }else{
-            game.batch.draw(inactiveButton, x, y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        }
-    }
-
     @Override
     public void render(float delta) {
         game.batch.begin();
         game.batch.draw(titleScreen,0,0);
-        buttonHover(activePlayButton, inactivePlayButton, PLAY_Y);
-        buttonHover(activeConnectButton, inactiveConnectButton, CONNECT_Y);
-        buttonHover(activeHostButton, inactiveHostButton, HOST_Y);
+        playButton.buttonHover(game);
+        connectButton.buttonHover(game);
+        hostButton.buttonHover(game);
         game.batch.end();
     }
 
