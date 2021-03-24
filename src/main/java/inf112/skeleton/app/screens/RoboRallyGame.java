@@ -12,6 +12,9 @@ public class RoboRallyGame extends Game {
     ShapeRenderer shapeRenderer;
     BitmapFont font;
 
+    public final int HEIGHT = 800;
+    public final int WIDTH = 600;
+
     @Override
     public void create () {
         batch = new SpriteBatch();
@@ -30,4 +33,13 @@ public class RoboRallyGame extends Game {
     public SpriteBatch getBatch() {
         return batch;
     }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
 }

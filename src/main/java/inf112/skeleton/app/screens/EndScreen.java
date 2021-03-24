@@ -42,11 +42,13 @@ public class EndScreen extends ScreenAdapter {
             public boolean touchUp(int x, int y, int pointer, int button) {
                 int restartW = restartButton.getWIDTH(); int restartH = restartButton.getHEIGHT(); int restartY = restartButton.getY();
                 int exitW = exitButton.getWIDTH(); int exitH = exitButton.getHEIGHT(); int exitY = exitButton.getY();
-                if (x < 600 / 2 - restartW / 2 + restartW && x > 600 / 2 - restartW / 2 && 800 - y < restartY + restartH && 800 - y > restartY) {
+                int w = game.getWIDTH(); int h = game.getHEIGHT();
+
+                if (x < w / 2 - restartW / 2 + restartW && x > w / 2 - restartW / 2 && h - y < restartY + restartH && h - y > restartY) {
                     game.setScreen(new MenuScreen(game));
                 }
 
-                if (x < 600 / 2 - exitW / 2 + exitW && x > 600 / 2 - exitW / 2 && 800 - y < exitY + exitH && 800 - y > exitY) {
+                if (x < w / 2 - exitW / 2 + exitW && x > w / 2 - exitW / 2 && h - y < exitY + exitH && h - y > exitY) {
                     Gdx.app.exit();
                 }
                 return true;
