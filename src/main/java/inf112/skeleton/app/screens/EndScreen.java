@@ -15,10 +15,12 @@ public class EndScreen extends ScreenAdapter {
     public RoboRallyGame game;
     Texture victoryScreen;
     Button restartButton;
+    Button exitButton;
 
     public EndScreen(RoboRallyGame game) {
         this.game = game;
-        this.restartButton = new Button("Menu/buttonRestartActive.png", "Menu/buttonRestartInactive.png" , 300, 150, 300);
+        this.restartButton = new Button("Menu/buttonRestartActive.png", "Menu/buttonRestartInactive.png" , 300, 150, 400);
+        this.exitButton = new Button("Menu/buttonExitActive.png", "Menu/buttonExitInactive.png" , 300, 150, 200);
         this.victoryScreen = new Texture("Menu/endScreen.png");
 
     }
@@ -38,11 +40,14 @@ public class EndScreen extends ScreenAdapter {
 
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
-                int restartW = restartButton.getWIDTH();
-                int restartH = restartButton.getHEIGHT();
-                int restartY = restartButton.getY();
+                int restartW = restartButton.getWIDTH(); int restartH = restartButton.getHEIGHT(); int restartY = restartButton.getY();
+                int exitW = exitButton.getWIDTH(); int exitH = exitButton.getHEIGHT(); int exitY = exitButton.getY();
                 if (x < 600 / 2 - restartW / 2 + restartW && x > 600 / 2 - restartW / 2 && 800 - y < restartY + restartH && 800 - y > restartY) {
                     game.setScreen(new MenuScreen(game));
+                }
+
+                if (x < 600 / 2 - exitW / 2 + exitW && x > 600 / 2 - exitW / 2 && 800 - y < exitY + exitH && 800 - y > exitY) {
+                    Gdx.app.exit();
                 }
                 return true;
             }
@@ -57,6 +62,7 @@ public class EndScreen extends ScreenAdapter {
         game.batch.begin();
         game.batch.draw(victoryScreen,0,0);
         restartButton.buttonHover(game);
+        exitButton.buttonHover(game);
         game.batch.end();
 
     }
