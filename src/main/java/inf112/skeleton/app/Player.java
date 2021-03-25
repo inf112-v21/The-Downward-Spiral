@@ -49,11 +49,9 @@ public class Player {
     }
 
     /**
-     * Moves the robot on an initialized board
-     * on the x-axis and y-axis. Also makes sure
-     * the robot doesn't move outside of the board
+     * Moves the robot in the direction it's facing
      *
-     * @return true if player is moved
+     * @param distance how far you want to move
      */
     public void move(int distance) {
         // Removes player from the old position
@@ -164,6 +162,10 @@ public class Player {
                 }
                 case TURN_CARD: {
                     turn(card.toString());
+                    break;
+                }
+                default: {
+                    System.out.println("Error with type: " + type);
                 }
             }
         }

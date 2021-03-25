@@ -19,7 +19,7 @@ public class NetworkConnection {
     private final int maxPlayers = 10;
     private final String serverIP;
     private final int serverPort = 27960;
-    static Client client = new Client();
+    private static Client client = new Client();
     //public Player localPlayer = new Player();
 
     private HashMap<Integer, Player> networkPlayerQueue = new HashMap<>();
@@ -31,7 +31,7 @@ public class NetworkConnection {
     }
 
     public NetworkConnection(String IP) {
-        this.serverIP = IP;;
+        this.serverIP = IP;
         connectionSetup();
     }
 
