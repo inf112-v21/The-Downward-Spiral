@@ -82,7 +82,6 @@ public class Player {
         CellType type = checker.checkNextMove(card);
 
         for (int i = 0; i < distance; i++) {
-            System.out.println(type);
             switch(type) {
                 case VALID_MOVE: {
                     // Perform move
@@ -165,7 +164,6 @@ public class Player {
                 }
                 case TURN_CARD: {
                     turn(card.toString());
-                    System.out.println(card.toString());
                 }
             }
         }
