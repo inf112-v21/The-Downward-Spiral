@@ -14,7 +14,6 @@ import inf112.skeleton.app.ProgramCards.Deck;
 
 
 
-
 public class GameScreen extends ScreenAdapter {
     RoboRallyGame game;
     public static Board boardTiledMap;
@@ -22,7 +21,7 @@ public class GameScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer render;
 
     public static Player localPlayer;
-    public static NetworkConnection connection;
+    public static NetworkConnection networkConnection;
 
     public Deck currentDeck;
 
@@ -49,7 +48,7 @@ public class GameScreen extends ScreenAdapter {
         currentDeck = new Deck();
 
         localPlayer = new Player();
-        this.connection = new NetworkConnection();
+        this.networkConnection = new NetworkConnection();
 
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
@@ -149,8 +148,8 @@ public class GameScreen extends ScreenAdapter {
 
             localPlayer.render();
 
-            if (!connection.getNetworkPlayers().isEmpty()) {
-                for (Player player : connection.getNetworkPlayers().values()) {
+            if (!networkConnection.getNetworkPlayers().isEmpty()) {
+                for (Player player : networkConnection.getNetworkPlayers().values()) {
                     player.render();
                 }
             }
