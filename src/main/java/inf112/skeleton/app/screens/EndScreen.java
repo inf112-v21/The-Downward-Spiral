@@ -6,9 +6,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.esotericsoftware.kryonet.Client;
 import inf112.skeleton.app.GUI.Button;
-import inf112.skeleton.app.network.RRServer;
+
 
 public class EndScreen extends ScreenAdapter {
 
