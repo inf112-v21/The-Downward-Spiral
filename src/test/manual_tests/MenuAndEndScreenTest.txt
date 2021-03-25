@@ -1,3 +1,37 @@
 Manuelle tester for MenuScreen GUI:
 
-    *
+    * En skjerm som viser "RoboRally" og "Play & Host", "Connect" og "Host" knapper.
+        * Kjør Main for å få opp menyen med tittelskjerm og knapper
+    * Når musepekeren går over knappene skal de ha en animasjon som viser at knappen er trykkbar
+        * Ta musepekeren over alle knappene og sjekk at de animeres intuitivt. Når musepekeren går over
+        en knapp skal det se ut som at knappen blir trykket inn.
+    * Når en spiller trykker på "Play & Host" startes det en server og spilleren blir tilkoblet til serveren
+        * Trykk på "Play & Host" knappen, så skal det stå i konsollen at en server er satt opp og clienten skal
+        starte. RoboRally skal nå være startet og hostes en server som andre instanser av Main kan koble seg til.
+    * Når en spiller trykker på "Connect" kobler de seg til en server som allerede er satt opp.
+        * For å teste dette raskt kan man teste det rett etter man har testet "Play & Host" knappen.
+        * Kjør en ny instans av Main og trykk "Connect". Man skal nå bli koblet til serveren som ble satt opp
+        når man testet "Play & Host" knappen.
+    * Når en spiller trykker "Host" setter de opp en server
+        * For å teste dette terminerer man alle tidligere instanser og kjører 2 nye.
+        * På den første instansen kan man trykke på "Host", det skal komme opp i konsollen at serveren er satt opp.
+        * På den andre instansen kan man trykke "Connect" for å koble seg til serveren som blir hostet.
+
+Manuelle tester for EndScreen GUI:
+    * En skjerm som det står "Victory" på kommer opp når en spiller har vunnet
+        * For å teste dette må man vinne spillet. For å gjøre dette raskt kjør Main og trykk på "Play & Host"
+        * Deretter beveger man spilleren med piltastene og plukker opp flaggene i rekkefølge 1-3.
+        * Når det tredje flagget er plukket opp skal EndScreen vises hvor det står "Victory"
+    * En "Restart?" og "Exit" knapp vises på skjermen
+        * Når EndScreen vises skal det også være to knapper på skjermen "Restart?" og "Exit"
+    * Knappene skal ha hover, slik at når musepekeren går over knappen skjer det en intuitiv animasjon slik at brukeren
+    skjønner at det kan trykke
+        * For å teste dette tar man bare musepekeren sin over knappene, så skal det se ut som at de blir trykket inn og
+        de skal bli rød.
+    * Når en spiller trykker "Restart?" skal de bli tatt tilbake til MenuScreen
+        * Tar musepekeren over "Restart?" slik at den blir trykket inn og blir rød og trykk på den.
+        * Da skal man bli tatt tilbake til MenuScreen
+    * Når en spiller trykker på "Exit" skal appen lukkes
+        * Lukk terminalen og kjør Main på nytt. Trykk "Play & Host" og vinn spillet som tidligere for å komme til
+        EndScreen
+        * Trykk på "Exit" og da skal appen lukkes.
