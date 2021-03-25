@@ -1,15 +1,12 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.screens.GameScreen;
-import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 
@@ -70,7 +67,7 @@ public class Player {
         }
 
         position.add(components[0], components[1]);
-        GameScreen.connection.sendPosition(this.getX(), this.getY());
+        GameScreen.networkConnection.sendPosition(this.getX(), this.getY());
     }
 
     public void executeCard(Card card) {
