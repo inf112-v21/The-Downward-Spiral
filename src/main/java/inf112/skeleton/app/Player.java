@@ -1,15 +1,21 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import inf112.skeleton.app.ProgramCards.Card;
+import inf112.skeleton.app.screens.GameScreen;
+import org.lwjgl.system.CallbackI;
+
+import java.util.ArrayList;
 
 public class Player {
-
     private final Vector2 position;
+
     private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
     private final TextureRegion[][] trRegionsPlayerStatus;
@@ -20,12 +26,15 @@ public class Player {
 
     public Direction direction;
 
+    public ArrayList<Card> selectableCards; // hand
+    public ArrayList<Card> chosenCards; // program
+    public int handSize = 9; // should be 9. 5 for testing
+
     /**
      * Constructor
-     *
      */
     public Player() {
-        this.board = RoboRally.boardTiledMap;
+        this.board = GameScreen.boardTiledMap;
         //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0, 0);
 
@@ -38,6 +47,7 @@ public class Player {
         playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
 
         direction = Direction.NORTH; // starting direction
+        this.chosenCards = new ArrayList<>();
 
     }
 
@@ -46,22 +56,122 @@ public class Player {
      * on the x-axis and y-axis. Also makes sure
      * the robot doesn't move outside of the board
      *
-     * @param dx
-     * @param dy
-     *
      * @return true if player is moved
      */
-    public boolean move(int dx, int dy) {
+    public void move(int distance) {
+        // Removes player from the old position
+        board.getPlayerLayer().setCell(getX(), getY(), null);
 
-        this.board.getPlayerLayer().setCell(getX(), getY(), null);
-
-        if (this.board.getBoardLayer().getCell(getX() + dx, getY() + dy) == null) {
-            System.out.println("You can't go outside the map");
-            return false;
-        } else {
-            position.add(dx, dy);
+        int[] components = direction.dirComponents(direction);
+        // If distance is negative
+        if (distance < 0) {
+            components[0] = components[0] * distance;
+            components[1] = components[1] * distance;
         }
-        return true;
+
+        position.add(components[0], components[1]);
+        GameScreen.connection.sendPosition(this.getX(), this.getY());
+    }
+
+    public void executeCard(Card card) {
+        if (!chosenCards.contains(card)) {
+            System.out.println("You don't have that many cards");
+            return;
+        }
+
+        int distance = Math.max(1, card.getMoves());
+
+        CellChecker checker = new CellChecker(this);
+        CellType type = checker.checkNextMove(card);
+
+        for (int i = 0; i < distance; i++) {
+            System.out.println(type);
+            switch(type) {
+                case VALID_MOVE: {
+                    // Perform move
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+                    break;
+                }
+                case FLAG: {
+                    // Perform move
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    int flagId = checker.getCellIDsAtPosition(position).get("Flag");
+
+                    if (flagId == 55) flagOneConfirmed = true;
+                    if ((flagId == 63) && (flagOneConfirmed)) flagTwoConfirmed = true;
+                    if ((flagId == 71) && (flagTwoConfirmed)) {
+                        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
+                        System.out.println("Won");
+                    }
+                    break;
+                }
+                case HOLE: {
+                    // Take damage
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    System.out.println("Lost");
+                    playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+                    break;
+                }
+                case BLOCKED_BY_WALL: { // DOES NOT WORK PROPERLY, HAS TO BE FIXED
+                    // Do nothing
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case WRENCHES: {
+                    // Do whatever a wrench does
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case YELLOW_BELTS: {
+                    // Do whatever a yellow belt does
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case BLUE_BELTS: {
+                    // Do whatever a blue belt does
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case LASER: {
+                    // Take damage
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case GEAR_RIGHT_TURN: {
+                    // Turn right
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case GEAR_LEFT_TURN: {
+                    // Turn left
+                    move(card.getMoves());
+                    type = checker.checkNextMove(card);
+
+                    break;
+                }
+                case TURN_CARD: {
+                    turn(card.toString());
+                    System.out.println(card.toString());
+                }
+            }
+        }
     }
 
     /**
@@ -82,7 +192,7 @@ public class Player {
      * Change player direction
      * @param dir new direction
      */
-    public void rotate(Direction dir) {
+    public void setDirection(Direction dir) {
         direction = dir; }
 
     // updates texture for robot based on direction (temp)
@@ -99,40 +209,6 @@ public class Player {
         if (direction == Direction.SOUTH) {
             playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][2]));
         }
-    }
-
-    /**
-     * Checks the status of the game at the end of a move,
-     * whether a player has won, picked up a flag or fallen
-     * in a hole
-     */
-    public boolean checkStatus() {
-        updateDirection();
-
-        // Checks if player have won
-        if ((this.board.getFlagLayer().getCell(getX(), getY())) != null) {
-
-            int tileId = (this.board.getFlagLayer().getCell(getX(), getY())).getTile().getId();
-
-            if (tileId == 55) {
-                flagOneConfirmed = true;
-                System.out.println("1st");
-            }
-            if ((tileId == 63) && (flagOneConfirmed)) {
-                flagTwoConfirmed = true;
-                System.out.println("2nd");
-            }
-            if ((tileId == 71) && (flagTwoConfirmed)) {
-                playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
-                System.out.println("Won");
-                return true;
-            }
-        }
-        if ((this.board.getHoleLayer().getCell(getX(), getY())) != null){
-            System.out.println("Lost");
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
-        }
-        return false;
     }
 
     /**
@@ -165,5 +241,43 @@ public class Player {
      */
     public void render() {
         this.board.getPlayerLayer().setCell(getX(), getY(), playerCell);
+    }
+
+    /**
+     * prints content of the hand to the terminal
+     * this is temporary until we have gui
+     */
+    public void showHand() {
+        for (int i = 0; i < this.selectableCards.size(); i++) {
+            System.out.println(i + 1 + ": " + this.selectableCards.get(i).toString());
+        }
+
+    }
+
+    /**
+     * Adds card to the players program
+     * @param index of the requested card
+     */
+    public void chooseCard(int index) {
+        if (chosenCards == null || chosenCards.size() <= 4) {
+            chosenCards.add(selectableCards.remove(index));
+            System.out.println("move " + (index +1) + " added to hand");
+            System.out.println("Your hand: " + chosenCards);
+            showHand();
+            if (chosenCards.size() == 5){
+                System.out.println("Hit SPACE to execute your list of moves");
+            }
+        } else {
+            System.out.println("Full hand");
+            System.out.println("Hit SPACE to execute your list of moves");
+        }
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Vector2 getPosition() {
+        return position;
     }
 }
