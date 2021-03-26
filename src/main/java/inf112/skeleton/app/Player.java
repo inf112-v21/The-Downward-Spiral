@@ -103,7 +103,6 @@ public class Player {
         CellType type = checker.checkNextMove(card);
 
         for (int i = 0; i < distance; i++) {
-            //System.out.println(type);
             switch(type) {
                 case VALID_MOVE: {
                     // Perform move
@@ -200,13 +199,11 @@ public class Player {
                     switch(beltId) {
 
                         case(21): {
-                            System.out.println("Should move 2 down");
                             move(Direction.SOUTH, 1);
                             move(Direction.SOUTH, 1);
                             break;
                         }
                         case(14): {
-                            System.out.println("Should move 2 right");
                             move(Direction.EAST, 1);
                             move(Direction.EAST, 1);
                             break;
