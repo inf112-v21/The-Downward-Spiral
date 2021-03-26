@@ -87,6 +87,7 @@ public class MenuScreen extends ScreenAdapter {
                 }
                 if (x < w/2 - hostW / 2 + hostW && x > w/2 - hostW / 2 && h - y < hostY + hostH && h - y > hostY){
                     RRServer server = new RRServer();
+                    Gdx.app.exit();
                     dispose();
                 }
                 return true;
