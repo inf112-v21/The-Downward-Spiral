@@ -4,7 +4,7 @@ Manuelle tester for spiller:
         * For å sjekke om roboten beveger seg i forventet starter man clienten som beskrevet i README.
         Da kan man bruke piltaster eller wasd for å bevege den. Roboten skal bevege seg en rute i den retningen du velger.
         Pil opp/W beveger den nord, Pil ned/S beveger den sør, Pil venstre/A beveger den vest og Pil høyre/D beveger den øst.
-    * Roboten kan ikke bevege seg utenfor brettet
+    * Roboten kan ikke bevege seg utenfor brettet - Bug skrevet i readme.
         * For å teste om roboten ikke kan flytte seg utenfor brettet kan man bevege seg til kanten av brettet og prøve å gå utenfor.
         Det skal komme opp en melding i konsollen at du ikke kan gå utenfor brettet og roboten skal forbli på posisjonen den er.
     * Roboten kan plukke opp flagg
