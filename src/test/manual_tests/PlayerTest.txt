@@ -46,4 +46,6 @@ Manuelle tester for spiller:
         * Er beltet gult skal spilleren flyttes en tile i retningen pilen på beltet peker
         * Er beltet blått skal spilleren beveges to tiles
         * Spillerens retning skal ikke endres av belter
-
+    * Gears/tannhjul skal rotere spiller
+        * For å teste belter må man starte et spill og gå til en tile med gear/tannhjul på brettet (orange eller grønne piler).
+        * Når spilleren står på et gear/tannhjul skal spilleren roteres i retningen pilene går.
