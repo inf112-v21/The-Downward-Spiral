@@ -65,7 +65,7 @@ public class Player {
         }
 
         position.add(components[0], components[1]);
-        GameScreen.networkConnection.sendPosition(this.getX(), this.getY());
+        GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
     }
 
     public void executeCard(Card card) {
@@ -224,9 +224,11 @@ public class Player {
         return (int) position.y;
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(int x, int y, Direction direction) {
         this.board.getPlayerLayer().setCell(getX(), getY(), null);
         position.set(x, y);
+        this.direction = direction;
+        updateDirection();
     }
 
     public void removePlayer() {

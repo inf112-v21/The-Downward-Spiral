@@ -62,17 +62,17 @@ public class NetworkConnection {
                 if (object instanceof PacketAddPlayer) {
                     PacketAddPlayer packet = (PacketAddPlayer) object;
                     NetworkPlayer p = packet.player;
-                    addPlayer(p.playerID, p.xPos, p.yPos);
+                    addPlayer(p.playerID, p.xPos, p.yPos, p.direction);
 
                     // Server initial response to client
                 } else if (object instanceof PacketNewConnectionResponse) {
                     PacketNewConnectionResponse packet = (PacketNewConnectionResponse)object;
-                    GameScreen.localPlayer.setPosition(packet.xPos, packet.yPos);
+                    GameScreen.localPlayer.setPosition(packet.xPos, packet.yPos, Direction.NORTH);
 
                     // A network player moved
                 } else if (object instanceof PacketUpdatePosition) {
                     PacketUpdatePosition packet = (PacketUpdatePosition)object;
-                    networkPlayers.get(packet.playerID).setPosition(packet.posX, packet.posY);
+                    networkPlayers.get(packet.playerID).setPosition(packet.x, packet.y, packet.direction);
                 } else if (object instanceof PacketRemovePlayer) {
                     PacketRemovePlayer packet = (PacketRemovePlayer)object;
                     removePlayer(packet.playerID);
@@ -89,11 +89,11 @@ public class NetworkConnection {
      * @param xPos X position of the player.
      * @param yPos Y position of the player.
      */
-    public void addPlayer(int playerID, int xPos, int yPos) {
+    public void addPlayer(int playerID, int xPos, int yPos, Direction direction) {
         // Add new player to networkPlayers
         networkPlayers.put(playerID, networkPlayerQueue.remove(networkPlayerQueue.size()-1));
         // Position new player on board
-        networkPlayers.get(playerID).setPosition(xPos, yPos);
+        networkPlayers.get(playerID).setPosition(xPos, yPos, direction);
     }
 
     /**
@@ -109,14 +109,15 @@ public class NetworkConnection {
     /**
      * Sends a move to the server.
      *
-     * @param x The x position we moved to.
-     * @param y The y position we moved to.
+     * @param x The dx position we moved to.
+     * @param y The dy position we moved to.
      */
-    public void sendPosition(int x, int y) {
+    public void sendPosition(int x, int y, Direction direction) {
         PacketUpdatePosition packet = new PacketUpdatePosition();
         packet.playerID = client.getID();
-        packet.posX = x;
-        packet.posY = y;
+        packet.x = x;
+        packet.y = y;
+        packet.direction = direction;
         client.sendTCP(packet);
     }
 
