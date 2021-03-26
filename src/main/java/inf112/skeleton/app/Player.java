@@ -161,6 +161,7 @@ public class Player {
                         }
                         default: {
                             System.out.println("Error with belt: " + beltId);
+                            break;
                         }
                     }
                     break;
