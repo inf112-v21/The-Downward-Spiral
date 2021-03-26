@@ -41,7 +41,11 @@ to `this.networkConnection = new NetworkConnection("IP OF SERVER");`'
 This should be a string.
 Now you should be able to connect to the other pc by running and choosing client as described above.
 
-If there is any problems try looking at [errorhandling](#known-buggs-and-possible-solutions).
+When you have collected all the flags you are greeted with a victory screen and a `restart` button.
+The restart button does however not shut down the server. So it's recommended to stop main and
+run the game again.
+
+If there are any problems try looking at [errorhandling](#known-buggs-and-possible-solutions).
 
 ___
 
@@ -85,8 +89,16 @@ Then add "-XstartOnFirstThread".
 
 Hit apply.
 
-### Server does not update directions or won/loss graphics for other players
-Right now there is a bug where other players can't see the players real direction.
+
+## Game logic buggs
+### Server does not update won/loss graphics for other players
 Other players can't see the updated graphics if you win or lose.
+
+### The logic to walls is implemented but not correctly working - Causing a chain bug
+The checks for walls is implemented, however there is a bug where this
+does not work properly. We have disabled walls for now, but the checks is
+still there. So the test for this would not work either. This may cause some problems for example belts and gears.
+Gears and belts does not function if a player move through a wall to get there,
+because the program is only returning that it is an invalid move.
 
 
