@@ -224,10 +224,16 @@ public class Player {
         return (int) position.y;
     }
 
+    /**
+     *
+     * @param x The new x position
+     * @param y The new y position
+     * @param direction The new direction
+     */
     public void setPosition(int x, int y, Direction direction) {
         this.board.getPlayerLayer().setCell(getX(), getY(), null);
         position.set(x, y);
-        this.direction = direction;
+        setDirection(direction);
         updateDirection();
     }
 

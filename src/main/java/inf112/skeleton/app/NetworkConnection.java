@@ -88,6 +88,7 @@ public class NetworkConnection {
      * @param playerID The playerID we want to add.
      * @param xPos X position of the player.
      * @param yPos Y position of the player.
+     * @param direction The direction of the player
      */
     public void addPlayer(int playerID, int xPos, int yPos, Direction direction) {
         // Add new player to networkPlayers
@@ -109,8 +110,9 @@ public class NetworkConnection {
     /**
      * Sends a move to the server.
      *
-     * @param x The dx position we moved to.
-     * @param y The dy position we moved to.
+     * @param x The x position we moved to.
+     * @param y The y position we moved to.
+     * @param direction The new direction
      */
     public void sendPosition(int x, int y, Direction direction) {
         PacketUpdatePosition packet = new PacketUpdatePosition();
