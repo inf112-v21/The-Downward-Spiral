@@ -25,7 +25,7 @@ Now you can run another main and choose to play as a client instead.
 Run main and hit the button `Connect`
 or if the menu for some reasons don't work simply hit the button `c`.
 
-If you don't want to have to instances of main on the computer that is hosting you can:
+If you don't want to have two instances of main on the computer that is hosting you can:
 Click `Host & Play` in the menu.
 or if the menu for some reasons don't work simply hit the button `SPACE`.
 One thing to note is that the console wil get very cluttered in this mode because you get information and prints from both server and client. 
