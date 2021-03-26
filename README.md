@@ -32,7 +32,7 @@ It is reccomended to use two instances for now.
 
 From here you can run as many more main as you want to add more players.
 This should also work across all computers on the same network without any further instructions.
-If you can't connect then try looking at the [errorhandling](#known-buggs-and-possible-solutions) below.
+If you can't connect then try looking at the [errorhandling](#known-bugs-and-possible-solutions) below.
 
 If you want to play from multiple computers on different networks then you need to portforward port `27960`.
 Then you can change the local ip in `GameScreen` at the line
@@ -45,7 +45,7 @@ When you have collected all the flags you are greeted with a victory screen and 
 The restart button does however not shut down the server. So it's recommended to stop main and
 run the game again.
 
-If there are any problems try looking at [errorhandling](#known-buggs-and-possible-solutions).
+If there are any problems try looking at [errorhandling](#known-bugs-and-possible-solutions).
 
 ___
 
@@ -58,7 +58,7 @@ The cards can move the robot forwards, backwards or rotate the robot. Robots can
 health will affect how you can influence the robot. The fastest player to collect all flags wins.
 The classic board game can have 2-8 players.
 
-# Known buggs and possible solutions
+# Known bugs and possible solutions
 
 ### Running the server error
 There is an error when starting the server. 
@@ -90,7 +90,8 @@ Then add "-XstartOnFirstThread".
 Hit apply.
 
 
-## Game logic buggs
+## Game logic bugs
+
 ### Server does not update won/loss graphics for other players
 Other players can't see the updated graphics if you win or lose.
 
@@ -101,4 +102,7 @@ still there. So the test for this would not work either. This may cause some pro
 Gears and belts does not function if a player move through a wall to get there,
 because the program is only returning that it is an invalid move.
 
-
+### The server never shuts down.
+The server never shuts down even if all the player have "won" and gone back to main menu.
+The server is already open if the host tries to click on `host & play` again.
+The best way is to close the game and stop main after you have finished one game.
