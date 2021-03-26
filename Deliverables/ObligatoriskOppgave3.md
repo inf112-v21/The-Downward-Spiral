@@ -34,6 +34,9 @@
 
 - Gruppedynamikken er stort sett utrolig bra. Vi passer på at det er rom for humor og pauser som ikke alltid handler om kode. 
   Dette skaper god stemning i gruppen og hjelper til med å holde motivasjonen oppe.
+- Gruppen kommuniserer godt over discord, hvor vi avtaler møter, diskuterer problemer og eller snakker om funksjonalitet.
+- Når en på teamet har mer kunnskap på et område prøver personen å lære gruppen det slik at alle til slutt får en god grunnleggende
+  kunnskap på forskjellige områder.
 ## Deloppgave 2: Krav
 - Vi har laget nye krav og skrevet brukerhistorier, akseptansekriterier og arbeidsoppgaver til dem i [Brukerhistorier.md](Brukerhistorier.md)
   - Vi har fullført noen av disse kravene til denne leveringen men noen av kravene var litt større enn vi hadde forventet og blir dermed mål for neste innlevering.
@@ -42,7 +45,7 @@
 
 ## Deloppgave 3: Produktleveranse og kodekvalitet 
 - Bygging og kjøring for kode ligger i [README.md](../README.md)
-- Klassediagram ligger i Deliverables som [klassediagram.drawio](Klassediagram.drawio)
+- Klassediagram ligger i Deliverables som [klassediagram.drawio](klassediagram.drawio)
 ![img.png](klassediagramOblig3.png)
 - Vi har dessverre måtte nesten kun ha manuelle tester, fordi som forrige gang, 
   har vi hatt store problemer med at vi får NullPointerException på Textures når vi prøver å loade feks. 
