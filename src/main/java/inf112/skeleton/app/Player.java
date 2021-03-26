@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
+import inf112.skeleton.app.screens.EndScreen;
 import inf112.skeleton.app.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -100,11 +101,18 @@ public class Player {
 
                     int flagId = checker.getCellIDsAtPosition(position).get("Flag");
 
-                    if (flagId == 55) flagOneConfirmed = true;
-                    if ((flagId == 63) && (flagOneConfirmed)) flagTwoConfirmed = true;
+                    if (flagId == 55) {
+                        flagOneConfirmed = true;
+                        System.out.println("Flag1");
+                    }
+                    if ((flagId == 63) && (flagOneConfirmed)){
+                        flagTwoConfirmed = true;
+                        System.out.println("Flag2");
+                    }
                     if ((flagId == 71) && (flagTwoConfirmed)) {
                         playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                         System.out.println("Won");
+                        GameScreen.getGame().setScreen(new EndScreen(GameScreen.getGame()));
                     }
                     break;
                 }
