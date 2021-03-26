@@ -61,3 +61,36 @@
 - Videre forbedringer diskuteres på chat inntil neste møte
 - Alle skal prøve å fikse problemet med Libgdx tester
 - Neste møte blir 7. mars kl 13, sikkert ikke alle som kan møte opp men noen samler seg, kan bli brukt som arbeidsøkt for tester.
+
+## Møtereferat #11 (fredag 19.03.21):
+- Deltakere: Simen, Thomas, Kristian og Sondre
+- Hensikt: Litt retro og fordele oppgaver
+- Vi har fordelt oppgaver og skrevet disse som trello kort
+- Forhørt med kunde/gruppeleder angående hvordan vi skal gå fram med neste leveranse (spesifikt om tester og dokumentasjon)
+- Skrev litt brukerhistorier for de nye kriteriene
+- Planlagt veien fremover
+- Neste møte blir kode opprydding i løpet av helgen som blir avtalt på meldinger
+
+
+## Møtereferat #12 (onsdag 24.03 kl 16.30-18:30)
+- Deltakere: Alle
+- Hensikt: Få oversikt over hva som må gjøres til oblig 3
+- Gått gjennom mangler til innleveringen
+- Diskutert code cleanup
+- Thomas viste demo av meny
+- Fordelt oppgaver: Thomas og Kristian refaktorerer koden sånn at fremtidige implementasjoner blir lettere. Sondre fortsetter med GUI for MenuScreen og EndScreen.
+
+## Møtereferat #13 (fredag 26.03 kl 10.15-12)
+- Deltakere: Alle
+- Hensikt: Fullføre arbeid på oblig 3
+- Gikk gjennom hva vi hadde igjen å gjøre før leveranse kl 16
+- Thomas viste det nyeste som har blitt merget inn i dev og forklarte koden til alle
+- Fordelte arbeidsoppgaver på hva som måtte gjøres for Oblig3
+- Simen skal fikse oppdatering av texture på server (bug)
+- Sondre skal lage klassediagram
+- Isabel skal skrive brukerhistorier for fremtidige implementasjoner
+- Kristian og Thomas skal legge til Belter og Gears
+- Kristian og Thomas skal fikse et CodeAcy issue
+- Vi jobber nå med dokumentasjon og diverse ting som må ordnes fram til kl 16
+ 
+
