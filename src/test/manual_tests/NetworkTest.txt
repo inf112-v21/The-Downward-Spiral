@@ -1,4 +1,11 @@
 NETWORK MANUAL TESTS
+
+    * Når en klient kobler til server skal server respondere med korrekt playerID
+        * Start en ny server og koble til en ny klient
+        * Server skal respondere med playerID = antall allerede tilkoblede spillere
+        * Koble til en ny klient
+        * Dersom første klient sin playerID = 0, og andre klient sin playerID = 1, har testen passert.
+
     * Når en spiller beveger seg skal server oppdatere posisjonen hos alle andre spillere
         * Start en ny server, og koble til to nye klienter
         * Beveg en av spillerene, og bekreft at begge klientene oppdaterer brettet som forventet.
