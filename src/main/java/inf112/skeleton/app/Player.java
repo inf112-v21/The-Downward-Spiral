@@ -157,6 +157,10 @@ public class Player {
                         case(52):
                         case(41): {
                             move(Direction.EAST, 1);
+                            break;
+                        }
+                        default: {
+                            System.out.println("Error with belt: " + beltId);
                         }
                     }
                     break;
@@ -180,6 +184,9 @@ public class Player {
                             move(Direction.EAST, 1);
                             move(Direction.EAST, 1);
                             break;
+                        }
+                        default: {
+                            System.out.println("Error with belt: " + beltId);
                         }
                     }
                     break;
