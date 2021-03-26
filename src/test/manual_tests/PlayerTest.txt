@@ -2,28 +2,48 @@ Manuelle tester for spiller:
 
     * Roboten beveger seg i forventet rekkefølge:
         * For å sjekke om roboten beveger seg i forventet starter man clienten som beskrevet i README.
-        Da kan man bruke piltaster eller wasd for å bevege den. Roboten skal bevege seg en rute i den retningen du velger.
-        Pil opp/W beveger den nord, Pil ned/S beveger den sør, Pil venstre/A beveger den vest og Pil høyre/D beveger den øst.
+        * Da kan man bruke piltaster eller wasd for å bevege den. Roboten skal bevege seg en rute i den retningen du velger.
+        * Pil opp/W beveger den nord, Pil ned/S beveger den sør, Pil venstre/A beveger den vest og Pil høyre/D beveger den øst.
     * Roboten kan ikke bevege seg utenfor brettet - Bug skrevet i readme.
         * For å teste om roboten ikke kan flytte seg utenfor brettet kan man bevege seg til kanten av brettet og prøve å gå utenfor.
-        Det skal komme opp en melding i konsollen at du ikke kan gå utenfor brettet og roboten skal forbli på posisjonen den er.
+        * Det skal komme opp en melding i konsollen at du ikke kan gå utenfor brettet og roboten skal forbli på posisjonen den er.
     * Roboten kan plukke opp flagg
         * For å teste dette beveger man roboten til ruten hvor “Flagg 1” befinner seg.
-        Deretter skal det komme opp en melding i konsollen at roboten har plukket opp flagget.
+        * Deretter skal det komme opp en melding i konsollen at roboten har plukket opp flagget.
     * Roboten vinner ved å plukke opp alle flaggene
         * For å teste dette kan man fortsetter rett etter den forrige testen og plukke opp alle flaggene i nummerert rekkefølge.
-        Når det tredje flagget er plukket opp skal det komme melding i konsollen at spilleren har vunnet og player spriten skal få blå konfekt rundt seg.
+        * Når det tredje flagget er plukket opp skal det komme melding i konsollen at spilleren har vunnet og player spriten skal få blå konfekt rundt seg.
     * Velge opp til 5 kort
-        * Trykk ENTER for å få delt ut 9 kort. Deretter kan man velge kort med det tilsvarende tallet.
-        Hvis man prøver å velge mer enn 5 kort så vil det komme en melding i terminalen om at hånden er full.
+        * Trykk ENTER for å få delt ut 9 kort.
+        * Deretter kan man velge kort med det tilsvarende tallet.
+        * Hvis man prøver å velge mer enn 5 kort så vil det komme en melding i terminalen om at hånden er full.
     * Roboten kan bevege seg med programkort
         * For å teste dette begynn et spill som beskrevet og trykk enter.
-        Dette vil trekke 9 kort som vises i terminalen. Velg opp til fem kort på hånden og trykk space for å gjennomføre bevegelsene.
-        Roboten skal bevege seg som kortene beskriver i rekkefølgen de ble valgt.
-        Dette inkluderer å bevege seg fram (i den retningen roboten står), bakover og rotere roboten.
+        * Dette vil trekke 9 kort som vises i terminalen.
+        * Velg opp til fem kort på hånden og trykk space for å gjennomføre bevegelsene.
+        * Roboten skal bevege seg som kortene beskriver i rekkefølgen de ble valgt.
+        * Velg et movement kort (move_1, move_2, move_3 eller move_-1).
+        * Spilleren skal bevege seg i den retningen spilleren står tilsvarende tallet på kortet.
+    * Roboten roteres av programkort
+        * Velg et roteringskort (u_turn, left_turn eller right_turn).
+        * Spilleren skal roteres i den retningen som står på kortet.
+        * u_turn skal rotere spilleren 180 grader.
+        * Roteringskort skal ikke flytte på spilleren, kun endre retning
     * Roboten har riktig retning
         * Roboten begynner foreløpig alltid i retning NORTH.
-        Roboten skal da stå på en rød pil som peker oppover, se player_Status.png.
-        Hvis robot endre retning enten med kort eller piltastene skal brikken oppdateres i henhold til spillerens nye retning.
-        Når en spiller har retning WEST skal pilen peke mot venstre, EAST mot høyre og SOUTH nedover.
-        Texture for det finnes i player_Directions.png
+        * Roboten skal da stå på en rød pil som peker oppover, se player_Status.png.
+        * Hvis robot endre retning enten med kort eller piltastene skal brikken oppdateres i henhold til spillerens nye retning.
+        * Når en spiller har retning WEST skal pilen peke mot venstre, EAST mot høyre og SOUTH nedover.
+        * Texture for det finnes i player_Directions.png
+    * Teste vegger
+        * For å teste dette må du starte et spill som beskrevet i README.
+        * Gå så deretter til en vegg.
+        * Hvis spilleren prøver å gå gjennom veggen skal dette forhindres og det vil komme opp en melding i terminalen.
+        * Spilleren skal kunne gå langs veggen, men ikke gjennom.
+    * Belter skal flytte spilleren
+        * For å teste belter må man starte et spill og gå til en tile med belte på brettet (gul eller blå pil).
+        * Når spilleren står på et belte skal spilleren beveges i retningen pilen på beltet peker.
+        * Er beltet gult skal spilleren flyttes en tile i retningen pilen på beltet peker
+        * Er beltet blått skal spilleren beveges to tiles
+        * Spillerens retning skal ikke endres av belter
+
