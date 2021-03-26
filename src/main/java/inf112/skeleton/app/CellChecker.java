@@ -44,13 +44,6 @@ public class CellChecker {
         for (Map.Entry<String, Integer> idSet : layerIDs.entrySet()) {
 
             if (idSet.getValue() != null) { //
-
-                if (idSet.getValue() == 53) { // Gear
-                    return CellType.GEAR_LEFT_TURN;
-                } else if (idSet.getValue() == 54) { // Gear
-                    return CellType.GEAR_RIGHT_TURN;
-                }
-
                 return CellType.valueOf(idSet.getKey().toUpperCase());
             }
         }
@@ -145,8 +138,7 @@ enum CellType {
     YELLOW_BELTS,
     BLUE_BELTS,
     LASER,
-    GEAR_RIGHT_TURN,
-    GEAR_LEFT_TURN,
+    GEARS,
     TURN_CARD,
-    BLOCKED_BY_WALL;
+    BLOCKED_BY_WALL
 }
