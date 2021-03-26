@@ -40,8 +40,9 @@ public class RRServer extends Listener {
                 // If a client sends a move
                 if (object instanceof PacketUpdatePosition) {
                     PacketUpdatePosition packet = (PacketUpdatePosition) object;
-                    players.get(packet.playerID).xPos = packet.posX;
-                    players.get(packet.playerID).yPos = packet.posY;
+                    players.get(packet.playerID).xPos = packet.x;
+                    players.get(packet.playerID).yPos = packet.y;
+                    players.get(packet.playerID).direction = packet.direction;
                     server.sendToAllExceptTCP(c.getID(), packet);
                 }
             }

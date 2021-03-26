@@ -1,5 +1,6 @@
 package inf112.skeleton.app.network;
 
+import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
@@ -10,6 +11,7 @@ public class ClassRegister {
             NetworkPlayer.class,
             PacketNewConnectionResponse.class,
             PacketUpdatePosition.class,
-            PacketRemovePlayer.class
+            PacketRemovePlayer.class,
+            Direction.class
     };
 }
