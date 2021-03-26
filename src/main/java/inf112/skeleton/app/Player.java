@@ -54,14 +54,19 @@ public class Player {
      * @param distance how far you want to move
      */
     public void move(int distance) {
+        move(direction, distance);
+    }
+
+    public void move(Direction dir, int distance) { // Will only move one at a time, the distance is to check if it's moving forwards or backwards
         // Removes player from the old position
         board.getPlayerLayer().setCell(getX(), getY(), null);
 
-        int[] components = direction.dirComponents(direction);
+        int[] components = dir.dirComponents(dir);
         // If distance is negative
+
         if (distance < 0) {
-            components[0] = components[0] * distance;
-            components[1] = components[1] * distance;
+            components[0] = components[0] * (-1);
+            components[1] = components[1] * (-1);
         }
 
         position.add(components[0], components[1]);
@@ -80,6 +85,7 @@ public class Player {
         CellType type = checker.checkNextMove(card);
 
         for (int i = 0; i < distance; i++) {
+            //System.out.println(type);
             switch(type) {
                 case VALID_MOVE: {
                     // Perform move
@@ -125,18 +131,66 @@ public class Player {
 
                     break;
                 }
-                case YELLOW_BELTS: {
+                case YELLOW_BELTS: { // Should use execute card instead, doesn't register anything it lands on after moving
+                    // Doesn't know what it ends up on
                     // Do whatever a yellow belt does
                     move(card.getMoves());
                     type = checker.checkNextMove(card);
 
+                    int beltId = checker.getCellIDsAtPosition(position).get("Yellow_belts");
+                    switch(beltId) {
+                        case(49): {
+                            move(Direction.NORTH, 1);
+                            break;
+                        }
+                        case(50):
+                        case(36):
+                        case(33): {
+                            move(Direction.SOUTH, 1);
+                            break;
+                        }
+                        case(51):
+                        case(44): {
+                            move(Direction.WEST, 1);
+                            break;
+                        }
+                        case(52):
+                        case(41): {
+                            move(Direction.EAST, 1);
+                            break;
+                        }
+                        default: {
+                            System.out.println("Error with belt: " + beltId);
+                            break;
+                        }
+                    }
                     break;
                 }
-                case BLUE_BELTS: {
+                case BLUE_BELTS: { // Doesn't know what it ends up on
                     // Do whatever a blue belt does
                     move(card.getMoves());
                     type = checker.checkNextMove(card);
 
+                    int beltId = checker.getCellIDsAtPosition(position).get("Blue_belts");
+                    switch(beltId) {
+
+                        case(21): {
+                            System.out.println("Should move 2 down");
+                            move(Direction.SOUTH, 1);
+                            move(Direction.SOUTH, 1);
+                            break;
+                        }
+                        case(14): {
+                            System.out.println("Should move 2 right");
+                            move(Direction.EAST, 1);
+                            move(Direction.EAST, 1);
+                            break;
+                        }
+                        default: {
+                            System.out.println("Error with belt: " + beltId);
+                            break;
+                        }
+                    }
                     break;
                 }
                 case LASER: {
@@ -146,18 +200,18 @@ public class Player {
 
                     break;
                 }
-                case GEAR_RIGHT_TURN: {
+                case GEARS: {
                     // Turn right
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
-                    break;
-                }
-                case GEAR_LEFT_TURN: {
-                    // Turn left
-                    move(card.getMoves());
-                    type = checker.checkNextMove(card);
+                    int gearId = checker.getCellIDsAtPosition(position).get("Gears");
+                    if (gearId == 53) { // turn left
+                        turn("left_turn");
+                    } else  {
+                        turn("right_turn"); // 54, turn right
+                    }
 
+                    type = checker.checkNextMove(card);
                     break;
                 }
                 case TURN_CARD: {
@@ -166,6 +220,7 @@ public class Player {
                 }
                 default: {
                     System.out.println("Error with type: " + type);
+                    break;
                 }
             }
         }
