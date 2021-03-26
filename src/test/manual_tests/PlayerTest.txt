@@ -1,4 +1,5 @@
 Manuelle tester for spiller:
+NB! Hvis testen ikke utføres som beskrevet så står dette mest sannsynlig som en bug i README.
 
     * Roboten beveger seg i forventet rekkefølge:
         * For å sjekke om roboten beveger seg i forventet starter man clienten som beskrevet i README.
