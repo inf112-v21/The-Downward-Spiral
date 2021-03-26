@@ -110,3 +110,7 @@ This also makes the test for player not going outside the map invalid.
 The server never shuts down even if all the player have "won" and gone back to main menu.
 The server is already open if the host tries to click on `host & play` again.
 The best way is to close the game and stop main after you have finished one game.
+
+## Using the exit button don't close terminal or server
+The exit button only closes the game window.
+You need to manually close main after.
