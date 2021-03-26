@@ -102,6 +102,9 @@ does not work properly. We have disabled walls for now, but the checks is
 still there. So the test for this would not work either. This may cause some problems for example belts and gears.
 Gears and belts does not function if a player move through a wall to get there,
 because the program is only returning that it is an invalid move.
+The player can now move out of the map,
+since walls and "out of map" is pretty much the same at the moment.
+This also makes the test for player not going outside the map invalid.
 
 ### The server never shuts down.
 The server never shuts down even if all the player have "won" and gone back to main menu.
