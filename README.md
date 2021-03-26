@@ -15,6 +15,7 @@ There are two commands you can run.
 To start a server you can simply click the `host` button
 or if the menu for some reasons don't work simply hit the button `s`.
 If you want to play on the same computer as the server is running as you need to enable multiple instances of main.
+The game window will close when you use this option, and server will continue in the terminal.
 
 in intellij you can do this by going to `Run -> Edit Configuration -> Modify options`
 Click the first option `Allow multiple instances`.
@@ -28,7 +29,7 @@ If you don't want to have to instances of main on the computer that is hosting y
 Click `Host & Play` in the menu.
 or if the menu for some reasons don't work simply hit the button `SPACE`.
 One thing to note is that the console wil get very cluttered in this mode because you get information and prints from both server and client. 
-It is reccomended to use two instances for now. 
+It is reccomended to use two instances for now.
 
 From here you can run as many more main as you want to add more players.
 This should also work across all computers on the same network without any further instructions.
