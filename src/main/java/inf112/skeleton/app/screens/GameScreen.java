@@ -15,7 +15,8 @@ import inf112.skeleton.app.ProgramCards.Deck;
 
 
 public class GameScreen extends ScreenAdapter {
-    RoboRallyGame game;
+
+    static RoboRallyGame game;
     public static Board boardTiledMap;
 
     private OrthogonalTiledMapRenderer render;
@@ -172,4 +173,9 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void resume() {
     }
+
+    public static RoboRallyGame getGame() {
+        return game;
+    }
+
 }
