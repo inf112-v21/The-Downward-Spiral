@@ -50,15 +50,26 @@ public class Player {
     }
 
     /**
-     * Moves the robot in the direction it's facing
+     * Moves the robot in the direction it's facing, but
+     * it can also move backwards without changing the robot's direction.
+     * It will only move one one space at a time.
      *
-     * @param distance how far you want to move
+     * @param distance the "direction". Positive for forwards, negative for backwards
      */
     public void move(int distance) {
         move(direction, distance);
     }
 
-    public void move(Direction dir, int distance) { // Will only move one at a time, the distance is to check if it's moving forwards or backwards
+
+    /**
+     * Moves the robot in given direction, but it
+     * can also move in the opposite direction.
+     * Will never change the robot's direction.
+     *
+     * @param dir the direction you want the robot to move in
+     * @param distance the "direction". Positive for dir direction, negative for the opposite direction
+     */
+    public void move(Direction dir, int distance) {
         // Removes player from the old position
         board.getPlayerLayer().setCell(getX(), getY(), null);
 
@@ -74,6 +85,12 @@ public class Player {
         GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
     }
 
+
+    /**
+     * Takes a card and moves/turns the robot according to the card and the game rules.
+     *
+     * @param card the card/program you want to run
+     */
     public void executeCard(Card card) {
         if (!chosenCards.contains(card)) {
             System.out.println("You don't have that many cards");

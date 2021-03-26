@@ -14,6 +14,14 @@ public class CellChecker {
         this.player = player;
     }
 
+
+    /**
+     * Used to check what the robot would stand on after moving, given a card.
+     * Will return something else if the robot should do something else, instead of moving.
+     *
+     * @param card the card/program you want to check
+     * @return a CellType that describes the new cell/action
+     */
     public CellType checkNextMove(Card card) {
         if (card.getMoves() == 0) {
             return CellType.TURN_CARD;
@@ -22,6 +30,13 @@ public class CellChecker {
         return checkNextMove(player.direction);
     }
 
+    /**
+     * Used to check what the robot would stand on after moving, given a direction.
+     * Will return something else if the robot should do something else, instead of moving.
+     *
+     * @param dir the direction you want to check
+     * @return a CellType that describes the new cell/action
+     */
     public CellType checkNextMove(Direction dir) {
         Vector2 nextPos = getNewPosition(player.getPosition(), dir);
 
@@ -51,6 +66,15 @@ public class CellChecker {
         return CellType.VALID_MOVE;
     }
 
+
+    /**
+     * Takes a position and a direction, then determines if there's a wall blocking
+     * the move towards that direction.
+     *
+     * @param pos a position
+     * @param dir the direction you want to look for a wall in
+     * @return boolean whether blocked or not
+     */
     private boolean blockedByWall(Vector2 pos, Direction dir) {
         if (getCellIDsAtPosition(pos).containsKey("Walls")) {
             int wallId = getCellIDsAtPosition(pos).get("Walls");
@@ -59,7 +83,6 @@ public class CellChecker {
                 case NORTH: {
                     // Should be blocked if wall towards north
                     if (wallId == 16 || wallId == 24 || wallId == 31) return true;
-
                 }
                 case SOUTH: {
                     // Should be blocked if wall towards south
@@ -98,6 +121,14 @@ public class CellChecker {
         return false;
     }
 
+
+    /**
+     * Finds a new position
+     *
+     * @param pos a position
+     * @param dir a direction
+     * @return the new position when moving one towards the direction
+     */
     private Vector2 getNewPosition(Vector2 pos, Direction dir) {
         Vector2 newPos = new Vector2(pos.x, pos.y);
 
@@ -114,6 +145,14 @@ public class CellChecker {
         return newPos;
     }
 
+
+    /**
+     * Finds the ID(s) of the cell at given position on every layer.
+     * The layer won't be included if the cell is null.
+     *
+     * @param pos a position
+     * @return HashMap with layer as key and ID as value
+     */
     public HashMap<String, Integer> getCellIDsAtPosition(Vector2 pos) {
         HashMap<String, Integer> IDs = new HashMap<>();
 
