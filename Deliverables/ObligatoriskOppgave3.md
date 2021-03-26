@@ -36,16 +36,21 @@
   Dette skaper god stemning i gruppen og hjelper til med å holde motivasjonen oppe.
 ## Deloppgave 2: Krav
 - Vi har laget nye krav og skrevet brukerhistorier, akseptansekriterier og arbeidsoppgaver til dem i [Brukerhistorier.md](Brukerhistorier.md)
-  Vi har fullført noen av disse kravene til denne leveringen men noen av kravene var litt større enn vi hadde forventet og blir dermed mål for neste innlevering.
-  Vi har kommet forbi MVP og fremover har vi tenkt å prioritere faser og runder og legge til mer funksjonalitet som liv og GUI for kort.
+  - Vi har fullført noen av disse kravene til denne leveringen men noen av kravene var litt større enn vi hadde forventet og blir dermed mål for neste innlevering.
+  - Vi har kommet forbi MVP og fremover har vi tenkt å prioritere faser og runder og legge til mer funksjonalitet som liv og GUI for kort.
 - Bugs som finnes er lagt i [README.md](../README.md) under known bugs.
 
 ## Deloppgave 3: Produktleveranse og kodekvalitet 
 - Bygging og kjøring for kode ligger i [README.md](../README.md)
 - Klassediagram ligger i Deliverables som [klassediagram.drawio](Klassediagram.drawio)
-![img.png](KlassediagramOblig3.png)
-- Vi har dessverre måtte nesten kun ha manuelle tester, fordi som forrige gang, har vi hatt store problemer med at vi får NullPointerException på Textures når vi prøver å loade feks. Button, Player, Card i test klassen. Vi har prøvd å ordne dette, men endte opp med å bruke mer tid på det enn nødvendig. Så vi har bestemt oss for å skrive manuelle tester.
-- Vi har i stor grad parprogrammert på mye av oppgaven derfor er det ugjevnt med commits på github. I Trello boardet står det hvem som har vært med på hva. Vi har prøvd å ha     litt forskjellige folk som committer denne gangen når vi har parprogrammert. Det er også fler som har laget pull requests denne gangen.
+![img.png](klassediagramOblig3.png)
+- Vi har dessverre måtte nesten kun ha manuelle tester, fordi som forrige gang, 
+  har vi hatt store problemer med at vi får NullPointerException på Textures når vi prøver å loade feks. 
+  Button, Player, Card i test klassen. Vi har prøvd å ordne dette, 
+  men endte opp med å bruke mer tid på det enn nødvendig. Så vi har bestemt oss for å skrive manuelle tester.
+- Vi har i stor grad parprogrammert på mye av oppgaven derfor er det ugjevnt med commits på github. 
+  I Trello boardet står det hvem som har vært med på hva. 
+  Vi har prøvd å ha litt forskjellige folk som committer denne gangen når vi har parprogrammert. Det er også fler som har laget pull requests denne gangen.
 - Link til trello: https://trello.com/b/D3Y3MkLV/roborally
 
 
