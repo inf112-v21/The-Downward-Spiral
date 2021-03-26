@@ -129,6 +129,10 @@ public class GameScreen extends ScreenAdapter {
         return true;
     }
 
+
+    /**
+     * Moves the local player in the direction it's facing.
+     */
     private void moveOneForward() {
         localPlayer.chosenCards.add(new Card(0, "move_1", 1));
         localPlayer.executeCard(localPlayer.chosenCards.get(localPlayer.chosenCards.size()-1));
