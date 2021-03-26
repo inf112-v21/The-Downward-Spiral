@@ -12,7 +12,8 @@ But if it does not work properly you can build it in the terminal with:
 Run the main class in `src/main/java/inf112.skeleton.app`
 
 There are two commands you can run.
-To start a server write `s` and hit enter
+To start a server you can simply click the `host` button
+or if the menu for some reasons don't work simply hit the button `s`.
 If you want to play on the same computer as the server is running as you need to enable multiple instances of main.
 
 in intellij you can do this by going to `Run -> Edit Configuration -> Modify options`
@@ -20,20 +21,27 @@ Click the first option `Allow multiple instances`.
 Remember to hit `Apply` in the bottom right corner.
 
 Now you can run another main and choose to play as a client instead.
-Run main and write `c` then hit enter.
+Run main and hit the button `Connect`
+or if the menu for some reasons don't work simply hit the button `c`.
 
 If you don't want to have to instances of main on the computer that is hosting you can:
-Write `sc` to start a server and connect.
+Click `Host & Play` in the menu.
+or if the menu for some reasons don't work simply hit the button `SPACE`.
 One thing to note is that the console wil get very cluttered in this mode because you get information and prints from both server and client. 
-It is reccomended to use two instances istead of this. 
+It is reccomended to use two instances for now. 
 
 From here you can run as many more main as you want to add more players.
 This should also work across all computers on the same network without any further instructions.
 If you can't connect then try looking at the [errorhandling](#known-buggs-and-possible-solutions) below.
 
 If you want to play from multiple computers on different networks then you need to portforward port `27960`.
-Then you can change the local ip in `RoboRally` at string `serverIP` to the IP of the server.
+Then you can change the local ip in `GameScreen` at the line
+`this.networkConnection = new NetworkConnection();`
+to `this.networkConnection = new NetworkConnection("IP OF SERVER");`'
+This should be a string.
 Now you should be able to connect to the other pc by running and choosing client as described above.
+
+If there is any problems try looking at [errorhandling](#known-buggs-and-possible-solutions).
 
 ___
 
