@@ -1,20 +1,30 @@
 NETWORK MANUAL TESTS
 
-Since one thread can run only one instance of the game, it easier to write manual tests for this class.
+    * Når en klient kobler til server skal server respondere med korrekt playerID
+        * Start en ny server og koble til en ny klient
+        * Server skal respondere med playerID = antall allerede tilkoblede spillere
+        * Koble til en ny klient
+        * Dersom første klient sin playerID = 0, og andre klient sin playerID = 1, har testen passert.
 
-    * When a player moves, the server should update the position of the moving player for all other clients
-        * Start a new server and two new clients
-        * Try moving one of the players and confirm both clients are updating correctly
-        * If both clients update the position correctly, the test has passed.
+    * Når en spiller beveger seg skal server oppdatere posisjonen hos alle andre spillere
+        * Start en ny server, og koble til to nye klienter
+        * Beveg en av spillerene, og bekreft at begge klientene oppdaterer brettet som forventet.
+        * Hvis posisjon oppdateres som forventet hos begge klientene, har testen passert.
 
-    * When a player connects, the position of already connected players should be rendered correctly
-        * Start a new server and one new client
-        * Move the client to a random position
-        * Start a new client
-        * The new client should display the position of the first client correctly
+    * Når en spiller beveger seg skal server oppdatere retningen hos alle andre spillere
+        * Start en ny server, og koble til to nye klienter
+        * Beveg en av spillerene, og bekreft at begge klientene oppdaterer brettet som forventet.
+        * Hvis retningen oppdateres som forventet hos begge klientene, har testen passert.
 
-    * When a player disconnects its sprite should be removed from all other clients boards
-        * Start a new server and two new clients
-        * Move both clients to a random position
-        * Disconnect one of the clients
-        * The remaining client should not display the disconnected client
+    * Når en spiller kobler til skal posisjonen og retningen til de allerede tilkoblede spillerene vises rett
+        * Start en ny server og en ny klient
+        * Beveg spilleren til en tilfeldig posisjon
+        * Startt en ny klient og koble til serveren
+        * Dersom den nye klienten viser posisjonen og retningen til den allerede tilkoblede klienten rett har testen passert
+
+    * Når en spiller kobler fra serveren skal brikken fjernes fra alle andre sitt brett
+        * Start en ny server og to nye klienter
+        * Beveg begge klientene til en tilfeldig posisjon
+        * Koble fra en av klientene
+        * Den gjenværende klienten skal fjerne den frakoblede klienten fra brettet
+        * Dersom brettet hos den gjenværende klienten vises korrekt har testen passert.

@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import org.junit.Before;
 import org.junit.Test;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import static org.junit.Assert.*;
 
 

@@ -82,8 +82,8 @@ Det er også noen kriterier som vi føler ikke er så viktig å få gjort enda. 
 - Vi har skrevet i [README.md](../README.md) filen hvordan programmet bygges og kjøres så vi refererer til den seksjonen for bygging og kjøring av programmet.
 - Vi hadde problemer med automatiske tester for Libgdx og måtte se oss nødt til å fjerne disse derfor er det inntil videre kun manuelle tester.
 - Vi har Junit tester på for eksempel oppsett av server og kryonet.
-- Vi har laget klassediagram for de viktigste klassene i programmet, dette ligger som en drawio fil som du finner i Deliverables: [klassediagram.drawio](klassediagramOblig2.drawio)
-  ![img.png](Klassediagram.png)
+- Vi har laget klassediagram for de viktigste klassene i programmet, dette ligger som en drawio fil som du finner i Deliverables: [klassediagram.drawio](klassediagram.drawio)
+  ![img.png](KlassediagramOblig2.png)
 - Vi har dessverre måtte kun skrive manuelle tester for bevegelse av robot og diverse spill funksjoner. 
   Dette er fordi vi har hatt problemer med JUnit tester ikke får tilgang til textures og dermed mislykkes testene. 
   Vi prøvde å få hjelp med dette problemet fra gruppeleder men kom dessverre ikke til noe løsning. 

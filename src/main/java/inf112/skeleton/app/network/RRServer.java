@@ -3,7 +3,6 @@ package inf112.skeleton.app.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import inf112.skeleton.app.RoboRally;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
@@ -16,8 +15,6 @@ public class RRServer extends Listener {
     public static Server server;
     public static final int port = 27960;
     public static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
-
-    static RoboRally game = new RoboRally();
 
     public RRServer() {
         server = new Server();
@@ -43,8 +40,9 @@ public class RRServer extends Listener {
                 // If a client sends a move
                 if (object instanceof PacketUpdatePosition) {
                     PacketUpdatePosition packet = (PacketUpdatePosition) object;
-                    players.get(packet.playerID).xPos = packet.posX;
-                    players.get(packet.playerID).yPos = packet.posY;
+                    players.get(packet.playerID).xPos = packet.x;
+                    players.get(packet.playerID).yPos = packet.y;
+                    players.get(packet.playerID).direction = packet.direction;
                     server.sendToAllExceptTCP(c.getID(), packet);
                 }
             }
