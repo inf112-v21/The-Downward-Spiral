@@ -42,4 +42,7 @@ public class RoboRallyGame extends Game {
         return HEIGHT;
     }
 
+    public void setWidth(int width) {
+        this.WIDTH = width;
+    }
 }

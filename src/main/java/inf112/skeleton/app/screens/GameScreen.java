@@ -21,6 +21,7 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer render;
 
+    public static cardsMenu hud;
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
 
@@ -137,6 +138,8 @@ public class GameScreen extends ScreenAdapter {
         localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
         localPlayer.updateDirection();
     }
+
+
 
 
     /**
