@@ -70,8 +70,8 @@ public class GameScreen extends ScreenAdapter {
      * amount equal to handSize
      */
     public void dealCards(){
-        localPlayer.selectableCards = currentDeck.deal(localPlayer.handSize);
-        localPlayer.showHand();
+        //localPlayer.selectableCards = currentDeck.deal(localPlayer.handSize);
+        networkConnection.requestHand(localPlayer.handSize);
     }
 
     /**

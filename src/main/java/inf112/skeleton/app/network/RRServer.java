@@ -3,11 +3,12 @@ package inf112.skeleton.app.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import inf112.skeleton.app.network.packets.PacketAddPlayer;
-import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
-import inf112.skeleton.app.network.packets.PacketUpdatePosition;
+import inf112.skeleton.app.ProgramCards.Card;
+import inf112.skeleton.app.ProgramCards.Deck;
+import inf112.skeleton.app.network.packets.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class RRServer extends Listener {
     public static Server server;
     public static final int port = 27960;
     public static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
+    public static Deck deck = new Deck();
 
     public RRServer() {
         server = new Server();
@@ -44,6 +46,14 @@ public class RRServer extends Listener {
                     players.get(packet.playerID).yPos = packet.y;
                     players.get(packet.playerID).direction = packet.direction;
                     server.sendToAllExceptTCP(c.getID(), packet);
+                }else if (object instanceof PacketRequestHand) {
+                    PacketRequestHand packet = (PacketRequestHand) object;
+                    ArrayList<Card> hand = deck.deal(packet.handSize);
+
+                    PacketRespondHand response = new PacketRespondHand();
+                    response.hand = hand;
+                    server.sendToTCP(c.getID(), response);
+                    System.out.println("Sent hand: " + hand);
                 }
             }
 
@@ -74,10 +84,15 @@ public class RRServer extends Listener {
                 PacketNewConnectionResponse packet3 = new PacketNewConnectionResponse();
                 packet3.xPos = player.xPos;
                 packet3.yPos = player.yPos;
+                //packet3.hand = deck.deal(8);
                 c.sendTCP(packet3);
+
+                //System.out.println("Sent hand: " + packet3.hand);
 
                 // Add new player to players list
                 players.put(c.getID(), player);
+
+
 
             }
 
