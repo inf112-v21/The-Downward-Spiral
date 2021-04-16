@@ -84,6 +84,7 @@ public class MenuScreen extends ScreenAdapter {
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
+
                 }
                 if (x < w/2 - hostW / 2 + hostW && x > w/2 - hostW / 2 && h - y < hostY + hostH && h - y > hostY){
                     RRServer server = new RRServer();

@@ -41,11 +41,13 @@ public class GameScreen extends ScreenAdapter {
 
         //Creates a bird's eye view of the board/game
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, boardTiledMap.getBoardLayer().getWidth(), boardTiledMap.getBoardLayer().getHeight());
+        camera.setToOrtho(false, (float) (boardTiledMap.getBoardLayer().getWidth()/0.6), boardTiledMap.getBoardLayer().getHeight());
         camera.translate((float)0, 0);
         camera.update();
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
+
+        hud = new cardsMenu(game);
 
         currentDeck = new Deck();
 
@@ -73,6 +75,7 @@ public class GameScreen extends ScreenAdapter {
     public void dealCards(){
         localPlayer.selectableCards = currentDeck.deal(localPlayer.handSize);
         localPlayer.showHand();
+
     }
 
     /**
@@ -148,11 +151,9 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-            Gdx.gl.glClearColor(1, 1, 1, 1);
-            Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
             localPlayer.render();
-
+            cardsMenu.renderHud(localPlayer.selectableCards);
             if (!networkConnection.getNetworkPlayers().isEmpty()) {
                 for (Player player : networkConnection.getNetworkPlayers().values()) {
                     player.render();
