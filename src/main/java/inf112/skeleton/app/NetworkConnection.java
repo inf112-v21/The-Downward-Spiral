@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 // Network imports
+import com.badlogic.gdx.Game;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -14,6 +15,7 @@ import inf112.skeleton.app.screens.GameScreen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 10;
@@ -81,6 +83,24 @@ public class NetworkConnection {
                     PacketRespondHand packet = (PacketRespondHand)object;
                     GameScreen.localPlayer.selectableCards = packet.hand;
                     GameScreen.localPlayer.showHand();
+                } else if (object instanceof PacketExecuteCard) {
+
+                    PacketExecuteCard packet = (PacketExecuteCard)object;
+                    System.out.println("Executing card: " + packet.card + " for playerID: " + packet.playerID);
+
+
+                    if (packet.playerID == client.getID()) {
+                        GameScreen.localPlayer.executeCard(packet.card);
+                    } else {
+                        networkPlayers.get(packet.playerID).executeCard(packet.card);
+                    }
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+
+                    }
+
                 }
             }
         });
@@ -154,5 +174,15 @@ public class NetworkConnection {
         PacketRequestHand packet = new PacketRequestHand();
         packet.handSize = handSize;
         client.sendTCP(packet);
+    }
+
+    public void sendHand(ArrayList<Card> hand) {
+        PacketRespondHand packet = new PacketRespondHand();
+        packet.hand = hand;
+        client.sendTCP(packet);
+    }
+
+    public int getClientID() {
+        return client.getID();
     }
 }

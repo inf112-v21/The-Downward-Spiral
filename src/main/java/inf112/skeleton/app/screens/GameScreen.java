@@ -24,7 +24,7 @@ public class GameScreen extends ScreenAdapter {
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
 
-    public Deck currentDeck;
+    //public Deck currentDeck;
 
     public GameScreen(RoboRallyGame game) {
         this.game = game;
@@ -46,7 +46,7 @@ public class GameScreen extends ScreenAdapter {
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
 
-        currentDeck = new Deck();
+        //currentDeck = new Deck();
 
         localPlayer = new Player();
         this.networkConnection = new NetworkConnection();
@@ -102,8 +102,9 @@ public class GameScreen extends ScreenAdapter {
         if (localPlayer.chosenCards != null) {
             final int cardSize = localPlayer.chosenCards.size();
             if (keycode == Input.Keys.SPACE) {
+                networkConnection.sendHand(localPlayer.chosenCards);
                 for (int i = 0; i < cardSize; i++) {
-                    localPlayer.executeCard(localPlayer.chosenCards.get(0));
+                    //localPlayer.executeCard(localPlayer.chosenCards.get(0));
                     localPlayer.chosenCards.remove(0);
                 }
             }
@@ -126,6 +127,14 @@ public class GameScreen extends ScreenAdapter {
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
+        }
+        if (keycode == Input.Keys.O) {
+            Card card = new Card(0, "move_1", 1);
+                GameScreen.localPlayer.executeCard(card);
+                for (Player player: networkConnection.getNetworkPlayers().values()) {
+                    player.executeCard(card);
+
+            }
         }
         return true;
     }

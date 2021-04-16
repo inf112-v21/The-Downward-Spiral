@@ -18,6 +18,7 @@ public class ClassRegister {
             Card.class,
             com.badlogic.gdx.utils.Array.class,
             PacketRequestHand.class,
-            PacketRespondHand.class
+            PacketRespondHand.class,
+            PacketExecuteCard.class
     };
 }
