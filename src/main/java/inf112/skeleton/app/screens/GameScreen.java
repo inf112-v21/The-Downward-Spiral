@@ -102,9 +102,9 @@ public class GameScreen extends ScreenAdapter {
         if (localPlayer.chosenCards != null) {
             final int cardSize = localPlayer.chosenCards.size();
             if (keycode == Input.Keys.SPACE) {
+                // Sends hand to server
                 networkConnection.sendHand(localPlayer.chosenCards);
                 for (int i = 0; i < cardSize; i++) {
-                    //localPlayer.executeCard(localPlayer.chosenCards.get(0));
                     localPlayer.chosenCards.remove(0);
                 }
             }
@@ -128,6 +128,8 @@ public class GameScreen extends ScreenAdapter {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
         }
+
+        // Used for debugging
         if (keycode == Input.Keys.O) {
             Card card = new Card(0, "move_1", 1);
                 GameScreen.localPlayer.executeCard(card);

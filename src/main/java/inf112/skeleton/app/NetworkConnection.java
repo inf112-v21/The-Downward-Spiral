@@ -86,7 +86,6 @@ public class NetworkConnection {
                 } else if (object instanceof PacketExecuteCard) {
 
                     PacketExecuteCard packet = (PacketExecuteCard)object;
-                    System.out.println("Executing card: " + packet.card + " for playerID: " + packet.playerID);
 
 
                     if (packet.playerID == client.getID()) {

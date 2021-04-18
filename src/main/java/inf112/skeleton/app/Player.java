@@ -94,13 +94,12 @@ public class Player {
      */
     public void executeCard(Card card) {
 
-
+        // Removed check, does not work with multiplayer.
         /*
         if (!chosenCards.contains(card)) {
             System.out.println("You don't have that many cards");
             return;
         }
-
          */
 
         int distance = Math.max(1, card.getMoves());

@@ -106,10 +106,8 @@ public class RRServer extends Listener {
                 PacketNewConnectionResponse packet3 = new PacketNewConnectionResponse();
                 packet3.xPos = player.xPos;
                 packet3.yPos = player.yPos;
-                //packet3.hand = deck.deal(8);
                 c.sendTCP(packet3);
 
-                //System.out.println("Sent hand: " + packet3.hand);
 
                 // Add new player to players list
                 players.put(c.getID(), player);
@@ -128,6 +126,9 @@ public class RRServer extends Listener {
         });
     }
 
+    /**
+     * Executes all cards stored in selectedCardsThisRound one by one.
+     */
     private void executeRound() {
         for (Card card: selectedCardsThisRound.keySet()) {
             PacketExecuteCard packet = new PacketExecuteCard();
