@@ -76,45 +76,57 @@ public class CellChecker {
      * @return boolean whether blocked or not
      */
     private boolean blockedByWall(Vector2 pos, Direction dir) {
-        if (getCellIDsAtPosition(pos).containsKey("Walls")) {
-            int wallId = getCellIDsAtPosition(pos).get("Walls");
+        boolean standingOnWall = getCellIDsAtPosition(pos).containsKey("Walls");
+        boolean landingOnWall = getCellIDsAtPosition(getNewPosition(pos, dir)).containsKey("Walls");
+
+        if (standingOnWall) {
+            int currentWallID = getCellIDsAtPosition(pos).get("Walls");
 
             switch (dir) {
                 case NORTH: {
                     // Should be blocked if wall towards north
-                    if (wallId == 16 || wallId == 24 || wallId == 31) return true;
+                    if (currentWallID == 16 || currentWallID == 24 || currentWallID == 31) return true;
+                    break;
                 }
                 case SOUTH: {
                     // Should be blocked if wall towards south
-                    if (wallId == 8 || wallId == 29 || wallId == 32) return true;
+                    if (currentWallID == 8 || currentWallID == 29 || currentWallID == 32) return true;
+                    break;
                 }
                 case WEST: {
                     // Should be blocked if wall towards west
-                    if (wallId == 24 || wallId == 30 || wallId == 32) return true;
+                    if (currentWallID == 24 || currentWallID == 30 || currentWallID == 32) return true;
+                    break;
                 }
                 case EAST: {
                     // Should be blocked if wall towards east
-                    if (wallId == 8 || wallId == 16 || wallId == 23) return true;
+                    if (currentWallID == 8 || currentWallID == 16 || currentWallID == 23) return true;
+                    break;
                 }
             }
-            // When/if a player moves towards a wall
-        } else if (getCellIDsAtPosition(getNewPosition(pos, dir)).get("Walls") != null){
-            int wallId = getCellIDsAtPosition(getNewPosition(pos, dir)).get("Walls");
+
+        }
+        if (landingOnWall) {
+            int nextWallID = getCellIDsAtPosition(getNewPosition(pos, dir)).get("Walls");
 
             switch (dir) {
                 case NORTH: {
                     // Should be blocked if wall towards south
-                    if (wallId == 8 || wallId == 29 || wallId == 32) return true;
+                    if (nextWallID == 8 || nextWallID == 29 || nextWallID == 32) return true;
+                    break;
                 }
                 case SOUTH: {
                     // Should be blocked if wall towards north
-                    if (wallId == 16 || wallId == 24 || wallId == 31) return true;
+                    if (nextWallID == 16 || nextWallID == 24 || nextWallID == 31) return true;
+                    break;
                 }
                 case WEST: {
-                    if (wallId == 8 || wallId == 16 || wallId == 23) return true;
+                    if (nextWallID == 8 || nextWallID == 16 || nextWallID == 23) return true;
+                    break;
                 }
                 case EAST: {
-                    if (wallId == 24 || wallId == 30 || wallId == 32) return true;
+                    if (nextWallID == 24 || nextWallID == 30 || nextWallID == 32) return true;
+                    break;
                 }
             }
         }
