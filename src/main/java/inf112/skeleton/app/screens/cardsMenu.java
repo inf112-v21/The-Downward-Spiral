@@ -17,6 +17,7 @@ public class cardsMenu {
     static ArrayList<Button> buttonTestPicked;
     static ArrayList<Button> buttonTestAdd;
     static ArrayList<Button> buttonTestRemove;
+    static Button resetButton;
     public static BitmapFont font;
     private int scaleCardInt = 75;
 
@@ -27,6 +28,9 @@ public class cardsMenu {
         buttonTestPicked = new ArrayList<>();
         buttonTestAdd = new ArrayList<>();
         buttonTestRemove = new ArrayList<>();
+
+        resetButton = new Button("CardsMenu/ResetButtonActive.png",
+                "CardsMenu/ResetButtonInactive.png", 40, 40, 500, 850);
         font = new BitmapFont();
     }
 
@@ -54,6 +58,12 @@ public class cardsMenu {
     public void touchCardUp(int x, int y) {
         //System.out.println("x: " + x + ", y: " + (800-y));
 
+        if (((x > resetButton.getX()-(resetButton.getWIDTH()/2)) && (x < resetButton.getX() + resetButton.getWIDTH()/2))
+                && ((game.getHEIGHT()-y > resetButton.getY()) && (game.getHEIGHT()-y < resetButton.getY()+ resetButton.getHEIGHT()))){
+            localPlayer.chosenCards.clear();
+            setSelectableCards();
+        }
+
         for (Button button : buttonTest){
             int buttonX = button.getX();
             int buttonY = button.getY();
@@ -62,7 +72,8 @@ public class cardsMenu {
 
 
             //TODO NEED WORK, SOMETHING IS BUGGY
-            if (((x > buttonX-(buttonWidth/2)) && (x < buttonX + buttonWidth/2)) && ((game.getHEIGHT()-y > buttonY) && (game.getHEIGHT()-y < buttonY+buttonHeight))){
+            if (((x > buttonX-(buttonWidth/2)) && (x < buttonX + buttonWidth/2))
+                    && ((game.getHEIGHT()-y > buttonY) && (game.getHEIGHT()-y < buttonY+buttonHeight))){
                 //System.out.println(buttonX + "<-X: :Y-> " +buttonY);
                 //System.out.println(button);
                 for (Card card : localPlayer.selectableCards) {
@@ -89,6 +100,7 @@ public class cardsMenu {
         game.batch.begin();
         font.draw(game.batch, "Pick Cards", 610, 780);
         font.draw(game.batch, "Your picked cards", 610, 520);
+        resetButton.buttonHover(game);
         for (Button button: buttonTest){
             button.buttonHover(game);
         }

@@ -234,6 +234,7 @@ public class Player {
                     break;
                 }
             }
+            selectableCards.clear();
         }
     }
 
@@ -333,7 +334,6 @@ public class Player {
         if (chosenCards == null || chosenCards.size() <= 4) {
             assert chosenCards != null;
             chosenCards.add(card);
-            selectableCards.remove(card);
             System.out.println("move " + (card) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
