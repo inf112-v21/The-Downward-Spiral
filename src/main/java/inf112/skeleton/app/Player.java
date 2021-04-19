@@ -98,22 +98,20 @@ public class Player {
         }
 
         int distance = Math.max(1, card.getMoves());
-
         CellChecker checker = new CellChecker(this);
-        CellType type = checker.checkNextMove(card);
 
         for (int i = 0; i < distance; i++) {
+            CellType type = checker.checkNextMove(card);
+
             switch(type) {
                 case VALID_MOVE: {
                     // Perform move
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
                     break;
                 }
                 case FLAG: {
                     // Perform move
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     int flagId = checker.getCellIDsAtPosition(position).get("Flag");
 
@@ -135,7 +133,6 @@ public class Player {
                 case HOLE: {
                     // Take damage
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     System.out.println("Lost");
                     playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
@@ -143,15 +140,11 @@ public class Player {
                 }
                 case BLOCKED_BY_WALL: { // DOES NOT WORK PROPERLY, HAS TO BE FIXED
                     // Do nothing
-                    move(card.getMoves());
-                    type = checker.checkNextMove(card);
-
                     break;
                 }
                 case WRENCHES: {
                     // Do whatever a wrench does
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     break;
                 }
@@ -159,7 +152,6 @@ public class Player {
                     // Doesn't know what it ends up on
                     // Do whatever a yellow belt does
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     int beltId = checker.getCellIDsAtPosition(position).get("Yellow_belts");
                     switch(beltId) {
@@ -193,7 +185,6 @@ public class Player {
                 case BLUE_BELTS: { // Doesn't know what it ends up on
                     // Do whatever a blue belt does
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     int beltId = checker.getCellIDsAtPosition(position).get("Blue_belts");
                     switch(beltId) {
@@ -218,7 +209,6 @@ public class Player {
                 case LASER: {
                     // Take damage
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     break;
                 }
@@ -233,7 +223,6 @@ public class Player {
                         turn("right_turn"); // 54, turn right
                     }
 
-                    type = checker.checkNextMove(card);
                     break;
                 }
                 case TURN_CARD: {
