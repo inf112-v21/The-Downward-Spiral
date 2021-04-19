@@ -21,8 +21,12 @@ public class Card extends Actor {
         return type;
     }
 
-    public String getPath(){
+    public String getInactivePath(){
         return "Cards/" + type + ".png";
+    }
+
+    public String getActivePath(){
+        return "Cards/" + type + "_active.png";
     }
 
     public int getMoves() {

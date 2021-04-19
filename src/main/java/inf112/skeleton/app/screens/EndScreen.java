@@ -18,8 +18,8 @@ public class EndScreen extends ScreenAdapter {
 
     public EndScreen(RoboRallyGame game) {
         this.game = game;
-        this.restartButton = new Button("Menu/buttonRestartActive.png", "Menu/buttonRestartInactive.png" , 300, 150, 400);
-        this.exitButton = new Button("Menu/buttonExitActive.png", "Menu/buttonExitInactive.png" , 300, 150, 200);
+        this.restartButton = new Button("Menu/buttonRestartActive.png", "Menu/buttonRestartInactive.png" , 300, 150, 400, 300);
+        this.exitButton = new Button("Menu/buttonExitActive.png", "Menu/buttonExitInactive.png" , 300, 150, 200, 300);
         this.victoryScreen = new Texture("Menu/endScreen.png");
 
     }

@@ -338,12 +338,14 @@ public class Player {
 
     /**
      * Adds card to the players program
-     * @param index of the requested card
+     * @param card for the requested card
      */
-    public void chooseCard(int index) {
+    public void chooseCard(Card card) {
         if (chosenCards == null || chosenCards.size() <= 4) {
-            chosenCards.add(selectableCards.remove(index));
-            System.out.println("move " + (index +1) + " added to hand");
+            assert chosenCards != null;
+            chosenCards.add(card);
+            selectableCards.remove(card);
+            System.out.println("move " + (card) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
             if (chosenCards.size() == 5){

@@ -13,7 +13,7 @@ public class Main {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("RobotRally");
         cfg.setWindowedMode(game.getWIDTH(), game.getHEIGHT());
-        //cfg.setResizable(false);
+        cfg.setResizable(false);
         new Lwjgl3Application(game, cfg);
     }
 }
