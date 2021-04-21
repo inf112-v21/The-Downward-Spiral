@@ -71,7 +71,6 @@ public class cardsMenu {
             int buttonHeight = button.getHEIGHT();
 
 
-            //TODO NEED WORK, SOMETHING IS BUGGY
             if (((x > buttonX-(buttonWidth/2)) && (x < buttonX + buttonWidth/2))
                     && ((game.getHEIGHT()-y > buttonY) && (game.getHEIGHT()-y < buttonY+buttonHeight))){
                 //System.out.println(buttonX + "<-X: :Y-> " +buttonY);
