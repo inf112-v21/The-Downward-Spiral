@@ -1,14 +1,12 @@
 package inf112.skeleton.app;
 
 // Network imports
-import com.badlogic.gdx.Game;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
-import inf112.skeleton.app.network.PacketRemovePlayer;
 import inf112.skeleton.app.network.packets.*;
 import inf112.skeleton.app.screens.GameScreen;
 
