@@ -25,10 +25,8 @@ public class GameScreen extends ScreenAdapter {
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
 
-    public Deck currentDeck;
-
     public GameScreen(RoboRallyGame game) {
-        GameScreen.game = game;
+        this.game = game;
     }
 
     /**
@@ -46,8 +44,6 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
-
-        currentDeck = new Deck();
 
         localPlayer = new Player();
         networkConnection = new NetworkConnection();
@@ -79,10 +75,8 @@ public class GameScreen extends ScreenAdapter {
      * amount equal to handSize
      */
     public void dealCards(){
-        localPlayer.selectableCards = currentDeck.deal(localPlayer.handSize);
-        localPlayer.showHand();
+        networkConnection.requestHand(localPlayer.handSize);
         hud.setSelectableCards();
-
     }
 
     /**
@@ -105,8 +99,9 @@ public class GameScreen extends ScreenAdapter {
         if (localPlayer.chosenCards != null) {
             final int cardSize = localPlayer.chosenCards.size();
             if (keycode == Input.Keys.SPACE) {
+                // Sends hand to server
+                networkConnection.sendHand(localPlayer.chosenCards);
                 for (int i = 0; i < cardSize; i++) {
-                    localPlayer.executeCard(localPlayer.chosenCards.get(0));
                     localPlayer.chosenCards.remove(0);
                 }
             }
@@ -130,6 +125,16 @@ public class GameScreen extends ScreenAdapter {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
         }
+
+        // Used for debugging
+        if (keycode == Input.Keys.O) {
+            Card card = new Card(0, "move_1", 1);
+                GameScreen.localPlayer.executeCard(card);
+                for (Player player: networkConnection.getNetworkPlayers().values()) {
+                    player.executeCard(card);
+
+            }
+        }
         return true;
     }
 
@@ -142,8 +147,6 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
-
-
     /**
      * Displays the objects that were previously created
      * for the user to see.
@@ -153,6 +156,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
             localPlayer.render();
+
             if (!networkConnection.getNetworkPlayers().isEmpty()) {
                 for (Player player : networkConnection.getNetworkPlayers().values()) {
                     player.render();

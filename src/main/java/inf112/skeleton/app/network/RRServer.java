@@ -3,11 +3,20 @@ package inf112.skeleton.app.network;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.ProgramCards.Card;
+import inf112.skeleton.app.ProgramCards.Deck;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
+import inf112.skeleton.app.network.packets.PacketRemovePlayer;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
+import inf112.skeleton.app.network.packets.PacketRespondHand;
+import inf112.skeleton.app.network.packets.PacketRequestHand;
+import inf112.skeleton.app.network.packets.PacketExecuteCard;
+import inf112.skeleton.app.screens.GameScreen;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +24,12 @@ public class RRServer extends Listener {
     public static Server server;
     public static final int port = 27960;
     public static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
+    public static Deck deck = new Deck();
+    public static Map<Card, Integer> selectedCardsThisRound = new HashMap<Card, Integer>();
+    public int roundNumber;
 
     public RRServer() {
+        roundNumber = 0;
         server = new Server();
 
         // Register classes being sent over the network
@@ -44,6 +57,29 @@ public class RRServer extends Listener {
                     players.get(packet.playerID).yPos = packet.y;
                     players.get(packet.playerID).direction = packet.direction;
                     server.sendToAllExceptTCP(c.getID(), packet);
+
+                    // If a client requests a hand
+                } else if (object instanceof PacketRequestHand) {
+                    PacketRequestHand packet = (PacketRequestHand) object;
+                    ArrayList<Card> hand = deck.deal(packet.handSize);
+
+                    PacketRespondHand response = new PacketRespondHand();
+                    response.hand = hand;
+                    server.sendToTCP(c.getID(), response);
+
+                    // If a client sends chosen cards for the round
+                } else if (object instanceof PacketRespondHand) {
+                    PacketRespondHand packet = (PacketRespondHand) object;
+                    for (Card card: packet.hand) {
+                        selectedCardsThisRound.put(card, c.getID());
+                    }
+
+                    if (selectedCardsThisRound.keySet().size() == players.size()* GameScreen.localPlayer.fullHandSize) {
+                        executeRound();
+                        selectedCardsThisRound.clear();
+                        roundNumber++;
+                    }
+
                 }
             }
 
@@ -58,6 +94,7 @@ public class RRServer extends Listener {
                 player.playerID = c.getID();
                 player.xPos = players.size();
                 player.yPos = 0;
+                player.direction = Direction.NORTH;
 
                 PacketAddPlayer packet = new PacketAddPlayer();
                 packet.player = player;
@@ -76,8 +113,11 @@ public class RRServer extends Listener {
                 packet3.yPos = player.yPos;
                 c.sendTCP(packet3);
 
+
                 // Add new player to players list
                 players.put(c.getID(), player);
+
+
 
             }
 
@@ -91,6 +131,17 @@ public class RRServer extends Listener {
         });
     }
 
+    /**
+     * Executes all cards stored in selectedCardsThisRound one by one.
+     */
+    private void executeRound() {
+        for (Card card: selectedCardsThisRound.keySet()) {
+            PacketExecuteCard packet = new PacketExecuteCard();
+            packet.card = card;
+            packet.playerID = selectedCardsThisRound.get(card);
+            server.sendToAllTCP(packet);
+        }
+    }
 
 
 }

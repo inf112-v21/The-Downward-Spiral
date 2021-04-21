@@ -4,8 +4,6 @@ import inf112.skeleton.app.ProgramCards.Card;
 
 import java.util.ArrayList;
 
-public class PacketNewConnectionResponse {
-    public int xPos;
-    public int yPos;
+public class PacketRespondHand {
     public ArrayList<Card> hand;
 }
