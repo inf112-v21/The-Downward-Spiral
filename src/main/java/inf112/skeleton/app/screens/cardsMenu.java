@@ -13,10 +13,10 @@ import static inf112.skeleton.app.screens.GameScreen.localPlayer;
 public class cardsMenu {
     static RoboRallyGame game;
     static ArrayList<Card> test;
-    static ArrayList<Button> buttonTest;
-    static ArrayList<Button> buttonTestPicked;
-    static ArrayList<Button> buttonTestAdd;
-    static ArrayList<Button> buttonTestRemove;
+    static ArrayList<Button> cardButtons;
+    static ArrayList<Button> cardButtonsPicked;
+    static ArrayList<Button> cardButtonsAdd;
+    static ArrayList<Button> cardButtonRemove;
     static Button resetButton;
     public static BitmapFont font;
     private int scaleCardInt = 75;
@@ -24,10 +24,10 @@ public class cardsMenu {
     public cardsMenu(RoboRallyGame game){
         this.game = game;
         test = new ArrayList<>();
-        buttonTest = new ArrayList<>();
-        buttonTestPicked = new ArrayList<>();
-        buttonTestAdd = new ArrayList<>();
-        buttonTestRemove = new ArrayList<>();
+        cardButtons = new ArrayList<>();
+        cardButtonsPicked = new ArrayList<>();
+        cardButtonsAdd = new ArrayList<>();
+        cardButtonRemove = new ArrayList<>();
 
         resetButton = new Button("CardsMenu/ResetButtonActive.png",
                 "CardsMenu/ResetButtonInactive.png", 40, 40, 500, 850);
@@ -35,8 +35,8 @@ public class cardsMenu {
     }
 
     public static void setSelectableCards() {
-        buttonTest.clear();
-        buttonTestPicked.clear();
+        cardButtons.clear();
+        cardButtonsPicked.clear();
         if (localPlayer.selectableCards != null) {
 
             int i = 1;
@@ -44,10 +44,10 @@ public class cardsMenu {
             for (Card card : localPlayer.selectableCards) {
                 //System.out.println(card);
                 if (i < 6) {
-                    buttonTest.add(new Button(card.getActivePath(), card.getInactivePath(), 70, 80, 670, 580+(hud.scaleCardInt * i)));
+                    cardButtons.add(new Button(card.getActivePath(), card.getInactivePath(), 70, 80, 670, 580+(hud.scaleCardInt * i)));
                     i += 1;
                 } else {
-                    buttonTest.add(new Button(card.getActivePath(), card.getInactivePath(), 70, 80, 570, 615+(hud.scaleCardInt * k)));
+                    cardButtons.add(new Button(card.getActivePath(), card.getInactivePath(), 70, 80, 570, 615+(hud.scaleCardInt * k)));
                     k += 1;
                 }
             }
@@ -64,7 +64,7 @@ public class cardsMenu {
             setSelectableCards();
         }
 
-        for (Button button : buttonTest){
+        for (Button button : cardButtons){
             int buttonX = button.getX();
             int buttonY = button.getY();
             int buttonWidth = button.getWIDTH();
@@ -78,11 +78,11 @@ public class cardsMenu {
                 //System.out.println(button);
                 for (Card card : localPlayer.selectableCards) {
                     if (button.getInactive().toString().equals(card.getInactivePath())) {
-                        if (buttonTestPicked.size() < 5) {
-                                buttonTestPicked.add(new Button(button.getActive().toString(), button.getInactive().toString(),
+                        if (cardButtonsPicked.size() < 5) {
+                                cardButtonsPicked.add(new Button(button.getActive().toString(), button.getInactive().toString(),
                                         buttonWidth, buttonHeight, (buttonY < 600 ? buttonY - 200  :  buttonY - 300 ),
-                                        580 + scaleCardInt + (hud.scaleCardInt * buttonTestPicked.size())));
-                                buttonTestRemove.add(button);
+                                        580 + scaleCardInt + (hud.scaleCardInt * cardButtonsPicked.size())));
+                                cardButtonRemove.add(button);
                                 localPlayer.chooseCard(card);
                             break;
                         }
@@ -91,9 +91,9 @@ public class cardsMenu {
             }
         }
         // This was a simple way to remove item from a list without errors in the for-loop.
-        buttonTest.addAll(buttonTestAdd);
-        buttonTest.removeAll(buttonTestRemove);
-        buttonTestRemove.clear();
+        cardButtons.addAll(cardButtonsAdd);
+        cardButtons.removeAll(cardButtonRemove);
+        cardButtonRemove.clear();
     }
 
     public void renderCard() {
@@ -101,10 +101,10 @@ public class cardsMenu {
         font.draw(game.batch, "Pick Cards", 610, 780);
         font.draw(game.batch, "Your picked cards", 610, 520);
         resetButton.buttonHover(game);
-        for (Button button: buttonTest){
+        for (Button button: cardButtons){
             button.buttonHover(game);
         }
-        for (Button but: buttonTestPicked){
+        for (Button but: cardButtonsPicked){
             but.buttonHover(game);
         }
         game.batch.end();
