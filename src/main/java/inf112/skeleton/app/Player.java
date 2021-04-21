@@ -27,7 +27,7 @@ public class Player {
     public ArrayList<Card> selectableCards; // hand
     public ArrayList<Card> chosenCards; // program
     public int handSize = 9; // should be 9. 5 for testing
-    public int testHandSize = 5;
+    public int fullHandSize = 5;
 
     /**
      * Constructor
@@ -346,12 +346,12 @@ public class Player {
      * @param index of the requested card
      */
     public void chooseCard(int index) {
-        if (chosenCards == null || chosenCards.size() <= testHandSize-1) {
+        if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
             chosenCards.add(selectableCards.remove(index));
             System.out.println("move " + (index +1) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
-            if (chosenCards.size() == testHandSize){
+            if (chosenCards.size() == fullHandSize){
                 System.out.println("Hit SPACE to execute your list of moves");
             }
         } else {

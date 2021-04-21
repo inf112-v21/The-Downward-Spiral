@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class RRServer extends Listener {
     public static Server server;
@@ -69,7 +68,7 @@ public class RRServer extends Listener {
                         selectedCardsThisRound.put(card, c.getID());
                     }
 
-                    if (selectedCardsThisRound.keySet().size() == players.size()* GameScreen.localPlayer.testHandSize) {
+                    if (selectedCardsThisRound.keySet().size() == players.size()* GameScreen.localPlayer.fullHandSize) {
                         executeRound();
                         selectedCardsThisRound.clear();
                         roundNumber++;
