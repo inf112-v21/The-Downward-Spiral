@@ -27,6 +27,7 @@ public class Player {
     public ArrayList<Card> selectableCards; // hand
     public ArrayList<Card> chosenCards; // program
     public int handSize = 9; // should be 9. 5 for testing
+    public int fullHandSize = 5;
 
     /**
      * Constructor
@@ -82,7 +83,7 @@ public class Player {
         }
 
         position.add(components[0], components[1]);
-        GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
+        //GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
     }
 
 
@@ -92,10 +93,14 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
+
+        // Removed check, does not work with multiplayer.
+        /*
         if (!chosenCards.contains(card)) {
             System.out.println("You don't have that many cards");
             return;
         }
+         */
 
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
@@ -330,12 +335,12 @@ public class Player {
      * @param index of the requested card
      */
     public void chooseCard(int index) {
-        if (chosenCards == null || chosenCards.size() <= 4) {
+        if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
             chosenCards.add(selectableCards.remove(index));
             System.out.println("move " + (index +1) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
-            if (chosenCards.size() == 5){
+            if (chosenCards.size() == fullHandSize){
                 System.out.println("Hit SPACE to execute your list of moves");
             }
         } else {

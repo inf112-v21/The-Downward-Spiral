@@ -4,16 +4,22 @@ package inf112.skeleton.app;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
-import inf112.skeleton.app.network.PacketRemovePlayer;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
+import inf112.skeleton.app.network.packets.PacketRemovePlayer;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
+import inf112.skeleton.app.network.packets.PacketRespondHand;
+import inf112.skeleton.app.network.packets.PacketRequestHand;
+import inf112.skeleton.app.network.packets.PacketExecuteCard;
 import inf112.skeleton.app.screens.GameScreen;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 10;
@@ -68,6 +74,7 @@ public class NetworkConnection {
                 } else if (object instanceof PacketNewConnectionResponse) {
                     PacketNewConnectionResponse packet = (PacketNewConnectionResponse)object;
                     GameScreen.localPlayer.setPosition(packet.xPos, packet.yPos, Direction.NORTH);
+                    GameScreen.localPlayer.selectableCards = packet.hand;
 
                     // A network player moved
                 } else if (object instanceof PacketUpdatePosition) {
@@ -76,6 +83,27 @@ public class NetworkConnection {
                 } else if (object instanceof PacketRemovePlayer) {
                     PacketRemovePlayer packet = (PacketRemovePlayer)object;
                     removePlayer(packet.playerID);
+                } else if (object instanceof PacketRespondHand) {
+                    PacketRespondHand packet = (PacketRespondHand)object;
+                    GameScreen.localPlayer.selectableCards = packet.hand;
+                    GameScreen.localPlayer.showHand();
+                } else if (object instanceof PacketExecuteCard) {
+
+                    PacketExecuteCard packet = (PacketExecuteCard)object;
+
+
+                    if (packet.playerID == client.getID()) {
+                        GameScreen.localPlayer.executeCard(packet.card);
+                    } else {
+                        networkPlayers.get(packet.playerID).executeCard(packet.card);
+                    }
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+
+                    }
+
                 }
             }
         });
@@ -143,5 +171,21 @@ public class NetworkConnection {
 
     public HashMap<Integer, Player> getNetworkPlayers() {
         return networkPlayers;
+    }
+
+    public void requestHand(int handSize) {
+        PacketRequestHand packet = new PacketRequestHand();
+        packet.handSize = handSize;
+        client.sendTCP(packet);
+    }
+
+    public void sendHand(ArrayList<Card> hand) {
+        PacketRespondHand packet = new PacketRespondHand();
+        packet.hand = hand;
+        client.sendTCP(packet);
+    }
+
+    public int getClientID() {
+        return client.getID();
     }
 }
