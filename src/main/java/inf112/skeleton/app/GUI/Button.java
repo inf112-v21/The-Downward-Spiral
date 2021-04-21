@@ -13,9 +13,9 @@ public class Button {
     private int Y;
     private int X;
 
-    public Button (String activeLoc, String inactiveLoc, int WIDTH, int HEIGHT, int Y, int X){
-        this.active = new Texture(activeLoc);
-        this.inactive = new Texture(inactiveLoc);
+    public Button (Texture active, Texture inactive, int WIDTH, int HEIGHT, int Y, int X){
+        this.active = active;
+        this.inactive = inactive;
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         this.Y = Y;

@@ -1,11 +1,16 @@
 package inf112.skeleton.app.screens;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import inf112.skeleton.app.GUI.Button;
 import inf112.skeleton.app.ProgramCards.Card;
+import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import static inf112.skeleton.app.screens.GameScreen.hud;
 import static inf112.skeleton.app.screens.GameScreen.localPlayer;
@@ -17,6 +22,7 @@ public class cardsMenu {
     static ArrayList<Button> cardButtonsPicked;
     static ArrayList<Button> cardButtonsAdd;
     static ArrayList<Button> cardButtonRemove;
+    static HashMap<String,Texture> cardTextures;
     static Button resetButton;
     public static BitmapFont font;
     private int scaleCardInt = 75;
@@ -28,13 +34,22 @@ public class cardsMenu {
         cardButtonsPicked = new ArrayList<>();
         cardButtonsAdd = new ArrayList<>();
         cardButtonRemove = new ArrayList<>();
+        cardTextures = new HashMap<>();
 
-        resetButton = new Button("CardsMenu/ResetButtonActive.png",
-                "CardsMenu/ResetButtonInactive.png", 40, 40, 500, 850);
+
+        File dir = new File("./assets/Cards");
+        for (String file : Objects.requireNonNull(dir.list())) {
+            cardTextures.put(file, new Texture("Cards/" + file));
+        }
+
+
+        resetButton = new Button(new Texture("CardsMenu/ResetButtonActive.png"),
+                new Texture("CardsMenu/ResetButtonInactive.png"), 40, 40, 500, 850);
         font = new BitmapFont();
     }
 
     public static void setSelectableCards() {
+        System.out.println("Cards: ?" + localPlayer.selectableCards);
         cardButtons.clear();
         cardButtonsPicked.clear();
         if (localPlayer.selectableCards != null) {
@@ -44,10 +59,10 @@ public class cardsMenu {
             for (Card card : localPlayer.selectableCards) {
                 //System.out.println(card);
                 if (i < 6) {
-                    cardButtons.add(new Button(card.getActivePath(), card.getInactivePath(), 70, 80, 670, 580+(hud.scaleCardInt * i)));
+                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 670, 580+(hud.scaleCardInt * i)));
                     i += 1;
                 } else {
-                    cardButtons.add(new Button(card.getActivePath(), card.getInactivePath(), 70, 80, 570, 615+(hud.scaleCardInt * k)));
+                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 570, 615+(hud.scaleCardInt * k)));
                     k += 1;
                 }
             }
@@ -56,7 +71,6 @@ public class cardsMenu {
     }
 
     public void touchCardUp(int x, int y) {
-        //System.out.println("x: " + x + ", y: " + (800-y));
 
         if (((x > resetButton.getX()-(resetButton.getWIDTH()/2)) && (x < resetButton.getX() + resetButton.getWIDTH()/2))
                 && ((game.getHEIGHT()-y > resetButton.getY()) && (game.getHEIGHT()-y < resetButton.getY()+ resetButton.getHEIGHT()))){
@@ -73,12 +87,10 @@ public class cardsMenu {
 
             if (((x > buttonX-(buttonWidth/2)) && (x < buttonX + buttonWidth/2))
                     && ((game.getHEIGHT()-y > buttonY) && (game.getHEIGHT()-y < buttonY+buttonHeight))){
-                //System.out.println(buttonX + "<-X: :Y-> " +buttonY);
-                //System.out.println(button);
                 for (Card card : localPlayer.selectableCards) {
-                    if (button.getInactive().toString().equals(card.getInactivePath())) {
+                    if (button.getInactive().toString().equals("Cards/" + card.getInactivePath())) {
                         if (cardButtonsPicked.size() < 5) {
-                                cardButtonsPicked.add(new Button(button.getActive().toString(), button.getInactive().toString(),
+                                cardButtonsPicked.add(new Button(button.getActive(), button.getInactive(),
                                         buttonWidth, buttonHeight, (buttonY < 600 ? buttonY - 200  :  buttonY - 300 ),
                                         580 + scaleCardInt + (hud.scaleCardInt * cardButtonsPicked.size())));
                                 cardButtonRemove.add(button);

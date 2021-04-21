@@ -229,7 +229,6 @@ public class Player {
                     break;
                 }
             }
-            selectableCards.clear();
         }
     }
 

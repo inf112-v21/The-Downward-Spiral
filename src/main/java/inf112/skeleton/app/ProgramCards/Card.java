@@ -1,5 +1,7 @@
 package inf112.skeleton.app.ProgramCards;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.ArrayList;
 
 
@@ -20,6 +22,7 @@ public class Card {
         this.priority = priority;
         this.type = type;
         this.moves = moves;
+
     }
 
     public String toString() {
@@ -27,11 +30,11 @@ public class Card {
     }
 
     public String getInactivePath(){
-        return "Cards/" + type + ".png";
+        return type + ".png";
     }
 
     public String getActivePath(){
-        return "Cards/" + type + "_active.png";
+        return type + "_active.png";
     }
 
     public int getMoves() {

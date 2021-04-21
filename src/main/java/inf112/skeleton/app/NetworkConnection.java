@@ -86,6 +86,7 @@ public class NetworkConnection {
                 } else if (object instanceof PacketRespondHand) {
                     PacketRespondHand packet = (PacketRespondHand)object;
                     GameScreen.localPlayer.selectableCards = packet.hand;
+                    GameScreen.hud.setSelectableCards();
                     GameScreen.localPlayer.showHand();
                 } else if (object instanceof PacketExecuteCard) {
 
