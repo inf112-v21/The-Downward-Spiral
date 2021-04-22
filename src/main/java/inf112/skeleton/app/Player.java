@@ -25,6 +25,7 @@ public class Player {
     private int lifeTokens = 3;
     private int damageTokens = 0;
 
+    private Vector2 startingPosition = new Vector2(5,0);
     public Direction direction;
 
     public ArrayList<Card> selectableCards; // hand
@@ -38,7 +39,7 @@ public class Player {
     public Player() {
         this.board = GameScreen.boardTiledMap;
         //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
-        position = new Vector2(0, 0);
+        position = new Vector2(0,0);
 
         TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
         trRegionsPlayerStatus = trStatus.split(300, 300);
@@ -247,9 +248,11 @@ public class Player {
     public void loseLifeToken() {
         this.lifeTokens -= 1;
         System.out.println("You lost a life token and now have " + lifeTokens + " left");
+        setPosition((int)startingPosition.x, (int)startingPosition.y, Direction.NORTH);
 
         if (this.lifeTokens <= 0) {
             // The player loses
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
             System.out.println("You lost the game");
         } else {
             this.damageTokens = 0; // (Y/N)
