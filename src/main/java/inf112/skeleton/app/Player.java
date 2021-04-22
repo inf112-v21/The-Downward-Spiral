@@ -95,7 +95,6 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
-        chosenCards.remove(card);
 
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
@@ -356,7 +355,6 @@ public class Player {
         if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
             assert chosenCards != null;
             chosenCards.add(card);
-            selectableCards.remove(card);
             System.out.println("move " + (card) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
