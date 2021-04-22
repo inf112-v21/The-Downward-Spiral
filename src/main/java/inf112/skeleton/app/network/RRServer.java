@@ -72,7 +72,6 @@ public class RRServer extends Listener {
                     // If a client sends chosen cards for the round
                 } else if (object instanceof PacketRespondHand) {
                     PacketRespondHand packet = (PacketRespondHand) object;
-
                     for (Card card: packet.hand) {
                         selectedCardsThisRound.put(card, c.getID());
                     }

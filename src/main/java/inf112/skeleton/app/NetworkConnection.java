@@ -91,8 +91,6 @@ public class NetworkConnection {
 
                     PacketExecuteCard packet = (PacketExecuteCard)object;
 
-
-
                     if (packet.playerID == client.getID()) {
                         GameScreen.localPlayer.executeCard(packet.card);
                     } else {
@@ -175,6 +173,7 @@ public class NetworkConnection {
     }
 
     public void sendHand(ArrayList<Card> hand) {
+        System.out.println(hand);
         PacketRespondHand packet = new PacketRespondHand();
         packet.hand = hand;
         client.sendTCP(packet);

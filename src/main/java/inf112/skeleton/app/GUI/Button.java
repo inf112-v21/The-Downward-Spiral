@@ -32,6 +32,10 @@ public class Button {
         }
     }
 
+    public static boolean onClick(RoboRallyGame game, Button button, int x, int y) {
+         return (((x > button.getX() - (button.getWIDTH() / 2)) && (x < button.getX() + button.getWIDTH() / 2)) && ((game.getHEIGHT() - y > button.getY()) && (game.getHEIGHT() - y < button.getY() + button.getHEIGHT())));
+    }
+
     public Texture getInactive() {
         return inactive;
     }
