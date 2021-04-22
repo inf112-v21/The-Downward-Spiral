@@ -171,6 +171,8 @@ public class NetworkConnection {
         PacketRespondHand packet = new PacketRespondHand();
         packet.hand = hand;
         client.sendTCP(packet);
+        GameScreen.localPlayer.chosenCards.clear();
+        GameScreen.localPlayer.selectableCards.clear();
     }
 
     public int getClientID() {
