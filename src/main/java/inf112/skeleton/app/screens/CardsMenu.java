@@ -22,6 +22,7 @@ public class CardsMenu {
     private final Texture cardMenuBackground;
     public static BitmapFont font;
     private final int scaleCardInt = 75;
+    private final int buttonStart = 575;
 
     public CardsMenu(RoboRallyGame game){
         this.game = game;
@@ -55,7 +56,7 @@ public class CardsMenu {
             for (Card card : GameScreen.localPlayer.selectableCards) {
                 //System.out.println(card);
                 if (i < 6) {
-                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 670, 575+(GameScreen.hud.scaleCardInt * i)));
+                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 670, GameScreen.hud.buttonStart+(GameScreen.hud.scaleCardInt * i)));
                     i += 1;
                 } else {
                     cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 570, 610+(GameScreen.hud.scaleCardInt * k)));
@@ -68,32 +69,28 @@ public class CardsMenu {
 
     public void touchCardUp(int x, int y) {
 
-        if (((x > resetButton.getX()-(resetButton.getWIDTH()/2)) && (x < resetButton.getX() + resetButton.getWIDTH()/2))
-                && ((game.getHEIGHT()-y > resetButton.getY()) && (game.getHEIGHT()-y < resetButton.getY()+ resetButton.getHEIGHT()))){
+        if (Button.onClick(game, resetButton, x, y)){
             GameScreen.localPlayer.chosenCards.clear();
             setSelectableCards();
         }
-        if (((x > executeButton.getX()-(executeButton.getWIDTH()/2)) && (x < executeButton.getX() + executeButton.getWIDTH()/2))
-                && ((game.getHEIGHT()-y > executeButton.getY()) && (game.getHEIGHT()-y < executeButton.getY()+ executeButton.getHEIGHT()))
-                && GameScreen.localPlayer.chosenCards != null){
+        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null){
                 // Sends hand to server
+            System.out.println(GameScreen.localPlayer.chosenCards);
                 GameScreen.networkConnection.sendHand(GameScreen.localPlayer.chosenCards);
         }
 
         for (Button button : cardButtons){
-            int buttonX = button.getX();
             int buttonY = button.getY();
             int buttonWidth = button.getWIDTH();
             int buttonHeight = button.getHEIGHT();
 
 
-            if (((x > buttonX-(buttonWidth/2)) && (x < buttonX + buttonWidth/2))
-                    && ((game.getHEIGHT()-y > buttonY) && (game.getHEIGHT()-y < buttonY+buttonHeight))){
+            if (Button.onClick(game, button, x, y)){
                 for (Card card : GameScreen.localPlayer.selectableCards) {
                     if (button.getInactive().toString().equals("Cards/" + card.getInactivePath()) && cardButtonsPicked.size() < 5) {
                             cardButtonsPicked.add(new Button(button.getActive(), button.getInactive(),
                                         buttonWidth, buttonHeight, (buttonY < 600 ? buttonY - 200  :  buttonY - 300 ),
-                                        580 + GameScreen.hud.scaleCardInt + (GameScreen.hud.scaleCardInt * cardButtonsPicked.size())));
+                                    GameScreen.hud.buttonStart + GameScreen.hud.scaleCardInt + (GameScreen.hud.scaleCardInt * cardButtonsPicked.size())));
                                 cardButtonRemove.add(button);
                                 GameScreen.localPlayer.chooseCard(card);
                             break;
