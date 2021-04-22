@@ -18,6 +18,7 @@ import inf112.skeleton.app.screens.GameScreen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class RRServer extends Listener {
@@ -25,7 +26,7 @@ public class RRServer extends Listener {
     public static final int port = 27960;
     public static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
     public static Deck deck = new Deck();
-    public static Map<Card, Integer> selectedCardsThisRound = new HashMap<Card, Integer>();
+    public static LinkedHashMap<Card, Integer> selectedCardsThisRound = new LinkedHashMap<Card, Integer>();
     public int roundNumber;
 
     public RRServer() {

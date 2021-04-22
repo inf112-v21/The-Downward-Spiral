@@ -39,9 +39,9 @@ public class CardsMenu {
 
         cardMenuBackground = new Texture("CardsMenu/cardsMenu.png");
         resetButton = new Button(new Texture("CardsMenu/buttonActiveReset.png"),
-                new Texture("CardsMenu/buttonInactiveReset.png"), 250, 103, 0, 900);
+                new Texture("CardsMenu/buttonInactiveReset.png"), 150, 63, 20, 900);
         executeButton = new Button(new Texture("CardsMenu/buttonActiveExecute.png"),
-                new Texture("CardsMenu/buttonInactiveExecute.png"), 250, 103, 0, 700);
+                new Texture("CardsMenu/buttonInactiveExecute.png"), 150, 63, 20, 700);
         font = new BitmapFont();
     }
 

@@ -23,9 +23,9 @@ public class MenuScreen extends ScreenAdapter {
         this.game = game;
         Gdx.graphics.setWindowedMode(600, 800);
 
-        playButton = new Button(new Texture("Menu/buttonPlayActive.png"), new Texture("Menu/buttonPlayInactive.png"), 300, 150, 450, 300);
-        connectButton = new Button(new Texture("Menu/buttonConnectActive.png"), new Texture("Menu/buttonConnectInactive.png"), 300, 150, 250, 300);
-        hostButton = new Button(new Texture("Menu/buttonHostActive.png"), new Texture("Menu/buttonHostInactive.png"), 300, 150, 50, 300);
+        playButton = new Button(new Texture("Menu/buttonPlayActive.png"), new Texture("Menu/buttonPlayInactive.png"), 300, 86, 450, 300);
+        connectButton = new Button(new Texture("Menu/buttonConnectActive.png"), new Texture("Menu/buttonConnectInactive.png"), 300, 86, 250, 300);
+        hostButton = new Button(new Texture("Menu/buttonHostActive.png"), new Texture("Menu/buttonHostInactive.png"), 300, 86, 50, 300);
 
         titleScreen = new Texture("Menu/Menu.png");
     }
