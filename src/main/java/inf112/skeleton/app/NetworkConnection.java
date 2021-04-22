@@ -92,16 +92,11 @@ public class NetworkConnection {
                     PacketExecuteCard packet = (PacketExecuteCard)object;
 
 
+
                     if (packet.playerID == client.getID()) {
                         GameScreen.localPlayer.executeCard(packet.card);
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
-                    }
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-
                     }
 
                 }
