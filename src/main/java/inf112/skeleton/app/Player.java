@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -8,11 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.screens.EndScreen;
 import inf112.skeleton.app.screens.GameScreen;
+import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 
 public class Player {
     private final Vector2 position;
+    private NetworkConnection connection;
 
     private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
@@ -25,7 +28,7 @@ public class Player {
     private int lifeTokens = 3;
     private int damageTokens = 0;
 
-    private Vector2 startingPosition = new Vector2(5,0);
+    private Vector2 startingPosition;
     public Direction direction;
 
     public ArrayList<Card> selectableCards; // hand
@@ -52,6 +55,22 @@ public class Player {
         direction = Direction.NORTH; // starting direction
         this.chosenCards = new ArrayList<>();
 
+    }
+
+    public void setConnection(NetworkConnection con) {
+        this.connection = con;
+        this.setStartingPosition(con.getClientID());
+    }
+
+    public void setStartingPosition(int id) {
+        System.out.println("Joined as player " + id);
+
+        int x = (int) getStartingPosition(connection.getClientID()).x;
+        int y = (int) getStartingPosition(connection.getClientID()).y;
+
+        System.out.println("Setting my location to: " + x + " | " + y);
+        setPosition(x, y, Direction.NORTH);
+        connection.sendPosition(x, y, direction);
     }
 
     /**
@@ -132,17 +151,18 @@ public class Player {
                 }
                 case HOLE: {
                     // Lose a life token
-                    move(card.getMoves());
                     this.loseLifeToken();
-                    break;
+                    return;
                 }
-                case BLOCKED_BY_WALL: { // DOES NOT WORK PROPERLY, HAS TO BE FIXED
+                case BLOCKED_BY_WALL: {
                     // Do nothing
                     break;
                 }
                 case WRENCHES: {
                     // Do whatever a wrench does
                     move(card.getMoves());
+                    if (this.damageTokens > 0) this.damageTokens -= 1;
+                    System.out.println("Damage tokens now: " + damageTokens);
 
                     break;
                 }
@@ -248,7 +268,12 @@ public class Player {
     public void loseLifeToken() {
         this.lifeTokens -= 1;
         System.out.println("You lost a life token and now have " + lifeTokens + " left");
-        setPosition((int)startingPosition.x, (int)startingPosition.y, Direction.NORTH);
+        int x = (int) getStartingPosition(connection.getClientID()).x;
+        int y = (int) getStartingPosition(connection.getClientID()).y;
+
+        System.out.println(x + " | " + y);
+        setPosition(x, y, Direction.NORTH);
+        connection.sendPosition(x, y, direction);
 
         if (this.lifeTokens <= 0) {
             // The player loses
@@ -258,6 +283,18 @@ public class Player {
             this.damageTokens = 0; // (Y/N)
             // Move the player to starting position/checkpoint
         }
+    }
+
+    private Vector2 getStartingPosition(int id) {
+        switch (id) {
+            case (1): { return new Vector2(5, 0); }
+            case (2): { return new Vector2(6, 0); }
+            case (3): { return new Vector2(3, 1); }
+            case (4): { return new Vector2(8, 1); }
+            case (5): { return new Vector2(1, 2); }
+            case (6): { return new Vector2(10, 2); }
+        }
+        return new Vector2(0,0);
     }
 
     /**
