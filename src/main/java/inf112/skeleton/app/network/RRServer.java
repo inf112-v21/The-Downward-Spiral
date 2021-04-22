@@ -27,6 +27,7 @@ public class RRServer extends Listener {
     public static Map<Integer, NetworkPlayer> players = new HashMap<Integer, NetworkPlayer>();
     public static Deck deck = new Deck();
     public static LinkedHashMap<Card, Integer> selectedCardsThisRound = new LinkedHashMap<Card, Integer>();
+    public static ArrayList<LinkedHashMap<Card, Integer>> selectedCardsPerPhase = new ArrayList<>();
     public int roundNumber;
 
     public RRServer() {
@@ -78,8 +79,10 @@ public class RRServer extends Listener {
                     if (selectedCardsThisRound.keySet().size() == players.size()* GameScreen.localPlayer.fullHandSize) {
                         executeRound();
                         selectedCardsThisRound.clear();
+                        selectedCardsPerPhase.clear();
                         roundNumber++;
                     }
+
 
                 }
             }
@@ -136,11 +139,28 @@ public class RRServer extends Listener {
      * Executes all cards stored in selectedCardsThisRound one by one.
      */
     private void executeRound() {
+        sortCards();
+
+        for (LinkedHashMap<Card, Integer> phase: selectedCardsPerPhase) {
+            for (Card card: phase.keySet()) {
+                PacketExecuteCard packet = new PacketExecuteCard();
+                packet.card = card;
+                packet.playerID = selectedCardsThisRound.get(card);
+                server.sendToAllTCP(packet);
+            }
+        }
+
+    }
+
+    // Sort cards into phases
+    private void sortCards() {
+        for (int i = 1; i < 6; i++) {
+            selectedCardsPerPhase.add(new LinkedHashMap<Card, Integer>());
+        }
+        int i = 0;
         for (Card card: selectedCardsThisRound.keySet()) {
-            PacketExecuteCard packet = new PacketExecuteCard();
-            packet.card = card;
-            packet.playerID = selectedCardsThisRound.get(card);
-            server.sendToAllTCP(packet);
+            selectedCardsPerPhase.get(i%5).put(card, selectedCardsThisRound.get(card));
+            i++;
         }
     }
 

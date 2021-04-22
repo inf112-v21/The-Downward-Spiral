@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 // Project imports
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector2; // kremt
 import inf112.skeleton.app.Board;
 import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.NetworkConnection;
@@ -23,9 +23,17 @@ public class GameScreen extends ScreenAdapter {
     public static CardsMenu hud;
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
+    private String connectIP;
 
     public GameScreen(RoboRallyGame game) {
         this.game = game;
+        this.connectIP = "127.0.0.1";
+    }
+
+    public GameScreen(RoboRallyGame game, String IP){
+        this.game = game;
+        this.connectIP = IP;
+
     }
 
     /**
@@ -45,7 +53,7 @@ public class GameScreen extends ScreenAdapter {
         render.setView(camera);
 
         localPlayer = new Player();
-        networkConnection = new NetworkConnection();
+        networkConnection = new NetworkConnection(connectIP);
         localPlayer.setConnection(networkConnection);
 
         if (localPlayer.selectableCards == null){
@@ -111,22 +119,19 @@ public class GameScreen extends ScreenAdapter {
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             localPlayer.setDirection(Direction.NORTH);
             this.moveOneForward();
-            //networkConnection.sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction, localPlayer.getPlayerID()); // Could be moved to moveOneForward()
+
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
             localPlayer.setDirection(Direction.SOUTH);
             this.moveOneForward();
-            //networkConnection.sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction, localPlayer.getPlayerID());
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             localPlayer.setDirection(Direction.EAST);
             this.moveOneForward();
-            //networkConnection.sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction, localPlayer.getPlayerID());
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
-            //networkConnection.sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction, localPlayer.getPlayerID());
         }
 
         // Used for debugging
