@@ -20,10 +20,19 @@ public class Card {
         this.priority = priority;
         this.type = type;
         this.moves = moves;
+
     }
 
     public String toString() {
         return type;
+    }
+
+    public String getInactivePath(){
+        return type + ".png";
+    }
+
+    public String getActivePath(){
+        return type + "_active.png";
     }
 
     public int getMoves() {

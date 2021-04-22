@@ -82,9 +82,7 @@ public class Player {
             components[1] = components[1] * (-1);
         }
 
-        position.add(components[0], components[1]);
-        //GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
-    }
+        position.add(components[0], components[1]); }
 
 
     /**
@@ -93,14 +91,7 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
-
-        // Removed check, does not work with multiplayer.
-        /*
-        if (!chosenCards.contains(card)) {
-            System.out.println("You don't have that many cards");
-            return;
-        }
-         */
+        chosenCards.remove(card);
 
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
@@ -332,12 +323,14 @@ public class Player {
 
     /**
      * Adds card to the players program
-     * @param index of the requested card
+     * @param card for the requested card
      */
-    public void chooseCard(int index) {
+    public void chooseCard(Card card) {
         if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
-            chosenCards.add(selectableCards.remove(index));
-            System.out.println("move " + (index +1) + " added to hand");
+            assert chosenCards != null;
+            chosenCards.add(card);
+            selectableCards.remove(card);
+            System.out.println("move " + (card) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
             if (chosenCards.size() == fullHandSize){

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.esotericsoftware.kryonet.Client;
 import inf112.skeleton.app.GUI.Button;
@@ -22,10 +21,11 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen(RoboRallyGame game) {
         this.game = game;
+        Gdx.graphics.setWindowedMode(600, 800);
 
-        playButton = new Button("Menu/buttonPlayActive.png", "Menu/buttonPlayInactive.png", 300, 150, 450);
-        connectButton = new Button("Menu/buttonConnectActive.png", "Menu/buttonConnectInactive.png", 300, 150, 250);
-        hostButton = new Button("Menu/buttonHostActive.png", "Menu/buttonHostInactive.png", 300, 150, 50);
+        playButton = new Button(new Texture("Menu/buttonPlayActive.png"), new Texture("Menu/buttonPlayInactive.png"), 300, 150, 450, 300);
+        connectButton = new Button(new Texture("Menu/buttonConnectActive.png"), new Texture("Menu/buttonConnectInactive.png"), 300, 150, 250, 300);
+        hostButton = new Button(new Texture("Menu/buttonHostActive.png"), new Texture("Menu/buttonHostInactive.png"), 300, 150, 50, 300);
 
         titleScreen = new Texture("Menu/Menu.png");
     }
@@ -71,7 +71,7 @@ public class MenuScreen extends ScreenAdapter {
                 int playW = playButton.getWIDTH(); int playH = playButton.getHEIGHT(); int playY = playButton.getY();
                 int connectW = connectButton.getWIDTH(); int connectH = connectButton.getHEIGHT(); int connectY = connectButton.getY();
                 int hostW = hostButton.getWIDTH(); int hostH = hostButton.getHEIGHT(); int hostY = hostButton.getY();
-                int w = game.getWIDTH(); int h = game.getHEIGHT();
+                int w = (int) (game.getWIDTH()*0.6); int h = game.getHEIGHT();
 
                 if (x < w/2 - playW / 2 + playW && x > w/2 - playW / 2 && h - y < playY + playH && h - y > playY){
                     System.out.println("Host & Play");
@@ -84,6 +84,7 @@ public class MenuScreen extends ScreenAdapter {
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
+
                 }
                 if (x < w/2 - hostW / 2 + hostW && x > w/2 - hostW / 2 && h - y < hostY + hostH && h - y > hostY){
                     RRServer server = new RRServer();

@@ -10,8 +10,6 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.NetworkConnection;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
-import inf112.skeleton.app.ProgramCards.Deck;
-
 
 
 public class GameScreen extends ScreenAdapter {
@@ -21,10 +19,9 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer render;
 
+    public static CardsMenu hud;
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
-
-    //public Deck currentDeck;
 
     public GameScreen(RoboRallyGame game) {
         this.game = game;
@@ -40,25 +37,31 @@ public class GameScreen extends ScreenAdapter {
 
         //Creates a bird's eye view of the board/game
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, boardTiledMap.getBoardLayer().getWidth(), boardTiledMap.getBoardLayer().getHeight());
+        camera.setToOrtho(false, (float) (boardTiledMap.getBoardLayer().getWidth()/0.6), boardTiledMap.getBoardLayer().getHeight());
         camera.translate((float)0, 0);
         camera.update();
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
 
-        //currentDeck = new Deck();
-
         localPlayer = new Player();
-        this.networkConnection = new NetworkConnection();
+        networkConnection = new NetworkConnection();
 
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
         }
+        hud = new CardsMenu(game);
+        Gdx.graphics.setWindowedMode(game.getWIDTH(), game.getHEIGHT());
 
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyUp(int keyCode) {
                 GameScreen.this.keyMovement(keyCode);
+                return true;
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                hud.touchCardUp(screenX, screenY);
                 return true;
             }
         });
@@ -70,8 +73,8 @@ public class GameScreen extends ScreenAdapter {
      * amount equal to handSize
      */
     public void dealCards(){
-        //localPlayer.selectableCards = currentDeck.deal(localPlayer.handSize);
         networkConnection.requestHand(localPlayer.handSize);
+        hud.setSelectableCards();
     }
 
     /**
@@ -89,14 +92,6 @@ public class GameScreen extends ScreenAdapter {
             dealCards();
             System.out.println("To program your robot hit the number corresponding to the move you want to add to your list of moves");
             System.out.println("When you have selected up to 5 moves you can hit SPACE to execute your list of moves");
-        }
-        // use 1-9 to pick which card
-        if (localPlayer.selectableCards != null) {
-            for (int i = 0; i < localPlayer.selectableCards.size(); i++) {
-                if (keycode == (i + 8)) {
-                    localPlayer.chooseCard(i);
-                }
-            }
         }
         // Use space to execute your program
         if (localPlayer.chosenCards != null) {
@@ -145,7 +140,7 @@ public class GameScreen extends ScreenAdapter {
     private void moveOneForward() {
         localPlayer.chosenCards.add(new Card(0, "move_1", 1));
         localPlayer.executeCard(localPlayer.chosenCards.get(localPlayer.chosenCards.size()-1));
-        localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
+        //localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
         localPlayer.updateDirection();
     }
 
@@ -156,9 +151,8 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-            Gdx.gl.glClearColor(1, 1, 1, 1);
-            Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
             localPlayer.render();
 
             if (!networkConnection.getNetworkPlayers().isEmpty()) {
@@ -167,6 +161,7 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
             render.render();
+            hud.renderCard();
     }
 
 

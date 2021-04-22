@@ -18,8 +18,8 @@ public class EndScreen extends ScreenAdapter {
 
     public EndScreen(RoboRallyGame game) {
         this.game = game;
-        this.restartButton = new Button("Menu/buttonRestartActive.png", "Menu/buttonRestartInactive.png" , 300, 150, 400);
-        this.exitButton = new Button("Menu/buttonExitActive.png", "Menu/buttonExitInactive.png" , 300, 150, 200);
+        this.restartButton = new Button(new Texture("Menu/buttonRestartActive.png"), new Texture("Menu/buttonRestartInactive.png") , 300, 150, 400, 300);
+        this.exitButton = new Button(new Texture("Menu/buttonExitActive.png"), new Texture("Menu/buttonExitInactive.png") , 300, 150, 200, 300);
         this.victoryScreen = new Texture("Menu/endScreen.png");
 
     }
@@ -59,7 +59,6 @@ public class EndScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(.25f, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         game.batch.begin();
         game.batch.draw(victoryScreen,0,0);
         restartButton.buttonHover(game);

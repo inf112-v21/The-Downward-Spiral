@@ -11,17 +11,19 @@ public class Button {
     private int WIDTH;
     private int HEIGHT;
     private int Y;
+    private int X;
 
-    public Button (String activeLoc, String inactiveLoc, int WIDTH, int HEIGHT, int Y){
-        this.active = new Texture(activeLoc);
-        this.inactive = new Texture(inactiveLoc);
+    public Button (Texture active, Texture inactive, int WIDTH, int HEIGHT, int Y, int X){
+        this.active = active;
+        this.inactive = inactive;
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         this.Y = Y;
+        this.X = X;
     }
 
     public void buttonHover(RoboRallyGame game){
-        int x = 600/2 - getWIDTH() / 2;
+        int x = getX() - getWIDTH() / 2;
         int y = getY();
         if (Gdx.input.getX() < x + getWIDTH() && Gdx.input.getX() > x && 800 - Gdx.input.getY() < y + getHEIGHT() && 800 - Gdx.input.getY() > y) {
             game.getBatch().draw(getActive(), x, y, getWIDTH(), getHEIGHT());
@@ -48,5 +50,9 @@ public class Button {
 
     public int getY() {
         return Y;
+    }
+
+    public int getX() {
+        return X;
     }
 }
