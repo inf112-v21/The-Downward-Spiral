@@ -19,7 +19,6 @@ import inf112.skeleton.app.screens.GameScreen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 10;
@@ -95,12 +94,6 @@ public class NetworkConnection {
                         GameScreen.localPlayer.executeCard(packet.card);
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
-                    }
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-
                     }
 
                 }
