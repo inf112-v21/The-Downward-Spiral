@@ -91,7 +91,6 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
-        chosenCards.remove(card);
 
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);

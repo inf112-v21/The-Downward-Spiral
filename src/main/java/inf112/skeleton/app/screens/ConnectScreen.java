@@ -12,8 +12,7 @@ import java.util.TimerTask;
 
 public class ConnectScreen extends ScreenAdapter {
 
-    RoboRallyGame game;
-
+    private final RoboRallyGame game;
     private final Button connectToLocal;
     private final Button inputAddress;
     private final Button connectToAddress;
