@@ -17,6 +17,7 @@ public class EndScreen extends ScreenAdapter {
     Button exitButton;
 
     public EndScreen(RoboRallyGame game) {
+        Gdx.graphics.setWindowedMode(600, 800);
         this.game = game;
         this.restartButton = new Button(new Texture("Menu/buttonRestartActive.png"), new Texture("Menu/buttonRestartInactive.png") , 300, 150, 400, 300);
         this.exitButton = new Button(new Texture("Menu/buttonExitActive.png"), new Texture("Menu/buttonExitInactive.png") , 300, 150, 200, 300);
@@ -39,15 +40,12 @@ public class EndScreen extends ScreenAdapter {
 
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
-                int restartW = restartButton.getWIDTH(); int restartH = restartButton.getHEIGHT(); int restartY = restartButton.getY();
-                int exitW = exitButton.getWIDTH(); int exitH = exitButton.getHEIGHT(); int exitY = exitButton.getY();
-                int w = game.getWIDTH(); int h = game.getHEIGHT();
 
-                if (x < w / 2 - restartW / 2 + restartW && x > w / 2 - restartW / 2 && h - y < restartY + restartH && h - y > restartY) {
+                if (Button.onClick(game, restartButton, x, y)) {
                     game.setScreen(new MenuScreen(game));
                 }
 
-                if (x < w / 2 - exitW / 2 + exitW && x > w / 2 - exitW / 2 && h - y < exitY + exitH && h - y > exitY) {
+                if (Button.onClick(game, exitButton, x, y)) {
                     Gdx.app.exit();
                 }
                 return true;

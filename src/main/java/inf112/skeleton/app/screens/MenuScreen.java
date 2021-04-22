@@ -68,25 +68,20 @@ public class MenuScreen extends ScreenAdapter {
             // TODO change to buttons
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
-                int playW = playButton.getWIDTH(); int playH = playButton.getHEIGHT(); int playY = playButton.getY();
-                int connectW = connectButton.getWIDTH(); int connectH = connectButton.getHEIGHT(); int connectY = connectButton.getY();
-                int hostW = hostButton.getWIDTH(); int hostH = hostButton.getHEIGHT(); int hostY = hostButton.getY();
-                int w = (int) (game.getWIDTH()*0.6); int h = game.getHEIGHT();
-
-                if (x < w/2 - playW / 2 + playW && x > w/2 - playW / 2 && h - y < playY + playH && h - y > playY){
+                if (Button.onClick(game, playButton, x, y)){
                     System.out.println("Host & Play");
                     RRServer server = new RRServer();
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
                 }
-                if (x < w/2 - connectW / 2 + connectW && x > w/2 - connectW / 2 && h - y < connectY + connectH && h - y > connectY){
+                if (Button.onClick(game, connectButton, x, y)){
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
                     game.setScreen(new GameScreen(game));
 
                 }
-                if (x < w/2 - hostW / 2 + hostW && x > w/2 - hostW / 2 && h - y < hostY + hostH && h - y > hostY){
+                if (Button.onClick(game, hostButton, x, y)){
                     RRServer server = new RRServer();
                     Gdx.app.exit();
                     dispose();
