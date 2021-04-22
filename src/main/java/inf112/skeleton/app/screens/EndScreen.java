@@ -19,8 +19,8 @@ public class EndScreen extends ScreenAdapter {
     public EndScreen(RoboRallyGame game) {
         Gdx.graphics.setWindowedMode(600, 800);
         this.game = game;
-        this.restartButton = new Button(new Texture("Menu/buttonRestartActive.png"), new Texture("Menu/buttonRestartInactive.png") , 300, 150, 400, 300);
-        this.exitButton = new Button(new Texture("Menu/buttonExitActive.png"), new Texture("Menu/buttonExitInactive.png") , 300, 150, 200, 300);
+        this.restartButton = new Button(new Texture("Menu/buttonRestartActive.png"), new Texture("Menu/buttonRestartInactive.png") , 300, 86, 400, 300);
+        this.exitButton = new Button(new Texture("Menu/buttonExitActive.png"), new Texture("Menu/buttonExitInactive.png") , 300, 86, 200, 300);
         this.victoryScreen = new Texture("Menu/endScreen.png");
 
     }
