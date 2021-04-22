@@ -76,9 +76,7 @@ public class MenuScreen extends ScreenAdapter {
                     game.setScreen(new GameScreen(game));
                 }
                 if (Button.onClick(game, connectButton, x, y)){
-                    Client client = new Client();
-                    System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new ConnectScreen(game));
 
                 }
                 if (Button.onClick(game, hostButton, x, y)){
