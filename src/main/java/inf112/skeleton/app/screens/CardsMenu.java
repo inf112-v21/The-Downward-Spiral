@@ -61,10 +61,10 @@ public class CardsMenu {
             for (Card card : localPlayer.selectableCards) {
                 //System.out.println(card);
                 if (i < 6) {
-                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 670, 580+(hud.scaleCardInt * i)));
+                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 670, 575+(hud.scaleCardInt * i)));
                     i += 1;
                 } else {
-                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 570, 615+(hud.scaleCardInt * k)));
+                    cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 570, 610+(hud.scaleCardInt * k)));
                     k += 1;
                 }
             }
