@@ -30,11 +30,6 @@ public class NetworkConnection {
     private HashMap<Integer, Player> networkPlayerQueue = new HashMap<>();
     private HashMap<Integer, Player> networkPlayers = new HashMap<>();
 
-    public NetworkConnection() {
-        this.serverIP = "127.0.0.1";
-        connectionSetup();
-    }
-
     public NetworkConnection(String IP) {
         this.serverIP = IP;
         connectionSetup();

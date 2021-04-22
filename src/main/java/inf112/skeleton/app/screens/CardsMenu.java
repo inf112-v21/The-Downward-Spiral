@@ -67,18 +67,23 @@ public class CardsMenu {
 
     }
 
+    // Gets input from InputAdapter
     public void touchCardUp(int x, int y) {
 
+        // Reset Button
         if (Button.onClick(game, resetButton, x, y)){
             GameScreen.localPlayer.chosenCards.clear();
             setSelectableCards();
         }
-        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null){
+
+        // Execute button
+        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null && GameScreen.localPlayer.chosenCards.size() == 5){
                 // Sends hand to server
             System.out.println(GameScreen.localPlayer.chosenCards);
                 GameScreen.networkConnection.sendHand(GameScreen.localPlayer.chosenCards);
         }
 
+        //
         for (Button button : cardButtons){
             int buttonY = button.getY();
             int buttonWidth = button.getWIDTH();

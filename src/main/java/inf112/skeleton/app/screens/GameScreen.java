@@ -22,9 +22,17 @@ public class GameScreen extends ScreenAdapter {
     public static CardsMenu hud;
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
+    private String connectIP;
 
     public GameScreen(RoboRallyGame game) {
         this.game = game;
+        this.connectIP = "127.0.0.1";
+    }
+
+    public GameScreen(RoboRallyGame game, String IP){
+        this.game = game;
+        this.connectIP = IP;
+
     }
 
     /**
@@ -44,7 +52,7 @@ public class GameScreen extends ScreenAdapter {
         render.setView(camera);
 
         localPlayer = new Player();
-        networkConnection = new NetworkConnection();
+        networkConnection = new NetworkConnection(connectIP);
 
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
