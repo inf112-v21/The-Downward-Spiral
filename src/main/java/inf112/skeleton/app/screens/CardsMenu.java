@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import static inf112.skeleton.app.screens.GameScreen.hud;
-import static inf112.skeleton.app.screens.GameScreen.localPlayer;
+import static inf112.skeleton.app.screens.GameScreen.*;
 
 public class CardsMenu {
     static RoboRallyGame game;
@@ -23,6 +22,8 @@ public class CardsMenu {
     static ArrayList<Button> cardButtonRemove;
     static HashMap<String,Texture> cardTextures;
     static Button resetButton;
+    static Button executeButton;
+    Texture cardMenuBackground;
     public static BitmapFont font;
     private int scaleCardInt = 75;
 
@@ -41,9 +42,11 @@ public class CardsMenu {
             cardTextures.put(file, new Texture("Cards/" + file));
         }
 
-
-        resetButton = new Button(new Texture("CardsMenu/ResetButtonActive.png"),
-                new Texture("CardsMenu/ResetButtonInactive.png"), 40, 40, 500, 850);
+        cardMenuBackground = new Texture("CardsMenu/cardsMenu.png");
+        resetButton = new Button(new Texture("CardsMenu/buttonActiveReset.png"),
+                new Texture("CardsMenu/buttonInactiveReset.png"), 250, 103, 0, 900);
+        executeButton = new Button(new Texture("CardsMenu/buttonActiveExecute.png"),
+                new Texture("CardsMenu/buttonInactiveExecute.png"), 250, 103, 0, 700);
         font = new BitmapFont();
     }
 
@@ -76,6 +79,15 @@ public class CardsMenu {
             localPlayer.chosenCards.clear();
             setSelectableCards();
         }
+        if (((x > executeButton.getX()-(executeButton.getWIDTH()/2)) && (x < executeButton.getX() + executeButton.getWIDTH()/2))
+                && ((game.getHEIGHT()-y > executeButton.getY()) && (game.getHEIGHT()-y < executeButton.getY()+ executeButton.getHEIGHT()))){
+            if (localPlayer.chosenCards != null) {
+                final int cardSize = localPlayer.chosenCards.size();
+                    // Sends hand to server
+                System.out.println(localPlayer.chosenCards);
+                    GameScreen.networkConnection.sendHand(localPlayer.chosenCards);
+            }
+        }
 
         for (Button button : cardButtons){
             int buttonX = button.getX();
@@ -101,16 +113,15 @@ public class CardsMenu {
             }
         }
         // This was a simple way to remove item from a list without errors in the for-loop.
-        cardButtons.addAll(cardButtonsAdd);
         cardButtons.removeAll(cardButtonRemove);
         cardButtonRemove.clear();
     }
 
     public void renderCard() {
         game.batch.begin();
-        font.draw(game.batch, "Pick Cards", 610, 780);
-        font.draw(game.batch, "Your picked cards", 610, 520);
+        game.batch.draw(cardMenuBackground,600,0);
         resetButton.buttonHover(game);
+        executeButton.buttonHover(game);
         for (Button button: cardButtons){
             button.buttonHover(game);
         }

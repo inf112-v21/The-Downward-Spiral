@@ -140,7 +140,7 @@ public class GameScreen extends ScreenAdapter {
     private void moveOneForward() {
         localPlayer.chosenCards.add(new Card(0, "move_1", 1));
         localPlayer.executeCard(localPlayer.chosenCards.get(localPlayer.chosenCards.size()-1));
-        localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
+        //localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
         localPlayer.updateDirection();
     }
 
