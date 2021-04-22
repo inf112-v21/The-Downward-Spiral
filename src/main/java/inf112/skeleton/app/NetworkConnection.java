@@ -90,6 +90,7 @@ public class NetworkConnection {
                 } else if (object instanceof PacketExecuteCard) {
 
                     PacketExecuteCard packet = (PacketExecuteCard)object;
+                    System.out.println("packet.card " + packet.card);
 
 
                     if (packet.playerID == client.getID()) {
@@ -183,6 +184,7 @@ public class NetworkConnection {
         System.out.println(hand);
         PacketRespondHand packet = new PacketRespondHand();
         packet.hand = hand;
+        System.out.println("packet.hand in sendhand: " + packet.hand);
         client.sendTCP(packet);
     }
 
