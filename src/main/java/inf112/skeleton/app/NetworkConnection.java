@@ -19,7 +19,6 @@ import inf112.skeleton.app.screens.GameScreen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 10;

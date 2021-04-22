@@ -142,9 +142,7 @@ public class RRServer extends Listener {
         sortCards();
 
         for (LinkedHashMap<Card, Integer> phase: selectedCardsPerPhase) {
-            System.out.println("Phase: " + phase);
             for (Card card: phase.keySet()) {
-                System.out.println("Executing card: " + card + " " + selectedCardsThisRound.get(card));
                 PacketExecuteCard packet = new PacketExecuteCard();
                 packet.card = card;
                 packet.playerID = selectedCardsThisRound.get(card);
