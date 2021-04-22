@@ -37,6 +37,7 @@ public class ConnectScreen extends ScreenAdapter {
 
         titleScreen = new Texture("Menu/connectScreen.png");
 
+        // Makes the text-field cursor blinking effect.
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
@@ -78,6 +79,7 @@ public class ConnectScreen extends ScreenAdapter {
             }
             @Override
             public boolean keyDown(int keyCode) {
+                // Checks if the user have clicked on the text-field
                 if (userWriting && (Input.Keys.toString(keyCode).length() <= 1 || keyCode == Input.Keys.BACKSPACE || keyCode == Input.Keys.ENTER)){
                     inputIP = inputIP.replace("|", "");
                     if (keyCode == Input.Keys.ENTER){
@@ -109,8 +111,11 @@ public class ConnectScreen extends ScreenAdapter {
         inputAddress.buttonHover(game);
         connectToAddress.buttonHover(game);
         backToMenu.buttonHover(game);
+
+        // Drawing the text written from the user.
         font.draw(game.batch, inputIP, 90, 395);
         font.getData().setScale(2);
+
         game.batch.end();
     }
 
