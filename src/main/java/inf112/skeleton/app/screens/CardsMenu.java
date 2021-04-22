@@ -68,15 +68,15 @@ public class CardsMenu {
 
     public void touchCardUp(int x, int y) {
 
-        if (((x > resetButton.getX()-(resetButton.getWIDTH()/2)) && (x < resetButton.getX() + resetButton.getWIDTH()/2))
-                && ((game.getHEIGHT()-y > resetButton.getY()) && (game.getHEIGHT()-y < resetButton.getY()+ resetButton.getHEIGHT()))){
+        if (Button.onClick(game, resetButton, x, y)){
+            System.out.println("umh?");
             GameScreen.localPlayer.chosenCards.clear();
             setSelectableCards();
         }
-        if (((x > executeButton.getX()-(executeButton.getWIDTH()/2)) && (x < executeButton.getX() + executeButton.getWIDTH()/2))
-                && ((game.getHEIGHT()-y > executeButton.getY()) && (game.getHEIGHT()-y < executeButton.getY()+ executeButton.getHEIGHT()))
-                && GameScreen.localPlayer.chosenCards != null){
+        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null){
                 // Sends hand to server
+            System.out.println("umh?2");
+            System.out.println(GameScreen.localPlayer.chosenCards);
                 GameScreen.networkConnection.sendHand(GameScreen.localPlayer.chosenCards);
         }
 
