@@ -10,8 +10,6 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.NetworkConnection;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
-import inf112.skeleton.app.ProgramCards.Deck;
-
 
 
 public class GameScreen extends ScreenAdapter {
@@ -21,7 +19,7 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer render;
 
-    public static cardsMenu hud;
+    public static CardsMenu hud;
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
 
@@ -51,7 +49,7 @@ public class GameScreen extends ScreenAdapter {
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
         }
-        hud = new cardsMenu(game);
+        hud = new CardsMenu(game);
         Gdx.graphics.setWindowedMode(game.getWIDTH(), game.getHEIGHT());
 
         Gdx.input.setInputProcessor(new InputAdapter() {

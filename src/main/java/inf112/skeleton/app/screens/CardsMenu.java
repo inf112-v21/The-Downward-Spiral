@@ -1,7 +1,6 @@
 package inf112.skeleton.app.screens;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import inf112.skeleton.app.GUI.Button;
@@ -15,7 +14,7 @@ import java.util.Objects;
 import static inf112.skeleton.app.screens.GameScreen.hud;
 import static inf112.skeleton.app.screens.GameScreen.localPlayer;
 
-public class cardsMenu {
+public class CardsMenu {
     static RoboRallyGame game;
     static ArrayList<Card> test;
     static ArrayList<Button> cardButtons;
@@ -27,7 +26,7 @@ public class cardsMenu {
     public static BitmapFont font;
     private int scaleCardInt = 75;
 
-    public cardsMenu(RoboRallyGame game){
+    public CardsMenu(RoboRallyGame game){
         this.game = game;
         test = new ArrayList<>();
         cardButtons = new ArrayList<>();
