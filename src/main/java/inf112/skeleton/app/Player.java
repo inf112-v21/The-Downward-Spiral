@@ -9,44 +9,61 @@ import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.screens.EndScreen;
 import inf112.skeleton.app.screens.GameScreen;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Player {
     private final Vector2 position;
+    private NetworkConnection connection;
 
     private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
-    private final TextureRegion[][] trRegionsPlayerStatus;
-    private final TextureRegion[][] trRegionsPlayerDir;
+    private TextureRegion[][] trRegionsPlayer;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
+
+    private int lifeTokens = 3;
+    private int damageTokens = 0;
 
     public Direction direction;
 
     public ArrayList<Card> selectableCards; // hand
     public ArrayList<Card> chosenCards; // program
     public int handSize = 9; // should be 9. 5 for testing
+    public int fullHandSize = 5;
 
     /**
      * Constructor
      */
-    public Player() {
+    public Player(int id) {
         this.board = GameScreen.boardTiledMap;
-        //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
-        position = new Vector2(0, 0);
-
-        TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
-        trRegionsPlayerStatus = trStatus.split(300, 300);
-        TextureRegion trDir = new TextureRegion(new Texture("player_Directions.png"));
-        trRegionsPlayerDir = trDir.split(300, 300);
+        position = new Vector2(0,0);
 
         playerCell = new TiledMapTileLayer.Cell();
-        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+        this.trRegionsPlayer = getPlayerTextures(id);
+        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
 
         direction = Direction.NORTH; // starting direction
         this.chosenCards = new ArrayList<>();
+    }
 
+    public void setConnection(NetworkConnection con) {
+        this.connection = con;
+        this.setStartingPosition(con.getClientID());
+    }
+
+    public void setStartingPosition(int id) {
+        System.out.println("Joined as player " + id);
+
+        int x = (int) getStartingPosition(connection.getClientID()).x;
+        int y = (int) getStartingPosition(connection.getClientID()).y;
+
+        System.out.println("Setting my location to: " + x + " | " + y);
+        setPosition(x, y, Direction.NORTH);
+        connection.sendPosition(x, y, direction);
     }
 
     /**
@@ -81,9 +98,7 @@ public class Player {
             components[1] = components[1] * (-1);
         }
 
-        position.add(components[0], components[1]);
-        GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
-    }
+        position.add(components[0], components[1]); }
 
 
     /**
@@ -92,28 +107,23 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
-        if (!chosenCards.contains(card)) {
-            System.out.println("You don't have that many cards");
-            return;
-        }
+        if (getX() <= -5 || getY() <= -5) return;
 
         int distance = Math.max(1, card.getMoves());
-
         CellChecker checker = new CellChecker(this);
-        CellType type = checker.checkNextMove(card);
 
         for (int i = 0; i < distance; i++) {
+            CellType type = checker.checkNextMove(card);
+
             switch(type) {
                 case VALID_MOVE: {
                     // Perform move
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
                     break;
                 }
                 case FLAG: {
                     // Perform move
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     int flagId = checker.getCellIDsAtPosition(position).get("Flag");
 
@@ -126,32 +136,25 @@ public class Player {
                         System.out.println("Flag2");
                     }
                     if ((flagId == 71) && (flagTwoConfirmed)) {
-                        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                         System.out.println("Won");
                         GameScreen.getGame().setScreen(new EndScreen(GameScreen.getGame()));
                     }
                     break;
                 }
                 case HOLE: {
-                    // Take damage
-                    move(card.getMoves());
-                    type = checker.checkNextMove(card);
-
-                    System.out.println("Lost");
-                    playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+                    // Lose a life token
+                    this.loseLifeToken();
                     break;
                 }
-                case BLOCKED_BY_WALL: { // DOES NOT WORK PROPERLY, HAS TO BE FIXED
+                case BLOCKED_BY_WALL: {
                     // Do nothing
-                    move(card.getMoves());
-                    type = checker.checkNextMove(card);
-
                     break;
                 }
                 case WRENCHES: {
                     // Do whatever a wrench does
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
+                    if (this.damageTokens > 0) this.damageTokens -= 1;
+                    System.out.println("Damage tokens now: " + damageTokens);
 
                     break;
                 }
@@ -159,7 +162,6 @@ public class Player {
                     // Doesn't know what it ends up on
                     // Do whatever a yellow belt does
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     int beltId = checker.getCellIDsAtPosition(position).get("Yellow_belts");
                     switch(beltId) {
@@ -193,7 +195,6 @@ public class Player {
                 case BLUE_BELTS: { // Doesn't know what it ends up on
                     // Do whatever a blue belt does
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
 
                     int beltId = checker.getCellIDsAtPosition(position).get("Blue_belts");
                     switch(beltId) {
@@ -203,9 +204,21 @@ public class Player {
                             move(Direction.SOUTH, 1);
                             break;
                         }
-                        case(14): {
+                        case(22): {
+                            move(Direction.WEST, 1);
+                            move(Direction.WEST, 1);
+                            break;
+                        }
+                        case(14):
+                        case(78): {
                             move(Direction.EAST, 1);
                             move(Direction.EAST, 1);
+                            break;
+                        }
+                        case(13):
+                        case(27): {
+                            move(Direction.NORTH, 1);
+                            move(Direction.NORTH, 1);
                             break;
                         }
                         default: {
@@ -218,8 +231,7 @@ public class Player {
                 case LASER: {
                     // Take damage
                     move(card.getMoves());
-                    type = checker.checkNextMove(card);
-
+                    this.takeDamage();
                     break;
                 }
                 case GEARS: {
@@ -233,7 +245,6 @@ public class Player {
                         turn("right_turn"); // 54, turn right
                     }
 
-                    type = checker.checkNextMove(card);
                     break;
                 }
                 case TURN_CARD: {
@@ -245,6 +256,42 @@ public class Player {
                     break;
                 }
             }
+        }
+        if (this.connection != null) {
+            connection.sendPosition(getX(), getY(), direction);
+        }
+    }
+
+    public void takeDamage() {
+        this.damageTokens += 1;
+        System.out.println("You took 1 damage and now have " + damageTokens);
+
+        if (this.damageTokens >= 10) {
+            this.damageTokens = 0;
+            this.loseLifeToken();
+        }
+    }
+
+    public void loseLifeToken() {
+        if (this.connection == null) return;
+        this.lifeTokens -= 1;
+        System.out.println("You lost a life token and now have " + lifeTokens + " left");
+
+        int x = (int) getStartingPosition(connection.getClientID()).x;
+        int y = (int) getStartingPosition(connection.getClientID()).y;
+
+        setPosition(x, y, Direction.NORTH);
+        //connection.sendPosition(x, y, direction);
+
+        if (this.lifeTokens <= 0) {
+            // The player loses
+            // Quick fix
+            setPosition(-10,-10, Direction.NORTH);
+            connection.sendPosition(-10,-10,Direction.NORTH);
+            System.out.println("You lost the game");
+        } else {
+            this.damageTokens = 0; // (Y/N)
+            // Move the player to starting position/checkpoint
         }
     }
 
@@ -271,17 +318,18 @@ public class Player {
 
     // updates texture for robot based on direction (temp)
     public void updateDirection() {
+        //System.out.println(trRegionsPlayer);
         if (direction == Direction.NORTH) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
         }
         if (direction == Direction.EAST) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][0]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][2]));
         }
         if (direction == Direction.WEST) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][1]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][1]));
         }
         if (direction == Direction.SOUTH) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][2]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][3]));
         }
     }
 
@@ -338,21 +386,49 @@ public class Player {
 
     /**
      * Adds card to the players program
-     * @param index of the requested card
+     * @param card for the requested card
      */
-    public void chooseCard(int index) {
-        if (chosenCards == null || chosenCards.size() <= 4) {
-            chosenCards.add(selectableCards.remove(index));
-            System.out.println("move " + (index +1) + " added to hand");
+    public void chooseCard(Card card) {
+        if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
+            assert chosenCards != null;
+            chosenCards.add(card);
+            System.out.println("move " + (card) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
-            if (chosenCards.size() == 5){
+            if (chosenCards.size() == fullHandSize){
                 System.out.println("Hit SPACE to execute your list of moves");
             }
         } else {
             System.out.println("Full hand");
             System.out.println("Hit SPACE to execute your list of moves");
         }
+    }
+
+    private Vector2 getStartingPosition(int id) {
+        switch (id) {
+            case (1): { return new Vector2(5, 0); }
+            case (2): { return new Vector2(6, 0); }
+            case (3): { return new Vector2(3, 1); }
+            case (4): { return new Vector2(8, 1); }
+            case (5): { return new Vector2(1, 2); }
+            case (6): { return new Vector2(10, 2); }
+            default: { return new Vector2(0,0); }
+        }
+    }
+
+    private TextureRegion[][] getPlayerTextures(int requestedId) {
+        HashMap<Integer, TextureRegion[][]> playerTextures = new HashMap<>();
+
+        int id = 1;
+        File dir = new File("./assets/PlayerSprites");
+        for (String file : Objects.requireNonNull(dir.list())) {
+            TextureRegion textureDirections = new TextureRegion(new Texture("PlayerSprites/" + file));
+            TextureRegion[][] test = textureDirections.split(300, 300);
+
+            playerTextures.put(id, test);
+            id++;
+        }
+        return playerTextures.get(requestedId);
     }
 
     public Board getBoard() {
@@ -362,4 +438,17 @@ public class Player {
     public Vector2 getPosition() {
         return position;
     }
+
+    public int getLifeTokens() {
+        return lifeTokens;
+    }
+
+    public int getDamageTokens() {
+        return damageTokens;
+    }
+
+    public NetworkConnection getConnection () {
+        return connection;
+    }
+
 }

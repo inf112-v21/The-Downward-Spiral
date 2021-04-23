@@ -1,0 +1,17 @@
+Connect Screen manuelle tester
+    * En skjerm hvor man kan skrive inn en IP
+        * Start spillet og trykk på “Connect”
+        * En skjerm skal komme opp hvor det er et tekstfelt for å skrive inn IP
+    * En knapp som kobler til en local host
+        * For å teste local host knappen start en server med “Play & Host”
+        * Start en ny client trykk “Connect” også “Local”
+        * Den nye clienten skal nå ha koblet seg til den lokale serveren som blir hostet på den andre clienten
+    * En knapp som kobler til IPen som er skrevet inn
+        * Behold alle clients oppe
+        * Start en ny client og trykk “Connect”
+        * Skriv inn “127.0.0.1” også trykke “Connect”
+        * Den nye clienten skal nå kobles til den lokale serveren, dette fungerer også med server over nettet
+    * En knapp som går tilbake til menyen
+        * Start en ny client og trykk “Connect”
+        * Trykk “Back”
+        * Nå vises menyen

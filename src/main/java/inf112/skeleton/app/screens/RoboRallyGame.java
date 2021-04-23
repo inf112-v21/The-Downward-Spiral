@@ -12,8 +12,8 @@ public class RoboRallyGame extends Game {
     ShapeRenderer shapeRenderer;
     BitmapFont font;
 
-    public final int HEIGHT = 800;
-    public final int WIDTH = 600;
+    public int HEIGHT = 800;
+    public int WIDTH = 1000;
 
     @Override
     public void create () {
@@ -42,4 +42,7 @@ public class RoboRallyGame extends Game {
         return HEIGHT;
     }
 
+    public void setWidth(int width) {
+        this.WIDTH = width;
+    }
 }

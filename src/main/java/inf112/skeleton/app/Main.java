@@ -4,8 +4,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import inf112.skeleton.app.screens.RoboRallyGame;
 
-
-//TODO Create new readme after rework.
 public class Main {
     public static void main(String[] args) {
         System.out.println("Commands for the game is written in README.md");

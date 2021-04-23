@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
@@ -76,45 +77,57 @@ public class CellChecker {
      * @return boolean whether blocked or not
      */
     private boolean blockedByWall(Vector2 pos, Direction dir) {
-        if (getCellIDsAtPosition(pos).containsKey("Walls")) {
-            int wallId = getCellIDsAtPosition(pos).get("Walls");
+        boolean standingOnWall = getCellIDsAtPosition(pos).containsKey("Walls");
+        boolean landingOnWall = getCellIDsAtPosition(getNewPosition(pos, dir)).containsKey("Walls");
+
+        if (standingOnWall) {
+            int currentWallID = getCellIDsAtPosition(pos).get("Walls");
 
             switch (dir) {
                 case NORTH: {
                     // Should be blocked if wall towards north
-                    if (wallId == 16 || wallId == 24 || wallId == 31) return true;
+                    if (currentWallID == 16 || currentWallID == 24 || currentWallID == 31) return true;
+                    break;
                 }
                 case SOUTH: {
                     // Should be blocked if wall towards south
-                    if (wallId == 8 || wallId == 29 || wallId == 32) return true;
+                    if (currentWallID == 8 || currentWallID == 29 || currentWallID == 32) return true;
+                    break;
                 }
                 case WEST: {
                     // Should be blocked if wall towards west
-                    if (wallId == 24 || wallId == 30 || wallId == 32) return true;
+                    if (currentWallID == 24 || currentWallID == 30 || currentWallID == 32) return true;
+                    break;
                 }
                 case EAST: {
                     // Should be blocked if wall towards east
-                    if (wallId == 8 || wallId == 16 || wallId == 23) return true;
+                    if (currentWallID == 8 || currentWallID == 16 || currentWallID == 23) return true;
+                    break;
                 }
             }
-            // When/if a player moves towards a wall
-        } else if (getCellIDsAtPosition(getNewPosition(pos, dir)).get("Walls") != null){
-            int wallId = getCellIDsAtPosition(getNewPosition(pos, dir)).get("Walls");
+
+        }
+        if (landingOnWall) {
+            int nextWallID = getCellIDsAtPosition(getNewPosition(pos, dir)).get("Walls");
 
             switch (dir) {
                 case NORTH: {
                     // Should be blocked if wall towards south
-                    if (wallId == 8 || wallId == 29 || wallId == 32) return true;
+                    if (nextWallID == 8 || nextWallID == 29 || nextWallID == 32) return true;
+                    break;
                 }
                 case SOUTH: {
                     // Should be blocked if wall towards north
-                    if (wallId == 16 || wallId == 24 || wallId == 31) return true;
+                    if (nextWallID == 16 || nextWallID == 24 || nextWallID == 31) return true;
+                    break;
                 }
                 case WEST: {
-                    if (wallId == 8 || wallId == 16 || wallId == 23) return true;
+                    if (nextWallID == 8 || nextWallID == 16 || nextWallID == 23) return true;
+                    break;
                 }
                 case EAST: {
-                    if (wallId == 24 || wallId == 30 || wallId == 32) return true;
+                    if (nextWallID == 24 || nextWallID == 30 || nextWallID == 32) return true;
+                    break;
                 }
             }
         }
@@ -156,7 +169,22 @@ public class CellChecker {
     public HashMap<String, Integer> getCellIDsAtPosition(Vector2 pos) {
         HashMap<String, Integer> IDs = new HashMap<>();
 
-        for (MapLayer layer : player.getBoard().getLayers().getLayers()) {
+        MapLayers mapLayers = player.getBoard().getLayers().getLayers();
+
+
+        for (int i = 0; i < mapLayers.getCount(); i++) {
+            MapLayer layer = mapLayers.get(i);
+            TiledMapTileLayer newLayer = (TiledMapTileLayer) layer;
+
+            if (newLayer.getCell((int) pos.x, (int) pos.y) != null) {
+                int id = newLayer.getCell((int) pos.x, (int) pos.y).getTile().getId();
+                IDs.put(layer.getName(), id);
+
+            }
+        }
+
+            /*
+        for (MapLayer layer : mapLayers) {
             TiledMapTileLayer newLayer = (TiledMapTileLayer) layer;
 
             if (newLayer.getCell((int)pos.x, (int)pos.y) != null) {
@@ -164,6 +192,7 @@ public class CellChecker {
                 IDs.put(layer.getName(), id);
             }
         }
+        */
         return IDs;
     }
 }

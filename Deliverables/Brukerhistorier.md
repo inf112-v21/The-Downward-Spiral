@@ -146,3 +146,85 @@
     - Arbeidsoppgaver: 
         - Sjekke om spilleren er på en tile med vegg
         - Sjekke om spilleren prøver å gå til en tile med vegg
+### 16. Card GUI
+Som spiller ønsker jeg et brukergrensesnitt hvor jeg kan velge kort og eksekvere dem
+    - Akseptansekriterier:
+En seksjon av skjermen hvor 9 kort vises
+En seksjon av skjermen hvor spilleren sine valgte kort vises
+Spilleren kan trykke på kort for å velge dem
+Spilleren kan legge alle kortene tilbake med “Reset” knapp
+Spilleren kan eksekvere kortene med “Execute” knapp
+Alt låses når spilleren har låst inn kort
+    - Arbeidsoppgaver:
+Vise kort grafisk
+Gi alle kortene en onClick
+Når et kort er valgt flyttes det til en annen seksjon
+Lage design for knapper og skjerm i Photoshop
+Lage onClick for knapper
+Grafikk som kommer når spilleren har låst inn 5 kort
+Knapper blir låst til runden er over
+
+### 17. Faser og runder
+- Som spiller ønsker jeg at server håndterer runder og faser, slik at kortene som blir valgt blir utført i rett rekkefølge. Når en runde er ferdig skal alle få utdelt nye kort.
+    - Akseptansekriterier:
+        - Spiller sender valgte kort til server
+        - Server sorterer kort i faser når alle spillere har valgt kort
+        - Server sender kortene som skal bli utført til alle spillere i rett rekkefølge.
+        - Server deler ut nye kort til alle spillere når runden er ferdig.
+    - Arbeidsoppgaver:
+        - Lage metoder som sender valgte kort til server når man vil utføre dem
+        - Lage et system i server for å sortere kort i faser.
+        - Implementere logikk som gjør at server venter på alle spillere før den begynner å utføre kort
+        - Lage metode som deler ut kort til alle spillere etter at runden er ferdig
+
+### 18. Connect screen
+- Som spiller ønsker jeg et brukergrensesnitt hvor jeg kan koble meg til en server som blir hostet på nett
+    - Akseptansekriterier:
+        - En skjerm hvor man kan skrive inn en IP
+        - En knapp som kobler til en local host
+        - En knapp som kobler til IPen som er skrevet inn
+        - En knapp som går tilbake til menyen
+    - Arbeidsoppgaver:
+        - Lage skjerm med tekstfelt i Photoshop
+        - Lage knapper i Photoshop
+        - Implementere en input over tekstfeltet
+        - Teksten blir brukt til å koble til server
+        - Gi knapper onClick
+### 19. Wrenches
+- Som spiller ønsker jeg å ha mulighet til å fjerne en damage token når jeg går på en wrench
+    - Akseptansekriterier:
+        - Hvis en spiller har en damage token mister de en når de går på en wrench
+        - Hvis en spiller har en damage token fjernes den fra grafikken
+    - Arbeidsoppgaver:
+        - Sjekker posisjonen til en spiller (om de er på en wrench)
+        - Sjekker om spilleren har en damage token
+        - Hvis begge sjekk er sann så oppdateres damage tokens for spilleren
+        - Oppdater grafikk
+### 20. Damage tokens og life tokens
+- Som spiller ønsker jeg et brukergrensesnitt hvor jeg kan se hvor mange damage og life tokens jeg har
+    - Akseptansekriterier:
+        - Når en spiller tar skade får de en damage token
+        - Når en spiller dør mister de en life token
+    - Arbeidsoppgaver:
+        - Lage tokens i Photoshop
+        - Lage trays i Photoshop
+        - Implementere tomme trays i GUI
+        - Oppdatere trays med tokens når spiller tar skade eller mister liv
+### 21. Forskjellige player sprites
+- Som spiller ønsker jeg et brukergrensesnitt hvor jeg kan se hvor mange damage og life tokens jeg har
+    - Akseptansekriterier:
+        - Når en spiller kobler til vil den få en sprite
+        - Når en ny spiller kobler til får de en annen player sprite osv
+    - Arbeidsoppgaver:
+        - Sjekke når en spiller kobler seg til og tildele en player sprite
+
+### 22. Spiller kollisjon
+- Som spiller ønsker jeg å kunne dytte andre spillere for å ta over deres posisjon
+    - Akseptansekriterier:
+       - år spiller1 går i spiller2 dyttes spilleren med lavest prioritet i riktig retning
+        - Spilleren som vant prioriteten tar over posisjonen til den andre
+    - Arbeidsoppgaver:
+        - Sjekke om to spillere vil kollidere
+        - Sjekke hvem som har høyest prioritet
+        - Bevege spillere i den retningen de blir dyttet
+        - Spilleren med høyest prioritet tar over posisjonen
