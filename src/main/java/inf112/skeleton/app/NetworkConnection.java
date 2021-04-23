@@ -90,6 +90,7 @@ public class NetworkConnection {
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
                     }
+                    GameScreen.hud.setCardsIsSent(true);
 
                 }
             }

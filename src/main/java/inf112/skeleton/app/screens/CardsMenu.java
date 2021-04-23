@@ -24,8 +24,11 @@ public class CardsMenu {
     private final int scaleCardInt = 75;
     private final int buttonStart = 575;
 
+    private boolean cardsIsSent;
+
     public CardsMenu(RoboRallyGame game){
         this.game = game;
+        cardsIsSent = false;
         cardButtons = new ArrayList<>();
         cardButtonsPicked = new ArrayList<>();
         cardButtonRemove = new ArrayList<>();
@@ -77,8 +80,10 @@ public class CardsMenu {
         }
 
         // Execute button
-        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null && GameScreen.localPlayer.chosenCards.size() == 5){
-                // Sends hand to server
+        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null
+                && GameScreen.localPlayer.chosenCards.size() == 5 && !cardsIsSent){
+                // Sends hand to server if possible
+            cardsIsSent = true;
             System.out.println(GameScreen.localPlayer.chosenCards);
                 GameScreen.networkConnection.sendHand(GameScreen.localPlayer.chosenCards);
         }
@@ -120,5 +125,9 @@ public class CardsMenu {
             but.buttonHover(game);
         }
         game.batch.end();
+    }
+
+    public void setCardsIsSent(boolean cardsIsSent) {
+        this.cardsIsSent = cardsIsSent;
     }
 }
