@@ -2,24 +2,17 @@ package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 // Project imports
-import com.badlogic.gdx.math.Vector2; // kremt
 import inf112.skeleton.app.Board;
 import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.NetworkConnection;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Objects;
-
 
 public class GameScreen extends ScreenAdapter {
-
     static RoboRallyGame game;
     public static Board boardTiledMap;
 
@@ -101,6 +94,8 @@ public class GameScreen extends ScreenAdapter {
      */
 
     public boolean keyMovement(int keycode) {
+        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealCards();
@@ -118,6 +113,7 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         }
+        if (!isDebug) return true;
 
         // You can move with Arrows or WASD
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
@@ -157,7 +153,7 @@ public class GameScreen extends ScreenAdapter {
     private void moveOneForward() {
         localPlayer.chosenCards.add(new Card(0, "move_1", 1));
         localPlayer.executeCard(localPlayer.chosenCards.get(localPlayer.chosenCards.size()-1));
-        //localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
+        localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
         localPlayer.updateDirection();
     }
 
