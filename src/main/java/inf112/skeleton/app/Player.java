@@ -1,6 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -9,11 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.screens.EndScreen;
 import inf112.skeleton.app.screens.GameScreen;
-import org.lwjgl.system.CallbackI;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Player {
+    private int playerID;
     private final Vector2 position;
     private NetworkConnection connection;
 
@@ -21,6 +23,7 @@ public class Player {
     private final TiledMapTileLayer.Cell playerCell;
     private final TextureRegion[][] trRegionsPlayerStatus;
     private final TextureRegion[][] trRegionsPlayerDir;
+    private TextureRegion[][] trRegionsPlayer;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
@@ -39,10 +42,12 @@ public class Player {
     /**
      * Constructor
      */
-    public Player() {
+    public Player(int id) {
+        this.playerID = id;
         this.board = GameScreen.boardTiledMap;
         //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0,0);
+
 
         TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
         trRegionsPlayerStatus = trStatus.split(300, 300);
@@ -51,6 +56,10 @@ public class Player {
 
         playerCell = new TiledMapTileLayer.Cell();
         playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+
+        this.trRegionsPlayer = getPlayerTextures(id);
+        //System.out.println(id);
+        //playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
 
         direction = Direction.NORTH; // starting direction
         this.chosenCards = new ArrayList<>();
@@ -286,18 +295,6 @@ public class Player {
         }
     }
 
-    private Vector2 getStartingPosition(int id) {
-        switch (id) {
-            case (1): { return new Vector2(5, 0); }
-            case (2): { return new Vector2(6, 0); }
-            case (3): { return new Vector2(3, 1); }
-            case (4): { return new Vector2(8, 1); }
-            case (5): { return new Vector2(1, 2); }
-            case (6): { return new Vector2(10, 2); }
-        }
-        return new Vector2(0,0);
-    }
-
     /**
      * Rotated the player based on card type
      * @param type name of card
@@ -321,19 +318,38 @@ public class Player {
 
     // updates texture for robot based on direction (temp)
     public void updateDirection() {
+        //System.out.println(trRegionsPlayer);
         if (direction == Direction.NORTH) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
         }
         if (direction == Direction.EAST) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][0]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][2]));
         }
         if (direction == Direction.WEST) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][1]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][1]));
         }
         if (direction == Direction.SOUTH) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][2]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][3]));
         }
     }
+
+    /*
+    public void updateDirection() {
+        if (direction == Direction.NORTH) {
+            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][0]));
+        }
+        if (direction == Direction.EAST) {
+            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][1]));
+        }
+        if (direction == Direction.WEST) {
+            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][2]));
+        }
+        if (direction == Direction.SOUTH) {
+            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][3]));
+        }
+    }
+
+     */
 
     /**
      * Gets the position of a robot on the x-axis
@@ -404,6 +420,33 @@ public class Player {
             System.out.println("Full hand");
             System.out.println("Hit SPACE to execute your list of moves");
         }
+    }
+
+    private Vector2 getStartingPosition(int id) {
+        switch (id) {
+            case (1): { return new Vector2(5, 0); }
+            case (2): { return new Vector2(6, 0); }
+            case (3): { return new Vector2(3, 1); }
+            case (4): { return new Vector2(8, 1); }
+            case (5): { return new Vector2(1, 2); }
+            case (6): { return new Vector2(10, 2); }
+        }
+        return new Vector2(0,0);
+    }
+
+    private TextureRegion[][] getPlayerTextures(int requestedId) {
+        HashMap<Integer, TextureRegion[][]> playerTextures = new HashMap<>();
+
+        int id = 1;
+        File dir = new File("./assets/PlayerSprites");
+        for (String file : Objects.requireNonNull(dir.list())) {
+            TextureRegion textureDirections = new TextureRegion(new Texture("PlayerSprites/" + file));
+            TextureRegion[][] test = textureDirections.split(300, 300);
+
+            playerTextures.put(id, test);
+            id++;
+        }
+        return playerTextures.get(requestedId);
     }
 
     public Board getBoard() {

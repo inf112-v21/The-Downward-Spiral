@@ -2,6 +2,7 @@ package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 // Project imports
@@ -11,6 +12,10 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.NetworkConnection;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Objects;
 
 
 public class GameScreen extends ScreenAdapter {
@@ -26,14 +31,12 @@ public class GameScreen extends ScreenAdapter {
     private String connectIP;
 
     public GameScreen(RoboRallyGame game) {
-        this.game = game;
-        this.connectIP = "127.0.0.1";
+        new GameScreen(game, "127.0.0.1");
     }
 
     public GameScreen(RoboRallyGame game, String IP){
         this.game = game;
         this.connectIP = IP;
-
     }
 
     /**
@@ -52,9 +55,10 @@ public class GameScreen extends ScreenAdapter {
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
 
-        localPlayer = new Player();
+        localPlayer = new Player(1);
         networkConnection = new NetworkConnection(connectIP);
         localPlayer.setConnection(networkConnection);
+
 
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
