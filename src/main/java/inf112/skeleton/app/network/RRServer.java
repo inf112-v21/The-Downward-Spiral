@@ -119,9 +119,6 @@ public class RRServer extends Listener {
 
                 // Add new player to players list
                 players.put(c.getID(), player);
-
-
-
             }
 
             // When a client disconnects
