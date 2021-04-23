@@ -112,3 +112,5 @@ You need to manually close main after.
 
 ## The graphics for the victory screen is somewhat broken.
 the buttons and functionality is working properly, but the screen is behaving strange.
+
+## Players who go into holes is not rendered before the end of the round for other players
