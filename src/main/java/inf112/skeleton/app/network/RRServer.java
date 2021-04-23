@@ -4,7 +4,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import inf112.skeleton.app.Direction;
-import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.ProgramCards.Deck;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
