@@ -27,6 +27,7 @@ public class EndScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+
         Gdx.input.setInputProcessor(new InputAdapter() {
 
             @Override
@@ -58,7 +59,7 @@ public class EndScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(.25f, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-        game.batch.draw(victoryScreen,0,0);
+        game.batch.draw(victoryScreen,0,0,600,800);
         restartButton.buttonHover(game);
         exitButton.buttonHover(game);
         game.batch.end();

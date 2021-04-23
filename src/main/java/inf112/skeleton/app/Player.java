@@ -204,9 +204,21 @@ public class Player {
                             move(Direction.SOUTH, 1);
                             break;
                         }
-                        case(14): {
+                        case(22): {
+                            move(Direction.WEST, 1);
+                            move(Direction.WEST, 1);
+                            break;
+                        }
+                        case(14):
+                        case(78): {
                             move(Direction.EAST, 1);
                             move(Direction.EAST, 1);
+                            break;
+                        }
+                        case(13):
+                        case(27): {
+                            move(Direction.NORTH, 1);
+                            move(Direction.NORTH, 1);
                             break;
                         }
                         default: {

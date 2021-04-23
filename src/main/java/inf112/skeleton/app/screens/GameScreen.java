@@ -15,6 +15,7 @@ import inf112.skeleton.app.ProgramCards.Card;
 public class GameScreen extends ScreenAdapter {
     static RoboRallyGame game;
     public static Board boardTiledMap;
+    private final Board gameBoard;
 
     private OrthogonalTiledMapRenderer render;
 
@@ -23,13 +24,10 @@ public class GameScreen extends ScreenAdapter {
     public static NetworkConnection networkConnection;
     private String connectIP;
 
-    public GameScreen(RoboRallyGame game) {
-        new GameScreen(game, "127.0.0.1");
-    }
-
-    public GameScreen(RoboRallyGame game, String IP){
+    public GameScreen(RoboRallyGame game, String IP, Board board) {
         this.game = game;
         this.connectIP = IP;
+        this.gameBoard = board;
     }
 
     /**
@@ -38,7 +36,7 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void show() {
-        boardTiledMap = new Board("assets/Risky_Exchange.tmx");
+        boardTiledMap = gameBoard;
 
         //Creates a bird's eye view of the board/game
         OrthographicCamera camera = new OrthographicCamera();
