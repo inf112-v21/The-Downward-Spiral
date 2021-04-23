@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Player {
-    private int playerID;
     private final Vector2 position;
     private NetworkConnection connection;
 
@@ -29,7 +28,6 @@ public class Player {
     private int lifeTokens = 3;
     private int damageTokens = 0;
 
-    private Vector2 startingPosition;
     public Direction direction;
 
     public ArrayList<Card> selectableCards; // hand
@@ -41,23 +39,15 @@ public class Player {
      * Constructor
      */
     public Player(int id) {
-        this.playerID = id;
         this.board = GameScreen.boardTiledMap;
-        //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0,0);
 
-
-
-
         playerCell = new TiledMapTileLayer.Cell();
-
         this.trRegionsPlayer = getPlayerTextures(id);
-        //System.out.println(id);
         playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
 
         direction = Direction.NORTH; // starting direction
         this.chosenCards = new ArrayList<>();
-
     }
 
     public void setConnection(NetworkConnection con) {
@@ -255,7 +245,7 @@ public class Player {
                 }
             }
         }
-        if (!(this.connection == null)) {
+        if (this.connection != null) {
             connection.sendPosition(getX(), getY(), direction);
         }
     }
@@ -410,8 +400,8 @@ public class Player {
             case (4): { return new Vector2(8, 1); }
             case (5): { return new Vector2(1, 2); }
             case (6): { return new Vector2(10, 2); }
+            default: { return new Vector2(0,0); }
         }
-        return new Vector2(0,0);
     }
 
     private TextureRegion[][] getPlayerTextures(int requestedId) {
