@@ -23,11 +23,10 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
-    private final int maxPlayers = 10;
+    private final int maxPlayers = 6;
     private final String serverIP;
     private final int serverPort = 27960;
     private static Client client = new Client();
-    //public Player localPlayer = new Player();
 
     private HashMap<Integer, Player> networkPlayerQueue = new HashMap<>();
     private HashMap<Integer, Player> networkPlayers = new HashMap<>();
@@ -40,7 +39,7 @@ public class NetworkConnection {
     private void connectionSetup() {
         // Create players and store them in a queue, we do this since Players must be created by same thread which runs the game.
         for (int i = 0; i < this.maxPlayers; i++) {
-            networkPlayerQueue.put(i, new Player());
+            networkPlayerQueue.put(i, new Player(i+1));
         }
 
 
@@ -195,7 +194,6 @@ public class NetworkConnection {
         PacketRespondHand packet = new PacketRespondHand();
         packet.hand = hand;
         client.sendTCP(packet);
-
     }
 
     public int getClientID() {

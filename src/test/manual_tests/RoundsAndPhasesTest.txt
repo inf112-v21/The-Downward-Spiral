@@ -1,0 +1,29 @@
+RUNDER OG FASER manuelle tester
+
+    * En spiller skal ikke kunne utføre kortene når det er valgt mindre 5 kort
+        * Start en ny server og koble til en ny klient
+        * Velg fire kort til og trykk "EXECUTE"
+        * Hvis serveren ikke utfører kortene som er valgt har testen passert.
+
+    * En spiller skal kunne utføre kortene når det er valgt 5 kort
+        * Start en ny server og koble til en ny klient
+        * Velg fem kort til og trykk "EXECUTE"
+        * Hvis serveren utfører kortene som er valgt har testen passert.
+
+    * Når flere spillere har valgt sine kort, skal server sortere kort inn i faser
+        * Start en ny server, og koble til to nye klienter
+        * Velg 5 kort hos begge spillere og trykk "EXECUTE"
+        * Kort skal sorteres inn i lister for hver fase
+        * Dersom serveren har sortert kortene rett, har testen passert.
+
+    * Når alle spillere har valgt kort, skal server utføre kortene i rett rekkefølge
+        * Start en ny server, og koble til to nye klienter
+        * Velg 5 kort hos begge spillere og trykk "EXECUTE"
+        * Kortene skal utføres i rett rekkefølge, ett kort per spiller i hver fase
+        * Dersom kortene blir utført i rett rekkefølge har testen passert.
+
+    * Når en runde er ferdig skal alle spillere få nye kort
+         * Start en ny server, og koble til to nye klienter
+         * Velg 5 kort hos begge spillere og trykk "EXECUTE"
+         * Når runden er ferdig skal server sende tilbake nye kort
+         * Dersom kortene blir oppdatert rett, har testen passert.

@@ -38,20 +38,14 @@ public class MenuScreen extends ScreenAdapter {
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
                 if (Button.onClick(game, playButton, x, y)){
-                    System.out.println("Host & Play");
-                    RRServer server = new RRServer();
-                    Client client = new Client();
-                    System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new selectMapScreen(game, true, "", ""));
                 }
                 if (Button.onClick(game, connectButton, x, y)){
                     game.setScreen(new ConnectScreen(game));
 
                 }
                 if (Button.onClick(game, hostButton, x, y)){
-                    RRServer server = new RRServer();
-                    Gdx.app.exit();
-                    dispose();
+                    game.setScreen(new selectMapScreen(game, false, "", ""));
                 }
                 return true;
             }

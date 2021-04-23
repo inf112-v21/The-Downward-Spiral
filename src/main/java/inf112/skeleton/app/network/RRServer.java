@@ -47,7 +47,6 @@ public class RRServer extends Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         // Listen for packets being sent to the server
         server.addListener(new Listener() {
             public void received (Connection c, Object object) {
@@ -119,9 +118,6 @@ public class RRServer extends Listener {
 
                 // Add new player to players list
                 players.put(c.getID(), player);
-
-
-
             }
 
             // When a client disconnects
@@ -147,6 +143,16 @@ public class RRServer extends Listener {
                 packet.playerID = selectedCardsThisRound.get(card);
                 server.sendToAllTCP(packet);
             }
+        }
+        deck.createDeck();
+
+        for (Integer playerID : players.keySet()) {
+            ArrayList<Card> hand = deck.deal(9);
+
+            PacketRespondHand response = new PacketRespondHand();
+            response.hand = hand;
+            server.sendToTCP(playerID, response);
+
         }
 
     }
