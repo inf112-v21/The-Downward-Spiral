@@ -27,18 +27,27 @@ public class CardsMenu {
     private final Texture lifeTray;
     private final Texture damageToken;
     private final Texture lifeToken;
+    private final Texture lockedScreen;
+    private final Texture lockedButton;
+
+    private boolean cardsIsSent;
 
     public CardsMenu(RoboRallyGame game){
         this.game = game;
+        cardsIsSent = false;
         cardButtons = new ArrayList<>();
         cardButtonsPicked = new ArrayList<>();
         cardButtonRemove = new ArrayList<>();
         cardTextures = new HashMap<>();
+
         damageTray = new Texture("CardsMenu/damageTray.png");
         lifeTray = new Texture("CardsMenu/lifeTray.png");
 
         damageToken = new Texture("CardsMenu/damageToken.png");
         lifeToken = new Texture("CardsMenu/lifeToken.png");
+
+        lockedScreen = new Texture("CardsMenu/locked.png");
+        lockedButton = new Texture("CardsMenu/lockedButton.png");
 
 
         File dir = new File("./assets/Cards");
@@ -80,14 +89,16 @@ public class CardsMenu {
     public void touchCardUp(int x, int y) {
 
         // Reset Button
-        if (Button.onClick(game, resetButton, x, y)){
+        if (Button.onClick(game, resetButton, x, y) && !cardsIsSent){
             GameScreen.localPlayer.chosenCards.clear();
             setSelectableCards();
         }
 
         // Execute button
-        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null && GameScreen.localPlayer.chosenCards.size() == 5){
-                // Sends hand to server
+        if (Button.onClick(game, executeButton, x, y) && GameScreen.localPlayer.chosenCards != null
+                && GameScreen.localPlayer.chosenCards.size() == 5 && !cardsIsSent){
+                // Sends hand to server if possible
+            cardsIsSent = true;
             System.out.println(GameScreen.localPlayer.chosenCards);
                 GameScreen.networkConnection.sendHand(GameScreen.localPlayer.chosenCards);
         }
@@ -120,8 +131,6 @@ public class CardsMenu {
     public void renderCard() {
         game.batch.begin();
         game.batch.draw(cardMenuBackground,600,0);
-        resetButton.buttonHover(game);
-        executeButton.buttonHover(game);
 
         // Render damage tokens
         game.batch.draw(damageTray, 625, 200, 350, 50);
@@ -141,6 +150,19 @@ public class CardsMenu {
         for (Button but: cardButtonsPicked){
             but.buttonHover(game);
         }
+        if (cardsIsSent){
+            game.batch.draw(lockedScreen, 610, 410);
+            game.batch.draw(lockedButton, 625, 20, 150, 63);
+            game.batch.draw(lockedButton, 825, 20, 150, 63);
+
+        }else{
+            resetButton.buttonHover(game);
+            executeButton.buttonHover(game);
+        }
         game.batch.end();
+    }
+
+    public void setCardsIsSent(boolean cardsIsSent) {
+        this.cardsIsSent = cardsIsSent;
     }
 }

@@ -1,8 +1,6 @@
 package inf112.skeleton.app;
 
 // Network imports
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -18,12 +16,9 @@ import inf112.skeleton.app.network.packets.PacketRequestHand;
 import inf112.skeleton.app.network.packets.PacketExecuteCard;
 import inf112.skeleton.app.screens.GameScreen;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 6;
@@ -93,6 +88,12 @@ public class NetworkConnection {
                         GameScreen.localPlayer.executeCard(packet.card);
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
+                    }
+                    GameScreen.localPlayer.chosenCards.remove(0);
+                    if (GameScreen.localPlayer.chosenCards.size() < 1){
+                        GameScreen.hud.setCardsIsSent(false);
+                        GameScreen.localPlayer.selectableCards.clear();
+                        GameScreen.localPlayer.chosenCards.clear();
                     }
                 }
             }

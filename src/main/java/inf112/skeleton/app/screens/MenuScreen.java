@@ -35,8 +35,6 @@ public class MenuScreen extends ScreenAdapter {
 
         // Checks for input and create server and client accordingly
         Gdx.input.setInputProcessor(new InputAdapter() {
-            // This is temporary, only for testing purposes
-            // TODO change to buttons
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
                 if (Button.onClick(game, playButton, x, y)){
@@ -44,7 +42,6 @@ public class MenuScreen extends ScreenAdapter {
                     RRServer server = new RRServer();
                     Client client = new Client();
                     System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                    System.out.println("Passed 1 here");
                     game.setScreen(new GameScreen(game));
                 }
                 if (Button.onClick(game, connectButton, x, y)){
