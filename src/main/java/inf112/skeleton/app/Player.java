@@ -412,4 +412,13 @@ public class Player {
     public Vector2 getPosition() {
         return position;
     }
+
+    public int getLifeTokens() {
+        return lifeTokens;
+    }
+
+    public int getDamageTokens() {
+        return damageTokens;
+    }
+
 }
