@@ -23,6 +23,10 @@ public class CardsMenu {
     public static BitmapFont font;
     private final int scaleCardInt = 75;
     private final int buttonStart = 575;
+    private final Texture damageTray;
+    private final Texture lifeTray;
+    private final Texture damageToken;
+    private final Texture lifeToken;
 
     private boolean cardsIsSent;
 
@@ -33,6 +37,11 @@ public class CardsMenu {
         cardButtonsPicked = new ArrayList<>();
         cardButtonRemove = new ArrayList<>();
         cardTextures = new HashMap<>();
+        damageTray = new Texture("CardsMenu/damageTray.png");
+        lifeTray = new Texture("CardsMenu/lifeTray.png");
+
+        damageToken = new Texture("CardsMenu/damageToken.png");
+        lifeToken = new Texture("CardsMenu/lifeToken.png");
 
 
         File dir = new File("./assets/Cards");
@@ -99,7 +108,7 @@ public class CardsMenu {
                 for (Card card : GameScreen.localPlayer.selectableCards) {
                     if (button.getInactive().toString().equals("Cards/" + card.getInactivePath()) && cardButtonsPicked.size() < 5) {
                             cardButtonsPicked.add(new Button(button.getActive(), button.getInactive(),
-                                        buttonWidth, buttonHeight, (buttonY < 600 ? buttonY - 200  :  buttonY - 300 ),
+                                        buttonWidth, buttonHeight, (buttonY < 600 ? buttonY - 150  :  buttonY - 250 ),
                                     GameScreen.hud.buttonStart + GameScreen.hud.scaleCardInt + (GameScreen.hud.scaleCardInt * cardButtonsPicked.size())));
                                 cardButtonRemove.add(button);
                                 GameScreen.localPlayer.chooseCard(card);
@@ -118,6 +127,19 @@ public class CardsMenu {
         game.batch.draw(cardMenuBackground,600,0);
         resetButton.buttonHover(game);
         executeButton.buttonHover(game);
+
+        // Render damage tokens
+        game.batch.draw(damageTray, 625, 200, 350, 50);
+        for (int i = 0; i < GameScreen.localPlayer.getDamageTokens(); i++){
+            game.batch.draw(damageToken, 643+(32*i), 210, 29, 29);
+        }
+
+        // Render life tokens
+        game.batch.draw(lifeTray, 735, 290, 130, 50);
+        for (int i = 0; i < GameScreen.localPlayer.getLifeTokens(); i++){
+            game.batch.draw(lifeToken, 753+(33*i), 300, 29, 29);
+        }
+
         for (Button button: cardButtons){
             button.buttonHover(game);
         }
