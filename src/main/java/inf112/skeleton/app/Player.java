@@ -117,6 +117,8 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
+        if (getX() <= -5 || getY() <= -5) return;
+
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
 
@@ -253,6 +255,9 @@ public class Player {
                 }
             }
         }
+        if (!(this.connection == null)) {
+            connection.sendPosition(getX(), getY(), direction);
+        }
     }
 
     public void takeDamage() {
@@ -269,18 +274,18 @@ public class Player {
         if (this.connection == null) return;
         this.lifeTokens -= 1;
         System.out.println("You lost a life token and now have " + lifeTokens + " left");
-        /*System.out.println(this.connection);
+
         int x = (int) getStartingPosition(connection.getClientID()).x;
         int y = (int) getStartingPosition(connection.getClientID()).y;
 
-        System.out.println(x + " | " + y);
         setPosition(x, y, Direction.NORTH);
-        connection.sendPosition(x, y, direction);
-        */
+        //connection.sendPosition(x, y, direction);
 
         if (this.lifeTokens <= 0) {
             // The player loses
-            //playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+            // Quick fix
+            setPosition(-10,-10, Direction.NORTH);
+            connection.sendPosition(-10,-10,Direction.NORTH);
             System.out.println("You lost the game");
         } else {
             this.damageTokens = 0; // (Y/N)
@@ -325,24 +330,6 @@ public class Player {
             playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][3]));
         }
     }
-
-    /*
-    public void updateDirection() {
-        if (direction == Direction.NORTH) {
-            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][0]));
-        }
-        if (direction == Direction.EAST) {
-            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][1]));
-        }
-        if (direction == Direction.WEST) {
-            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][2]));
-        }
-        if (direction == Direction.SOUTH) {
-            playerCell.setTile(new StaticTiledMapTile(getTextures()[0][3]));
-        }
-    }
-
-     */
 
     /**
      * Gets the position of a robot on the x-axis
