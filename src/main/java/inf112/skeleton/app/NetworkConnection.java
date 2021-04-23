@@ -8,17 +8,19 @@ import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.network.ClassRegister;
 import inf112.skeleton.app.network.NetworkPlayer;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
+import inf112.skeleton.app.network.packets.PacketKeepAlive;
 import inf112.skeleton.app.network.packets.PacketNewConnectionResponse;
-import inf112.skeleton.app.network.packets.PacketRemovePlayer;
 import inf112.skeleton.app.network.packets.PacketUpdatePosition;
-import inf112.skeleton.app.network.packets.PacketRespondHand;
+import inf112.skeleton.app.network.packets.PacketRemovePlayer;
 import inf112.skeleton.app.network.packets.PacketRequestHand;
+import inf112.skeleton.app.network.packets.PacketRespondHand;
 import inf112.skeleton.app.network.packets.PacketExecuteCard;
 import inf112.skeleton.app.screens.GameScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 6;
@@ -86,7 +88,6 @@ public class NetworkConnection {
 
                     if (packet.playerID == client.getID()) {
                         GameScreen.localPlayer.executeCard(packet.card);
-
                         GameScreen.localPlayer.chosenCards.remove(0);
                         if (GameScreen.localPlayer.chosenCards.size() < 1){
                             GameScreen.hud.setCardsIsSent(false);
@@ -96,6 +97,22 @@ public class NetworkConnection {
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
                     }
+
+
+                    // Client needs to send a packet back to prevent a timeout
+                    client.setKeepAliveTCP(10*1000);
+                    client.sendTCP(new PacketKeepAlive());
+
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
+
 
                 }
             }
