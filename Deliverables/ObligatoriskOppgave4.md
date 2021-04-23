@@ -26,7 +26,7 @@ slik at alle henger med hvordan produktet ser og skal se ut.
 Noe vi kunne gjort bedre er å ha startet med en god kodestil slik at vi ikke måtte bruke store deler av tiden på å refaktorere koden, 
 dette skjer gjerne når det er mange som jobber på noe samtidig.
 https://trello.com/b/D3Y3MkLV/roborally
-Under ser du bilde av Trello-tavlen vår, den er nå ganske blank nå ettersom vi har lagt til fortløpende.
+- Under ser du bilde av Trello-tavlen vår, den er nå ganske blank nå ettersom vi har lagt til fortløpende.
 ![image](https://user-images.githubusercontent.com/1353611/115930229-6496a080-a489-11eb-83e3-7136fb79f637.png)
 I starten var det gjerne litt stille i voice channelen på discord men nå er det ikke like stille lengre. 
 Vi snakker og planlegger godt sammen og stiller hverandre spørsmål om det er noe vi lurer på om noe noen har gjort. 
