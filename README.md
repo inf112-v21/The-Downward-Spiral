@@ -49,7 +49,6 @@ Moving players with WASD is only availible in debug mode.
 If there are any problems try looking at [errorhandling](#known-bugs-and-possible-solutions).
 
 ___
-
 # Description 
 
 RoboRally is a board game where the aim is to collect flags to win the game.
@@ -58,6 +57,21 @@ The player pick cards from a random collection to program the robot to move.
 The cards can move the robot forwards, backwards or rotate the robot. Robots can also take damage, and their current
 health will affect how you can influence the robot. The fastest player to collect all flags wins.
 The classic board game can have 2-8 players.
+
+## How to play
+First you have to connect to a server or create your own as described above.
+You should wait for all players to connect before you continue.
+When all the player are connected each player can hit `Enter` to draw cards.
+Now you will see the cards on the right of the game and here you can click on them to choose what card to start with.
+The order you click on the card is the order you want your robot to move.
+After you are done picking out cards, each player must click execute.
+Note that to click execute the program requires you to have picked 5 cards.
+Now all the players should move in turn, and the cards will be executed.
+After this the round will end, and you will get new cards.
+To win you need to collect all the flags in right order from 1-3.
+Each time you go outside the map or in a hole you will lose a lifetoken.
+You also lose a lifetoken when you have been damaged 10 times by a laser.
+If you lose all the lifetokens you will die and the player will no longer be on the screen.
 
 # Known bugs and possible solutions
 
@@ -112,6 +126,9 @@ The exit button only closes the game window.
 You need to manually close main after.
 
 ## The graphics for the victory screen is somewhat broken.
-the buttons and functionality is working properly, but the screen is behaving strange.
+The buttons and functionality is working properly, but the screen is behaving strange.
 
-## Players who go into holes is not rendered before the end of the round for other players
+## Players who lose a lifetoken is not rendered properly before the end of the round for other players
+This happens because the player is moved back to their starting position, 
+which causes some problems for the server.
+This can happen when you go into a hole, move out of the map or gets 10 damagetokens.
