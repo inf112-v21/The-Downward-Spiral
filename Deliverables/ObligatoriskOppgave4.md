@@ -18,6 +18,8 @@ Vi synes prosjektet har gått ganske greit. Vi føler vi har fått gjort en god 
 Vi har også blitt bedre med denne leveransen med å planlegge arbeidsoppgavene på en slik måte at ingen må vente på at en annen del av koden er ferdig før de kan begynne på sin oppgave. 
 Vi planla alt litt tidligere slik at vi kunne få gjort litt mer kodemessig og vi har alle blitt litt flinkere på git og github.
 Alle har nå en grei forståelse av branches, pull-requests og merge.
+På større pull-requests har vi sørget for å ha en ganske god beskrivelse med bilder og chekclister.
+På mindre pull-requests så har vi valgt å holde det til noen beskrivende setninger.
 Dette var de tre punktene vi sa ved forrige leveranse at vi skulle bli flinkere med og det føler vi at vi har fått gjort. 
 I helheten av prosjektet føler vi at vi har vært ganske flink med å planlegge hva vi har lyst til å gjøre sammen, 
 slik at alle henger med hvordan produktet ser og skal se ut. 
