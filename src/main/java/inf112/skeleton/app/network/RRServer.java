@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.ProgramCards.Deck;
 import inf112.skeleton.app.network.packets.PacketAddPlayer;
@@ -47,7 +48,6 @@ public class RRServer extends Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         // Listen for packets being sent to the server
         server.addListener(new Listener() {
             public void received (Connection c, Object object) {
@@ -147,6 +147,16 @@ public class RRServer extends Listener {
                 packet.playerID = selectedCardsThisRound.get(card);
                 server.sendToAllTCP(packet);
             }
+        }
+        deck.createDeck();
+
+        for (Integer playerID : players.keySet()) {
+            ArrayList<Card> hand = deck.deal(9);
+
+            PacketRespondHand response = new PacketRespondHand();
+            response.hand = hand;
+            server.sendToTCP(playerID, response);
+
         }
 
     }
