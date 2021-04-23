@@ -21,3 +21,9 @@ RUNDER OG FASER manuelle tester
         * Velg 5 kort hos begge spillere og trykk "EXECUTE"
         * Kortene skal utføres i rett rekkefølge, ett kort per spiller i hver fase
         * Dersom kortene blir utført i rett rekkefølge har testen passert.
+
+    * Når en runde er ferdig skal alle spillere få nye kort
+         * Start en ny server, og koble til to nye klienter
+         * Velg 5 kort hos begge spillere og trykk "EXECUTE"
+         * Når runden er ferdig skal server sende tilbake nye kort
+         * Dersom kortene blir oppdatert rett, har testen passert.
