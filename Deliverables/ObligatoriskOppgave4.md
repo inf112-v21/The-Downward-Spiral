@@ -23,7 +23,7 @@ slik at alle henger med hvordan produktet ser og skal se ut.
 Noe vi kunne gjort bedre er å ha startet med en god kodestil slik at vi ikke måtte bruke store deler av tiden på å refaktorere koden, 
 dette skjer gjerne når det er mange som jobber på noe samtidig.
 https://trello.com/b/D3Y3MkLV/roborally
-SKJERMDUMP!!!
+![image](https://user-images.githubusercontent.com/1353611/115881430-06979800-a44c-11eb-93d6-ef3c863f9d49.png)
 I starten var det gjerne litt stille i voice channelen på discord men nå er det ikke like stille lengre. 
 Vi snakker og planlegger godt sammen og stiller hverandre spørsmål om det er noe vi lurer på om noe noen har gjort. 
 Vi lagde en egen chat på discord og det har hjulpet mye med å få raske svar fra alle siden det er ikke alle som sjekker INF112 discorden så ofte. 
