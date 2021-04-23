@@ -15,6 +15,7 @@ public class selectMapScreen extends ScreenAdapter {
     private final Button RiskyExchange;
     private final Button FactoryReject;
     private final Button backToMenu;
+    private final String serverIP;
     private Boolean playAndHost;
     private String connectType;
 
@@ -23,6 +24,7 @@ public class selectMapScreen extends ScreenAdapter {
         this.game = game;
         this.playAndHost = play;
         this.connectType = connectType;
+        this.serverIP = IP;
         RiskyExchange = new Button(new Texture("Menu/riskyExchangeActive.png"),
                 new Texture("Menu/riskyExchangeInactive.png"), 300, 86, 500, 300);
         FactoryReject = new Button(new Texture("Menu/factoryRejectActive.png"),
@@ -70,7 +72,7 @@ public class selectMapScreen extends ScreenAdapter {
         }else if (connectType == "customIP") {
             Client client = new Client();
             System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-            game.setScreen(new GameScreen(game, connectType, new Board("assets/" + map +".tmx")));
+            game.setScreen(new GameScreen(game, serverIP, new Board("assets/" + map +".tmx")));
 
         } else {
             RRServer server = new RRServer();
