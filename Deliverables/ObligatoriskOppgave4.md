@@ -16,13 +16,15 @@ Vi valgte å fokusere mer på å rydde opp i koden vår på forrige leveranse og
 fordi det har gjort det mye lettere for oss å implementere nye ting.
 Vi synes prosjektet har gått ganske greit. Vi føler vi har fått gjort en god del på selve leveransen som er over MVP. 
 Vi har også blitt bedre med denne leveransen med å planlegge arbeidsoppgavene på en slik måte at ingen må vente på at en annen del av koden er ferdig før de kan begynne på sin oppgave. 
-Vi planla alt litt tidligere slik at vi kunne få gjort litt mer kodemessig og vi har alle blitt litt flinkere på Git. 
+Vi planla alt litt tidligere slik at vi kunne få gjort litt mer kodemessig og vi har alle blitt litt flinkere på git og github.
+Alle har nå en grei forståelse av branches, pull-requests og merge.
 Dette var de tre punktene vi sa ved forrige leveranse at vi skulle bli flinkere med og det føler vi at vi har fått gjort. 
 I helheten av prosjektet føler vi at vi har vært ganske flink med å planlegge hva vi har lyst til å gjøre sammen, 
 slik at alle henger med hvordan produktet ser og skal se ut. 
 Noe vi kunne gjort bedre er å ha startet med en god kodestil slik at vi ikke måtte bruke store deler av tiden på å refaktorere koden, 
 dette skjer gjerne når det er mange som jobber på noe samtidig.
 https://trello.com/b/D3Y3MkLV/roborally
+Under ser du bilde av Trello-tavlen vår, den er nå ganske blank nå ettersom vi har lagt til fortløpende.
 ![image](https://user-images.githubusercontent.com/1353611/115881430-06979800-a44c-11eb-93d6-ef3c863f9d49.png)
 I starten var det gjerne litt stille i voice channelen på discord men nå er det ikke like stille lengre. 
 Vi snakker og planlegger godt sammen og stiller hverandre spørsmål om det er noe vi lurer på om noe noen har gjort. 
