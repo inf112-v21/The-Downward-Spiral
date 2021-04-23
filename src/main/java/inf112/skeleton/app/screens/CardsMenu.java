@@ -72,7 +72,6 @@ public class CardsMenu {
             int i = 1;
             int k = 1;
             for (Card card : GameScreen.localPlayer.selectableCards) {
-                //System.out.println(card);
                 if (i < 6) {
                     cardButtons.add(new Button(cardTextures.get(card.getActivePath()), cardTextures.get(card.getInactivePath()), 70, 80, 670, GameScreen.hud.buttonStart+(GameScreen.hud.scaleCardInt * i)));
                     i += 1;

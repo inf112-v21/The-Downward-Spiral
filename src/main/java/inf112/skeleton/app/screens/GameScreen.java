@@ -98,8 +98,6 @@ public class GameScreen extends ScreenAdapter {
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealCards();
-            System.out.println("To program your robot hit the number corresponding to the move you want to add to your list of moves");
-            System.out.println("When you have selected up to 5 moves you can hit SPACE to execute your list of moves");
         }
         // Use space to execute your program
         if (localPlayer.chosenCards != null) {
@@ -142,7 +140,6 @@ public class GameScreen extends ScreenAdapter {
                 GameScreen.localPlayer.executeCard(card);
                 for (Player player: networkConnection.getNetworkPlayers().values()) {
                     player.executeCard(card);
-
             }
         }
         return true;
