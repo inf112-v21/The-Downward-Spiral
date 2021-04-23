@@ -38,14 +38,14 @@ public class MenuScreen extends ScreenAdapter {
             @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
                 if (Button.onClick(game, playButton, x, y)){
-                    game.setScreen(new selectMapScreen(game, true));
+                    game.setScreen(new selectMapScreen(game, true, "", ""));
                 }
                 if (Button.onClick(game, connectButton, x, y)){
                     game.setScreen(new ConnectScreen(game));
 
                 }
                 if (Button.onClick(game, hostButton, x, y)){
-                    game.setScreen(new selectMapScreen(game, false));
+                    game.setScreen(new selectMapScreen(game, false, "", ""));
                 }
                 return true;
             }

@@ -60,17 +60,13 @@ public class ConnectScreen extends ScreenAdapter {
             public boolean touchUp(int x, int y, int pointer, int button) {
 
                 if (Button.onClick(game, connectToLocal, x, y)) {
-                    Client client = new Client();
-                    System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new selectMapScreen(game, false, "localhost", ""));
                 }else if (Button.onClick(game, inputAddress, x, y)) {
                     inputIP = "|";
                     userWriting = true;
                     // Wrote own text-field input for more flexibility
                 }else if (Button.onClick(game, connectToAddress, x, y)) {
-                    Client client = new Client();
-                    client.discoverHost(27960, 5000);
-                    game.setScreen(new GameScreen(game, inputIP.replace("|", "")));
+                    game.setScreen(new selectMapScreen(game, false, "customIP", inputIP.replace("|", "")));
                 }else if (Button.onClick(game, backToMenu, x, y)) {
                     game.setScreen(new MenuScreen(game));
                 }else {
@@ -84,9 +80,7 @@ public class ConnectScreen extends ScreenAdapter {
                 if (userWriting && (Input.Keys.toString(keyCode).length() <= 1 || keyCode == Input.Keys.BACKSPACE || keyCode == Input.Keys.ENTER)){
                     inputIP = inputIP.replace("|", "");
                     if (keyCode == Input.Keys.ENTER){
-                        Client client = new Client();
-                        client.discoverHost(27960, 5000);
-                        game.setScreen(new GameScreen(game, inputIP.replace("|", "")));
+                        game.setScreen(new selectMapScreen(game, false, "customIP", inputIP.replace("|", "")));
                     }
                     if (keyCode == Input.Keys.BACKSPACE && inputIP.length() >= lastInput.length()) {
                         inputIP = inputIP.substring(0, inputIP.length() - lastInput.length());

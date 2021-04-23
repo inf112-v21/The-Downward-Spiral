@@ -25,20 +25,9 @@ public class GameScreen extends ScreenAdapter {
     public static NetworkConnection networkConnection;
     private String connectIP;
 
-    public GameScreen(RoboRallyGame game) {
-        this.game = game;
-        this.connectIP = "127.0.0.1";
-        this.gameBoard = new Board("assets/" + "serverString her" +".tmx");
-    }
-
-    public GameScreen(RoboRallyGame game, String IP){
+    public GameScreen(RoboRallyGame game, String IP, Board board) {
         this.game = game;
         this.connectIP = IP;
-
-    }
-
-    public GameScreen(RoboRallyGame game, Board board) {
-        this.game = game;
         this.gameBoard = board;
     }
 

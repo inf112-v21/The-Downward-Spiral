@@ -16,11 +16,13 @@ public class selectMapScreen extends ScreenAdapter {
     private final Button FactoryReject;
     private final Button backToMenu;
     private Boolean playAndHost;
+    private String connectType;
 
 
-    public selectMapScreen(RoboRallyGame game, Boolean play) {
+    public selectMapScreen(RoboRallyGame game, Boolean play, String connectType, String IP) {
         this.game = game;
         this.playAndHost = play;
+        this.connectType = connectType;
         RiskyExchange = new Button(new Texture("Menu/riskyExchangeActive.png"),
                 new Texture("Menu/riskyExchangeInactive.png"), 300, 86, 500, 300);
         FactoryReject = new Button(new Texture("Menu/factoryRejectActive.png"),
@@ -59,8 +61,18 @@ public class selectMapScreen extends ScreenAdapter {
             RRServer server = new RRServer();
             Client client = new Client();
             System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-            game.setScreen(new GameScreen(game, new Board("assets/" + map +".tmx"));
-        }else{
+            game.setScreen(new GameScreen(game, "127.0.0.1", new Board("assets/" + map +".tmx")));
+        } else if (connectType == "localhost") {
+            Client client = new Client();
+            System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
+            game.setScreen(new GameScreen(game, "127.0.0.1", new Board("assets/" + map +".tmx")));
+
+        }else if (connectType == "customIP") {
+            Client client = new Client();
+            System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
+            game.setScreen(new GameScreen(game, connectType, new Board("assets/" + map +".tmx")));
+
+        } else {
             RRServer server = new RRServer();
             Gdx.app.exit();
             dispose();
