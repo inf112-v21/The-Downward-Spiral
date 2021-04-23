@@ -11,9 +11,7 @@ But if it does not work properly you can build it in the terminal with:
 
 Run the main class in `src/main/java/inf112.skeleton.app`
 
-There are two commands you can run.
-To start a server you can simply click the `host` button
-or if the menu for some reasons don't work simply hit the button `s`.
+To start a server you can simply click the `host` button.
 If you want to play on the same computer as the server is running as you need to enable multiple instances of main.
 The game window will close when you use this option, and server will continue in the terminal.
 
@@ -23,23 +21,22 @@ Remember to hit `Apply` in the bottom right corner.
 
 Now you can run another main and choose to play as a client instead.
 Run main and hit the button `Connect`
-or if the menu for some reasons don't work simply hit the button `c`.
+Here you can choose between localhost or a custom ip.
+Next screen is to select map, this map needs to be the same for each player to work properly.
 
 If you don't want to have two instances of main on the computer that is hosting you can:
 Click `Host & Play` in the menu.
-or if the menu for some reasons don't work simply hit the button `SPACE`.
+When you click host and play you also need to select the map. Remember this map should be the same for all connected players.
 One thing to note is that the console wil get very cluttered in this mode because you get information and prints from both server and client. 
-It is reccomended to use two instances for now.
+It is recommended to use two instances for a more clean console.
 
 From here you can run as many more main as you want to add more players.
 This should also work across all computers on the same network without any further instructions.
 If you can't connect then try looking at the [errorhandling](#known-bugs-and-possible-solutions) below.
 
 If you want to play from multiple computers on different networks then you need to portforward port `27960`.
-Then you can change the local ip in `GameScreen` at the line
-`this.networkConnection = new NetworkConnection();`
-to `this.networkConnection = new NetworkConnection("IP OF SERVER");`'
-This should be a string.
+Then you can choose the `connect` option from the menu and write in the IP of the server.
+Then click `connect` or hit `Enter`
 Now you should be able to connect to the other pc by running and choosing client as described above.
 
 When you have collected all the flags you are greeted with a victory screen and a `restart` button.
@@ -96,15 +93,11 @@ Hit apply.
 ### Server does not update won/loss graphics for other players
 Other players can't see the updated graphics if you win or lose.
 
-### The logic to walls is implemented but not correctly working - Causing a chain bug
-The checks for walls is implemented, however there is a bug where this
-does not work properly. We have disabled walls for now, but the checks is
-still there. So the test for this would not work either. This may cause some problems for example belts and gears.
-Gears and belts does not function if a player move through a wall to get there,
-because the program is only returning that it is an invalid move.
-The player can now move out of the map,
-since walls and "out of map" is pretty much the same at the moment.
-This also makes the test for player not going outside the map invalid.
+### Game-logic does not apply twice
+There is only exectued one logic for each cell each round,
+since there can not be two types of logic that applies to one cell in the current code.
+This is mainly a problem for 
+
 
 ### The server never shuts down.
 The server never shuts down even if all the player have "won" and gone back to main menu.
@@ -114,3 +107,6 @@ The best way is to close the game and stop main after you have finished one game
 ## Using the exit button don't close terminal or server
 The exit button only closes the game window.
 You need to manually close main after.
+
+## The graphics for the victory screen is somewhat broken.
+the buttons and functionality is working properly, but the screen is behaving strange.
