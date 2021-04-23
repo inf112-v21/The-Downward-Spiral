@@ -92,5 +92,42 @@
 - Kristian og Thomas skal legge til Belter og Gears
 - Kristian og Thomas skal fikse et CodeAcy issue
 - Vi jobber nå med dokumentasjon og diverse ting som må ordnes fram til kl 16
- 
+
+
+## Møtereferat #14 (fredag 9.04 kl 10.15-12)
+- Deltakere: Alle
+- Hensikt: Få oversikt over arbeidsoppgaver for neste leveranse
+- Simen skal få serveren til å holde styr på ting (runder/faser/kort/dekk)
+- Isabel skal gi prioritering til kortene
+- Sondre og Thomas skal lage kort GUI
+- Kristian skal fikse vegg bug
+
+## Møtereferat #15 (fredag 16.04 kl 10.15-12)
+- Deltakere: Isabel, Thomas, Simen og Sondre
+- Hensikt: Få oversikt over alles framgang på arbeidsoppgaver
+- Sondre og Thomas fortsetter på GUI for kort
+- Isabel skal lage et nytt brett
+- Simen fortsetter på runder og faser
+
+## Møtereferat #16 (onsdag 21.04 kl 10.15-12)
+- Deltakere: Alle
+- Hensikt: Gå gjennom det alle har gjort og evt merge. Fordele oppgaver for resten av prosjektet
+- Thomas viser kort GUI
+- Thomas fortsetter på GUI
+- Simen viser faser og runder
+- Isabel viser nytt brett
+- Sondre skal lage spiller textures
+- Sondre skal lage spiller damage og tokens grafikk
+- Simen skal implementere at server skal håndtere skade og deale kort
+- Kristian lager laser og hull
+
+## Møtereferat #17 (fredag 23.04 kl 10.15-12)
+- Deltakere: Alle
+- Hensikt: Ferdigstille leveransen og skrive dokumentasjon
+- Fikse bugs med player textures
+- Siste implementeringer
+- Skrive ferdig dokumentasjon
+- Sondre skal lage klassediagram
+- Oppdatere README 
+
 
