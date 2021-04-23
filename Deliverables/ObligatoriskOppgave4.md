@@ -35,14 +35,16 @@ Vi har laget nye krav og skrevet brukerhistorier, akseptansekriterier og arbeids
 Bugs som finnes er lagt i readme under known bugs.
 Vi rakk ikke å fullføre det siste kravet med å ha spiller kollisjon. Dette ble ikke så høyt prioritert.
 
-##Deloppgave 3: Produktleveranse og kodekvalitet
+## Deloppgave 3: Produktleveranse og kodekvalitet
 Bygging og kjøring for kode ligger i README.md
-Klassediagram ligger i Deliverables som klassediagramoblig3.png
+Klassediagram ligger i Deliverables som klassediagramoblig4.png
+![image](https://user-images.githubusercontent.com/1353611/115881254-db14ad80-a44b-11eb-91cb-4c5c8481634a.png)
+
 Vi har dessverre måtte nesten kun ha manuelle tester, fordi som forrige gang, 
 har vi hatt store problemer med at vi får NullPointerException på Textures når vi prøver å loade feks. 
 Button, Player, Card i test klassen. Vi har prøvd å ordne dette, men endte opp med å bruke mer tid på det enn nødvendig. 
 Så vi har bestemt oss for å skrive manuelle tester. For å teste programmet må man kjøre det i debug mode, 
-da kan man bevege spiller med piltaster. NB! Programkort fungerer dårlig etter man har beveget seg med piltaster.
+da kan man bevege spiller med piltaster.
 Vi har i stor grad parprogrammert på mye av oppgaven derfor er det ugjevnt med commits på github. 
 I Trello boardet står det hvem som har vært med på hva. 
 Vi har prøvd å ha litt forskjellige folk som committer denne gangen når vi har parprogrammert. 
