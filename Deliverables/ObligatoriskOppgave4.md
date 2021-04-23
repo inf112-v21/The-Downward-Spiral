@@ -36,14 +36,14 @@ I helheten av prosjektet har kommunikasjonene og gruppedynamikken vært veldig b
 ## Deloppgave 2: Krav
 Vi har lagt til noen nye krav som ligger i brukerhistorier.md i deliverables.
 Vi har laget nye krav og skrevet brukerhistorier, akseptansekriterier og arbeidsoppgaver til dem i Brukerhistorier.md.
-Bugs som finnes er lagt i readme under known bugs.
+Bugs som finnes er lagt i [README.md](../README.md) under known bugs.
 Vi rakk ikke å fullføre det siste kravet med å ha spiller kollisjon. Dette ble ikke så høyt prioritert.
 
 ## Deloppgave 3: Produktleveranse og kodekvalitet
-Bygging og kjøring for kode ligger i README.md.
+Bygging og kjøring for kode ligger i [README.md](../README.md)
 Eventuelle bugs ligger også i readme, dette gjelder også bugs som kan påvirke tester.
-Klassediagram ligger i Deliverables som klassediagramoblig4.png
-![image](https://user-images.githubusercontent.com/1353611/115881254-db14ad80-a44b-11eb-91cb-4c5c8481634a.png)
+- Klassediagram ligger i Deliverables som [klassediagram.drawio](klassediagram.drawio)
+![img.png](klassediagramOblig4.png)
 
 Vi har dessverre måtte nesten kun ha manuelle tester, fordi som forrige gang, 
 har vi hatt store problemer med at vi får NullPointerException på Textures når vi prøver å loade feks. 
