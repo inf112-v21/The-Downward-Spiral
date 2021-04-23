@@ -38,7 +38,8 @@ Bugs som finnes er lagt i readme under known bugs.
 Vi rakk ikke å fullføre det siste kravet med å ha spiller kollisjon. Dette ble ikke så høyt prioritert.
 
 ## Deloppgave 3: Produktleveranse og kodekvalitet
-Bygging og kjøring for kode ligger i README.md
+Bygging og kjøring for kode ligger i README.md.
+Eventuelle bugs ligger også i readme, dette gjelder også bugs som kan påvirke tester.
 Klassediagram ligger i Deliverables som klassediagramoblig4.png
 ![image](https://user-images.githubusercontent.com/1353611/115881254-db14ad80-a44b-11eb-91cb-4c5c8481634a.png)
 
