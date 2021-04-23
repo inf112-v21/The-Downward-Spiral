@@ -61,6 +61,7 @@ public class GameScreen extends ScreenAdapter {
         localPlayer = new Player();
         networkConnection = new NetworkConnection(connectIP);
 
+
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
         }
@@ -175,7 +176,12 @@ public class GameScreen extends ScreenAdapter {
                     player.render();
                 }
             }
-            render.render();
+            try {
+                render.render();
+            } catch (Exception e) {
+                System.out.println(e);
+
+        }
             hud.renderCard();
     }
 

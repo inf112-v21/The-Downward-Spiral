@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.ProgramCards.Card;
@@ -168,7 +169,22 @@ public class CellChecker {
     public HashMap<String, Integer> getCellIDsAtPosition(Vector2 pos) {
         HashMap<String, Integer> IDs = new HashMap<>();
 
-        for (MapLayer layer : player.getBoard().getLayers().getLayers()) {
+        MapLayers mapLayers = player.getBoard().getLayers().getLayers();
+
+
+        for (int i = 0; i < mapLayers.getCount(); i++) {
+            MapLayer layer = mapLayers.get(i);
+            TiledMapTileLayer newLayer = (TiledMapTileLayer) layer;
+
+            if (newLayer.getCell((int) pos.x, (int) pos.y) != null) {
+                int id = newLayer.getCell((int) pos.x, (int) pos.y).getTile().getId();
+                IDs.put(layer.getName(), id);
+
+            }
+        }
+
+            /*
+        for (MapLayer layer : mapLayers) {
             TiledMapTileLayer newLayer = (TiledMapTileLayer) layer;
 
             if (newLayer.getCell((int)pos.x, (int)pos.y) != null) {
@@ -176,6 +192,7 @@ public class CellChecker {
                 IDs.put(layer.getName(), id);
             }
         }
+        */
         return IDs;
     }
 }
