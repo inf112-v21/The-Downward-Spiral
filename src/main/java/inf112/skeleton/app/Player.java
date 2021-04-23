@@ -9,15 +9,18 @@ import inf112.skeleton.app.ProgramCards.Card;
 import inf112.skeleton.app.screens.EndScreen;
 import inf112.skeleton.app.screens.GameScreen;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Player {
     private final Vector2 position;
+    private NetworkConnection connection;
 
     private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
-    private final TextureRegion[][] trRegionsPlayerStatus;
-    private final TextureRegion[][] trRegionsPlayerDir;
+    private TextureRegion[][] trRegionsPlayer;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
@@ -25,7 +28,6 @@ public class Player {
     private int lifeTokens = 3;
     private int damageTokens = 0;
 
-    private Vector2 startingPosition = new Vector2(5,0);
     public Direction direction;
 
     public ArrayList<Card> selectableCards; // hand
@@ -36,22 +38,32 @@ public class Player {
     /**
      * Constructor
      */
-    public Player() {
+    public Player(int id) {
         this.board = GameScreen.boardTiledMap;
-        //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
         position = new Vector2(0,0);
 
-        TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
-        trRegionsPlayerStatus = trStatus.split(300, 300);
-        TextureRegion trDir = new TextureRegion(new Texture("player_Directions.png"));
-        trRegionsPlayerDir = trDir.split(300, 300);
-
         playerCell = new TiledMapTileLayer.Cell();
-        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+        this.trRegionsPlayer = getPlayerTextures(id);
+        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
 
         direction = Direction.NORTH; // starting direction
         this.chosenCards = new ArrayList<>();
+    }
 
+    public void setConnection(NetworkConnection con) {
+        this.connection = con;
+        this.setStartingPosition(con.getClientID());
+    }
+
+    public void setStartingPosition(int id) {
+        System.out.println("Joined as player " + id);
+
+        int x = (int) getStartingPosition(connection.getClientID()).x;
+        int y = (int) getStartingPosition(connection.getClientID()).y;
+
+        System.out.println("Setting my location to: " + x + " | " + y);
+        setPosition(x, y, Direction.NORTH);
+        connection.sendPosition(x, y, direction);
     }
 
     /**
@@ -95,6 +107,7 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
+        if (getX() <= -5 || getY() <= -5) return;
 
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
@@ -123,7 +136,6 @@ public class Player {
                         System.out.println("Flag2");
                     }
                     if ((flagId == 71) && (flagTwoConfirmed)) {
-                        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                         System.out.println("Won");
                         GameScreen.getGame().setScreen(new EndScreen(GameScreen.getGame()));
                     }
@@ -131,17 +143,18 @@ public class Player {
                 }
                 case HOLE: {
                     // Lose a life token
-                    move(card.getMoves());
                     this.loseLifeToken();
                     break;
                 }
-                case BLOCKED_BY_WALL: { // DOES NOT WORK PROPERLY, HAS TO BE FIXED
+                case BLOCKED_BY_WALL: {
                     // Do nothing
                     break;
                 }
                 case WRENCHES: {
                     // Do whatever a wrench does
                     move(card.getMoves());
+                    if (this.damageTokens > 0) this.damageTokens -= 1;
+                    System.out.println("Damage tokens now: " + damageTokens);
 
                     break;
                 }
@@ -244,6 +257,9 @@ public class Player {
                 }
             }
         }
+        if (this.connection != null) {
+            connection.sendPosition(getX(), getY(), direction);
+        }
     }
 
     public void takeDamage() {
@@ -257,13 +273,21 @@ public class Player {
     }
 
     public void loseLifeToken() {
+        if (this.connection == null) return;
         this.lifeTokens -= 1;
         System.out.println("You lost a life token and now have " + lifeTokens + " left");
-        setPosition((int)startingPosition.x, (int)startingPosition.y, Direction.NORTH);
+
+        int x = (int) getStartingPosition(connection.getClientID()).x;
+        int y = (int) getStartingPosition(connection.getClientID()).y;
+
+        setPosition(x, y, Direction.NORTH);
+        //connection.sendPosition(x, y, direction);
 
         if (this.lifeTokens <= 0) {
             // The player loses
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+            // Quick fix
+            setPosition(-10,-10, Direction.NORTH);
+            connection.sendPosition(-10,-10,Direction.NORTH);
             System.out.println("You lost the game");
         } else {
             this.damageTokens = 0; // (Y/N)
@@ -294,17 +318,18 @@ public class Player {
 
     // updates texture for robot based on direction (temp)
     public void updateDirection() {
+        //System.out.println(trRegionsPlayer);
         if (direction == Direction.NORTH) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
         }
         if (direction == Direction.EAST) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][0]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][2]));
         }
         if (direction == Direction.WEST) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][1]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][1]));
         }
         if (direction == Direction.SOUTH) {
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerDir[0][2]));
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][3]));
         }
     }
 
@@ -379,6 +404,33 @@ public class Player {
         }
     }
 
+    private Vector2 getStartingPosition(int id) {
+        switch (id) {
+            case (1): { return new Vector2(5, 0); }
+            case (2): { return new Vector2(6, 0); }
+            case (3): { return new Vector2(3, 1); }
+            case (4): { return new Vector2(8, 1); }
+            case (5): { return new Vector2(1, 2); }
+            case (6): { return new Vector2(10, 2); }
+            default: { return new Vector2(0,0); }
+        }
+    }
+
+    private TextureRegion[][] getPlayerTextures(int requestedId) {
+        HashMap<Integer, TextureRegion[][]> playerTextures = new HashMap<>();
+
+        int id = 1;
+        File dir = new File("./assets/PlayerSprites");
+        for (String file : Objects.requireNonNull(dir.list())) {
+            TextureRegion textureDirections = new TextureRegion(new Texture("PlayerSprites/" + file));
+            TextureRegion[][] test = textureDirections.split(300, 300);
+
+            playerTextures.put(id, test);
+            id++;
+        }
+        return playerTextures.get(requestedId);
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -393,6 +445,10 @@ public class Player {
 
     public int getDamageTokens() {
         return damageTokens;
+    }
+
+    public NetworkConnection getConnection () {
+        return connection;
     }
 
 }

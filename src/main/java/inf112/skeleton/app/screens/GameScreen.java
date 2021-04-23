@@ -13,7 +13,6 @@ import inf112.skeleton.app.ProgramCards.Card;
 
 
 public class GameScreen extends ScreenAdapter {
-
     static RoboRallyGame game;
     public static Board boardTiledMap;
     private final Board gameBoard;
@@ -47,8 +46,10 @@ public class GameScreen extends ScreenAdapter {
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
 
-        localPlayer = new Player();
+        localPlayer = new Player(1);
         networkConnection = new NetworkConnection(connectIP);
+        localPlayer.setConnection(networkConnection);
+
 
 
         if (localPlayer.selectableCards == null){
@@ -92,6 +93,8 @@ public class GameScreen extends ScreenAdapter {
      */
 
     public boolean keyMovement(int keycode) {
+        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+
         // press enter to deal cards
         if (keycode == Input.Keys.ENTER) {
             dealCards();
@@ -109,24 +112,28 @@ public class GameScreen extends ScreenAdapter {
                 }
             }
         }
+        if (!isDebug) return true;
 
         // You can move with Arrows or WASD
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             localPlayer.setDirection(Direction.NORTH);
             this.moveOneForward();
-
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
             localPlayer.setDirection(Direction.SOUTH);
             this.moveOneForward();
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             localPlayer.setDirection(Direction.EAST);
             this.moveOneForward();
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
 
         // Used for debugging
@@ -145,7 +152,7 @@ public class GameScreen extends ScreenAdapter {
     private void moveOneForward() {
         localPlayer.chosenCards.add(new Card(0, "move_1", 1));
         localPlayer.executeCard(localPlayer.chosenCards.get(localPlayer.chosenCards.size()-1));
-        //localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
+        localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
         localPlayer.updateDirection();
     }
 
