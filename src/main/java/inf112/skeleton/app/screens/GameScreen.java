@@ -119,19 +119,22 @@ public class GameScreen extends ScreenAdapter {
         if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
             localPlayer.setDirection(Direction.NORTH);
             this.moveOneForward();
-
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
         if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
             localPlayer.setDirection(Direction.SOUTH);
             this.moveOneForward();
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
         if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
             localPlayer.setDirection(Direction.EAST);
             this.moveOneForward();
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
         if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
+            localPlayer.getConnection().sendPosition(localPlayer.getX(), localPlayer.getY(), localPlayer.direction);
         }
 
         // Used for debugging

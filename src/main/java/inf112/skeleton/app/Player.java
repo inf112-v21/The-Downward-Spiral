@@ -267,13 +267,14 @@ public class Player {
         if (this.connection == null) return;
         this.lifeTokens -= 1;
         System.out.println("You lost a life token and now have " + lifeTokens + " left");
-        System.out.println(this.connection);
+        /*System.out.println(this.connection);
         int x = (int) getStartingPosition(connection.getClientID()).x;
         int y = (int) getStartingPosition(connection.getClientID()).y;
 
         System.out.println(x + " | " + y);
         setPosition(x, y, Direction.NORTH);
         connection.sendPosition(x, y, direction);
+        */
 
         if (this.lifeTokens <= 0) {
             // The player loses
@@ -419,6 +420,10 @@ public class Player {
 
     public int getDamageTokens() {
         return damageTokens;
+    }
+
+    public NetworkConnection getConnection () {
+        return connection;
     }
 
 }
