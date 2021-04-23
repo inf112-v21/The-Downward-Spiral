@@ -19,6 +19,7 @@ import inf112.skeleton.app.screens.GameScreen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkConnection {
     private final int maxPlayers = 10;
@@ -90,7 +91,17 @@ public class NetworkConnection {
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
                     }
-                    GameScreen.hud.setCardsIsSent(true);
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    GameScreen.localPlayer.chosenCards.remove(0);
+                    if (GameScreen.localPlayer.chosenCards.size() < 1){
+                        GameScreen.hud.setCardsIsSent(false);
+                        GameScreen.localPlayer.selectableCards.clear();
+                        GameScreen.localPlayer.chosenCards.clear();
+                    }
 
                 }
             }
@@ -172,8 +183,7 @@ public class NetworkConnection {
         PacketRespondHand packet = new PacketRespondHand();
         packet.hand = hand;
         client.sendTCP(packet);
-        GameScreen.localPlayer.chosenCards.clear();
-        GameScreen.localPlayer.selectableCards.clear();
+
     }
 
     public int getClientID() {
