@@ -10,7 +10,6 @@ import inf112.skeleton.app.screens.EndScreen;
 import inf112.skeleton.app.screens.GameScreen;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class Player {
     private final Vector2 position;
