@@ -36,37 +36,6 @@ public class MenuScreen extends ScreenAdapter {
         // Checks for input and create server and client accordingly
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
-            public boolean keyUp(int keyCode) {
-                switch (keyCode) {
-                    case Input.Keys.SPACE: {
-                        RRServer server = new RRServer();
-                        Client client = new Client();
-                        System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                        game.setScreen(new GameScreen(game));
-                        break;
-                    }
-                    case Input.Keys.S: {
-                        RRServer server = new RRServer();
-                        dispose();
-                        break;
-                    }
-
-                    case Input.Keys.C: {
-                        Client client = new Client();
-                        System.out.println("Found server with IP: " + client.discoverHost(27960, 5000));
-                        game.setScreen(new GameScreen(game));
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-
-                }
-                return true;
-            }
-            // This is temporary, only for testing purposes
-            // TODO change to buttons
-            @Override
             public boolean touchUp(int x, int y, int pointer, int button) {
                 if (Button.onClick(game, playButton, x, y)){
                     System.out.println("Host & Play");

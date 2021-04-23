@@ -71,6 +71,8 @@ public class ConnectScreen extends ScreenAdapter {
                     Client client = new Client();
                     client.discoverHost(27960, 5000);
                     game.setScreen(new GameScreen(game, inputIP.replace("|", "")));
+                }else if (Button.onClick(game, backToMenu, x, y)) {
+                    game.setScreen(new MenuScreen(game));
                 }else {
                     userWriting = false;
                 }
