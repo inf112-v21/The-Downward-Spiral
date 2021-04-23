@@ -25,7 +25,7 @@ Noe vi kunne gjort bedre er å ha startet med en god kodestil slik at vi ikke m�
 dette skjer gjerne når det er mange som jobber på noe samtidig.
 https://trello.com/b/D3Y3MkLV/roborally
 Under ser du bilde av Trello-tavlen vår, den er nå ganske blank nå ettersom vi har lagt til fortløpende.
-![image](https://user-images.githubusercontent.com/1353611/115881430-06979800-a44c-11eb-93d6-ef3c863f9d49.png)
+![image](https://user-images.githubusercontent.com/1353611/115930229-6496a080-a489-11eb-83e3-7136fb79f637.png)
 I starten var det gjerne litt stille i voice channelen på discord men nå er det ikke like stille lengre. 
 Vi snakker og planlegger godt sammen og stiller hverandre spørsmål om det er noe vi lurer på om noe noen har gjort. 
 Vi lagde en egen chat på discord og det har hjulpet mye med å få raske svar fra alle siden det er ikke alle som sjekker INF112 discorden så ofte. 
