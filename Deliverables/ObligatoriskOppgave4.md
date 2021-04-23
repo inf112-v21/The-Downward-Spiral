@@ -16,14 +16,18 @@ Vi valgte å fokusere mer på å rydde opp i koden vår på forrige leveranse og
 fordi det har gjort det mye lettere for oss å implementere nye ting.
 Vi synes prosjektet har gått ganske greit. Vi føler vi har fått gjort en god del på selve leveransen som er over MVP. 
 Vi har også blitt bedre med denne leveransen med å planlegge arbeidsoppgavene på en slik måte at ingen må vente på at en annen del av koden er ferdig før de kan begynne på sin oppgave. 
-Vi planla alt litt tidligere slik at vi kunne få gjort litt mer kodemessig og vi har alle blitt litt flinkere på Git. 
+Vi planla alt litt tidligere slik at vi kunne få gjort litt mer kodemessig og vi har alle blitt litt flinkere på git og github.
+Alle har nå en grei forståelse av branches, pull-requests og merge.
+På større pull-requests har vi sørget for å ha en ganske god beskrivelse med bilder og chekclister.
+På mindre pull-requests så har vi valgt å holde det til noen beskrivende setninger.
 Dette var de tre punktene vi sa ved forrige leveranse at vi skulle bli flinkere med og det føler vi at vi har fått gjort. 
 I helheten av prosjektet føler vi at vi har vært ganske flink med å planlegge hva vi har lyst til å gjøre sammen, 
 slik at alle henger med hvordan produktet ser og skal se ut. 
 Noe vi kunne gjort bedre er å ha startet med en god kodestil slik at vi ikke måtte bruke store deler av tiden på å refaktorere koden, 
 dette skjer gjerne når det er mange som jobber på noe samtidig.
 https://trello.com/b/D3Y3MkLV/roborally
-![image](https://user-images.githubusercontent.com/1353611/115881430-06979800-a44c-11eb-93d6-ef3c863f9d49.png)
+Under ser du bilde av Trello-tavlen vår, den er nå ganske blank nå ettersom vi har lagt til fortløpende.
+![image](https://user-images.githubusercontent.com/1353611/115930229-6496a080-a489-11eb-83e3-7136fb79f637.png)
 I starten var det gjerne litt stille i voice channelen på discord men nå er det ikke like stille lengre. 
 Vi snakker og planlegger godt sammen og stiller hverandre spørsmål om det er noe vi lurer på om noe noen har gjort. 
 Vi lagde en egen chat på discord og det har hjulpet mye med å få raske svar fra alle siden det er ikke alle som sjekker INF112 discorden så ofte. 
@@ -36,7 +40,8 @@ Bugs som finnes er lagt i readme under known bugs.
 Vi rakk ikke å fullføre det siste kravet med å ha spiller kollisjon. Dette ble ikke så høyt prioritert.
 
 ## Deloppgave 3: Produktleveranse og kodekvalitet
-Bygging og kjøring for kode ligger i README.md
+Bygging og kjøring for kode ligger i README.md.
+Eventuelle bugs ligger også i readme, dette gjelder også bugs som kan påvirke tester.
 Klassediagram ligger i Deliverables som klassediagramoblig4.png
 ![image](https://user-images.githubusercontent.com/1353611/115881254-db14ad80-a44b-11eb-91cb-4c5c8481634a.png)
 

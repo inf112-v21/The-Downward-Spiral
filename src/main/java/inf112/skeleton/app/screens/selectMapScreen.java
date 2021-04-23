@@ -48,7 +48,7 @@ public class selectMapScreen extends ScreenAdapter {
                 }else if (Button.onClick(game, FactoryReject, x, y)) {
                     runGame("Factory_Rejects");
                 }else if (Button.onClick(game, backToMenu, x ,y)) {
-                    game.setScreen(new MenuScreen(game));
+                    game.setScreen((playAndHost? new MenuScreen(game) : new ConnectScreen(game)));
                 }
 
                 return true;
