@@ -88,15 +88,23 @@ public class NetworkConnection {
 
                     if (packet.playerID == client.getID()) {
                         GameScreen.localPlayer.executeCard(packet.card);
+                        GameScreen.localPlayer.chosenCards.remove(0);
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
                     }
+
+
+
+                    client.setKeepAliveTCP(10*1000);
+
+                    System.out.println(client.isIdle());
                     try {
                         TimeUnit.SECONDS.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    GameScreen.localPlayer.chosenCards.remove(0);
+
+
                     if (GameScreen.localPlayer.chosenCards.size() < 1){
                         GameScreen.hud.setCardsIsSent(false);
                         GameScreen.localPlayer.selectableCards.clear();
