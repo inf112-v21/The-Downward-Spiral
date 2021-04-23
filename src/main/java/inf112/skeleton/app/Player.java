@@ -20,7 +20,7 @@ public class Player {
 
     private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
-    private TextureRegion[][] trRegionsPlayer;
+    private final TextureRegion[][] trRegionsPlayer;
 
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
@@ -55,6 +55,12 @@ public class Player {
         this.setStartingPosition(con.getClientID());
     }
 
+
+    /**
+     * Moves the player to its starting location based on player id
+     *
+     * @param id player id
+     */
     public void setStartingPosition(int id) {
         System.out.println("Joined as player " + id);
 
@@ -154,8 +160,6 @@ public class Player {
                     // Do whatever a wrench does
                     move(card.getMoves());
                     if (this.damageTokens > 0) this.damageTokens -= 1;
-                    System.out.println("Damage tokens now: " + damageTokens);
-
                     break;
                 }
                 case YELLOW_BELTS: { // Should use execute card instead, doesn't register anything it lands on after moving
@@ -264,7 +268,6 @@ public class Player {
 
     public void takeDamage() {
         this.damageTokens += 1;
-        System.out.println("You took 1 damage and now have " + damageTokens);
 
         if (this.damageTokens >= 10) {
             this.damageTokens = 0;
@@ -275,17 +278,13 @@ public class Player {
     public void loseLifeToken() {
         if (this.connection == null) return;
         this.lifeTokens -= 1;
-        System.out.println("You lost a life token and now have " + lifeTokens + " left");
 
         int x = (int) getStartingPosition(connection.getClientID()).x;
         int y = (int) getStartingPosition(connection.getClientID()).y;
-
         setPosition(x, y, Direction.NORTH);
-        //connection.sendPosition(x, y, direction);
 
         if (this.lifeTokens <= 0) {
             // The player loses
-            // Quick fix
             setPosition(-10,-10, Direction.NORTH);
             connection.sendPosition(-10,-10,Direction.NORTH);
             System.out.println("You lost the game");
@@ -392,18 +391,16 @@ public class Player {
         if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
             assert chosenCards != null;
             chosenCards.add(card);
-            System.out.println("move " + (card) + " added to hand");
-            System.out.println("Your hand: " + chosenCards);
-            showHand();
-            if (chosenCards.size() == fullHandSize){
-                System.out.println("Hit SPACE to execute your list of moves");
-            }
-        } else {
-            System.out.println("Full hand");
-            System.out.println("Hit SPACE to execute your list of moves");
         }
     }
 
+
+    /**
+     * Get a player's starting position
+     *
+     * @param id player id
+     * @return Corresponding starting position
+     */
     private Vector2 getStartingPosition(int id) {
         switch (id) {
             case (1): { return new Vector2(5, 0); }
@@ -416,19 +413,26 @@ public class Player {
         }
     }
 
-    private TextureRegion[][] getPlayerTextures(int requestedId) {
+
+    /**
+     * Get a player's textures
+     *
+     * @param id player id
+     * @return The player's textures
+     */
+    private TextureRegion[][] getPlayerTextures(int id) {
         HashMap<Integer, TextureRegion[][]> playerTextures = new HashMap<>();
 
-        int id = 1;
+        int i = 1;
         File dir = new File("./assets/PlayerSprites");
         for (String file : Objects.requireNonNull(dir.list())) {
             TextureRegion textureDirections = new TextureRegion(new Texture("PlayerSprites/" + file));
             TextureRegion[][] test = textureDirections.split(300, 300);
 
-            playerTextures.put(id, test);
-            id++;
+            playerTextures.put(i, test);
+            i++;
         }
-        return playerTextures.get(requestedId);
+        return playerTextures.get(id);
     }
 
     public Board getBoard() {
@@ -450,5 +454,4 @@ public class Player {
     public NetworkConnection getConnection () {
         return connection;
     }
-
 }
