@@ -8,6 +8,7 @@ knapper og unike spiller sprites. Vi har også hatt en person som har hatt ansva
 så de har vel hatt en slags server ansvarlig rolle (Simen). 
 Ellers er alle med å utvikle. Alle gikk inn i prosjektet med noe som de kunne bedre enn andre, 
 men vi har likevel sørget for at alle har fått nok av utfordringer.
+
 Denne leveransen har vi jobbet litt annerledes, vi har gitt alle hvert sitt ansvar og alle har fått gjort dette samtidig. 
 Så nå har vi fått gjort litt flere oppgaver parallelt. 
 Vi har vel strengt tatt fortsatt Kanban som vår prosjektmetodikk siden vi bruker fremdeles aktivt prosjekttavle, 
@@ -21,6 +22,7 @@ Alle har nå en grei forståelse av branches, pull-requests og merge.
 På større pull-requests har vi sørget for å ha en ganske god beskrivelse med bilder og chekclister.
 På mindre pull-requests så har vi valgt å holde det til noen beskrivende setninger.
 Dette var de tre punktene vi sa ved forrige leveranse at vi skulle bli flinkere med og det føler vi at vi har fått gjort. 
+
 I helheten av prosjektet føler vi at vi har vært ganske flink med å planlegge hva vi har lyst til å gjøre sammen, 
 slik at alle henger med hvordan produktet ser og skal se ut. 
 Noe vi kunne gjort bedre er å ha startet med en god kodestil slik at vi ikke måtte bruke store deler av tiden på å refaktorere koden, 
