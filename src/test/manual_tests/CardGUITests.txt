@@ -1,0 +1,15 @@
+Card GUI manuelle tester
+    * En seksjon av skjermen hvor 9 kort vises
+        * For å få delt ut kort, trykk ENTER
+        * Kortene skal vises på toppen av skjermen under “Your hand”
+    * Spilleren kan trykke på kort for å velge dem
+        * Kortene kan bli valgt med musen
+        * Når musepekeren er over et kort vil de “lyse” gult
+        * Kortet kan bli valgt ved å trykke på det
+    * En seksjon av skjermen hvor spilleren sine valgte kort vises
+        * Når et kort er valgt vil det flyttes ned på skjermen under “Picked cards”
+    * Spilleren kan legge alle kortene tilbake med “Reset” knapp
+        * Når kort er valgt kan man trykke på “Reset” da vil alle kortene gå tilbake til hånden. Spilleren kan eksekvere kortene med “Execute” knapp
+        * Når 5 kort er valgt kan man trykke på “Execute” for å kjøre programmet. Roboten vil nå flytte seg ut ifra kortene når alle spillere på serveren har executet 5 kort
+    * Alt låses når spilleren har låst inn kort
+        * Når spilleren har valgt å execute de 5 kortene de har valgt så låses alle knapper og kort.
