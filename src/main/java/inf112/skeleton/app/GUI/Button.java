@@ -13,9 +13,9 @@ public class Button {
     private int Y;
     private int X;
 
-    public Button (String activeLoc, String inactiveLoc, int WIDTH, int HEIGHT, int Y, int X){
-        this.active = new Texture(activeLoc);
-        this.inactive = new Texture(inactiveLoc);
+    public Button (Texture active, Texture inactive, int WIDTH, int HEIGHT, int Y, int X){
+        this.active = active;
+        this.inactive = inactive;
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         this.Y = Y;
@@ -30,6 +30,10 @@ public class Button {
         }else{
             game.getBatch().draw(getInactive(), x, y, getWIDTH(), getHEIGHT());
         }
+    }
+
+    public static boolean onClick(RoboRallyGame game, Button button, int x, int y) {
+         return (((x > button.getX() - (button.getWIDTH() / 2)) && (x < button.getX() + button.getWIDTH() / 2)) && ((game.getHEIGHT() - y > button.getY()) && (game.getHEIGHT() - y < button.getY() + button.getHEIGHT())));
     }
 
     public Texture getInactive() {

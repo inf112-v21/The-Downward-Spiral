@@ -22,11 +22,16 @@ public class Player {
     private boolean flagOneConfirmed;
     private boolean flagTwoConfirmed;
 
+    private int lifeTokens = 3;
+    private int damageTokens = 0;
+
+    private Vector2 startingPosition = new Vector2(5,0);
     public Direction direction;
 
     public ArrayList<Card> selectableCards; // hand
     public ArrayList<Card> chosenCards; // program
     public int handSize = 9; // should be 9. 5 for testing
+    public int fullHandSize = 5;
 
     /**
      * Constructor
@@ -34,7 +39,7 @@ public class Player {
     public Player() {
         this.board = GameScreen.boardTiledMap;
         //playerLayer = (TiledMapTileLayer) tm.getLayers().get("Player");
-        position = new Vector2(0, 0);
+        position = new Vector2(0,0);
 
         TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
         trRegionsPlayerStatus = trStatus.split(300, 300);
@@ -81,9 +86,7 @@ public class Player {
             components[1] = components[1] * (-1);
         }
 
-        position.add(components[0], components[1]);
-        GameScreen.networkConnection.sendPosition(this.getX(), this.getY(), this.direction);
-    }
+        position.add(components[0], components[1]); }
 
 
     /**
@@ -92,10 +95,6 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
-        if (!chosenCards.contains(card)) {
-            System.out.println("You don't have that many cards");
-            return;
-        }
 
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
@@ -131,11 +130,9 @@ public class Player {
                     break;
                 }
                 case HOLE: {
-                    // Take damage
+                    // Lose a life token
                     move(card.getMoves());
-
-                    System.out.println("Lost");
-                    playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+                    this.loseLifeToken();
                     break;
                 }
                 case BLOCKED_BY_WALL: { // DOES NOT WORK PROPERLY, HAS TO BE FIXED
@@ -221,7 +218,7 @@ public class Player {
                 case LASER: {
                     // Take damage
                     move(card.getMoves());
-
+                    this.takeDamage();
                     break;
                 }
                 case GEARS: {
@@ -246,7 +243,31 @@ public class Player {
                     break;
                 }
             }
-            selectableCards.clear();
+        }
+    }
+
+    public void takeDamage() {
+        this.damageTokens += 1;
+        System.out.println("You took 1 damage and now have " + damageTokens);
+
+        if (this.damageTokens >= 10) {
+            this.damageTokens = 0;
+            this.loseLifeToken();
+        }
+    }
+
+    public void loseLifeToken() {
+        this.lifeTokens -= 1;
+        System.out.println("You lost a life token and now have " + lifeTokens + " left");
+        setPosition((int)startingPosition.x, (int)startingPosition.y, Direction.NORTH);
+
+        if (this.lifeTokens <= 0) {
+            // The player loses
+            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+            System.out.println("You lost the game");
+        } else {
+            this.damageTokens = 0; // (Y/N)
+            // Move the player to starting position/checkpoint
         }
     }
 
@@ -343,13 +364,13 @@ public class Player {
      * @param card for the requested card
      */
     public void chooseCard(Card card) {
-        if (chosenCards == null || chosenCards.size() <= 4) {
+        if (chosenCards == null || chosenCards.size() <= fullHandSize -1) {
             assert chosenCards != null;
             chosenCards.add(card);
             System.out.println("move " + (card) + " added to hand");
             System.out.println("Your hand: " + chosenCards);
             showHand();
-            if (chosenCards.size() == 5){
+            if (chosenCards.size() == fullHandSize){
                 System.out.println("Hit SPACE to execute your list of moves");
             }
         } else {
@@ -365,4 +386,13 @@ public class Player {
     public Vector2 getPosition() {
         return position;
     }
+
+    public int getLifeTokens() {
+        return lifeTokens;
+    }
+
+    public int getDamageTokens() {
+        return damageTokens;
+    }
+
 }

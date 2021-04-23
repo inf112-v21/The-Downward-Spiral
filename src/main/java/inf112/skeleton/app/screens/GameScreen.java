@@ -10,8 +10,6 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.NetworkConnection;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.ProgramCards.Card;
-import inf112.skeleton.app.ProgramCards.Deck;
-
 
 
 public class GameScreen extends ScreenAdapter {
@@ -21,14 +19,20 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer render;
 
-    public static cardsMenu hud;
+    public static CardsMenu hud;
     public static Player localPlayer;
     public static NetworkConnection networkConnection;
-
-    public Deck currentDeck;
+    private String connectIP;
 
     public GameScreen(RoboRallyGame game) {
-        GameScreen.game = game;
+        this.game = game;
+        this.connectIP = "127.0.0.1";
+    }
+
+    public GameScreen(RoboRallyGame game, String IP){
+        this.game = game;
+        this.connectIP = IP;
+
     }
 
     /**
@@ -47,15 +51,13 @@ public class GameScreen extends ScreenAdapter {
         render = new OrthogonalTiledMapRenderer(boardTiledMap.getLayers(), 1/boardTiledMap.getBoardLayer().getTileWidth());
         render.setView(camera);
 
-        currentDeck = new Deck();
-
         localPlayer = new Player();
-        networkConnection = new NetworkConnection();
+        networkConnection = new NetworkConnection(connectIP);
 
         if (localPlayer.selectableCards == null){
             System.out.println("Hit enter to draw cards, or move around with arrows/WASD");
         }
-        hud = new cardsMenu(game);
+        hud = new CardsMenu(game);
         Gdx.graphics.setWindowedMode(game.getWIDTH(), game.getHEIGHT());
 
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -79,10 +81,8 @@ public class GameScreen extends ScreenAdapter {
      * amount equal to handSize
      */
     public void dealCards(){
-        localPlayer.selectableCards = currentDeck.deal(localPlayer.handSize);
-        localPlayer.showHand();
+        networkConnection.requestHand(localPlayer.handSize);
         hud.setSelectableCards();
-
     }
 
     /**
@@ -105,8 +105,9 @@ public class GameScreen extends ScreenAdapter {
         if (localPlayer.chosenCards != null) {
             final int cardSize = localPlayer.chosenCards.size();
             if (keycode == Input.Keys.SPACE) {
+                // Sends hand to server
+                networkConnection.sendHand(localPlayer.chosenCards);
                 for (int i = 0; i < cardSize; i++) {
-                    localPlayer.executeCard(localPlayer.chosenCards.get(0));
                     localPlayer.chosenCards.remove(0);
                 }
             }
@@ -130,6 +131,16 @@ public class GameScreen extends ScreenAdapter {
             localPlayer.setDirection(Direction.WEST);
             this.moveOneForward();
         }
+
+        // Used for debugging
+        if (keycode == Input.Keys.O) {
+            Card card = new Card(0, "move_1", 1);
+                GameScreen.localPlayer.executeCard(card);
+                for (Player player: networkConnection.getNetworkPlayers().values()) {
+                    player.executeCard(card);
+
+            }
+        }
         return true;
     }
 
@@ -137,11 +148,9 @@ public class GameScreen extends ScreenAdapter {
     private void moveOneForward() {
         localPlayer.chosenCards.add(new Card(0, "move_1", 1));
         localPlayer.executeCard(localPlayer.chosenCards.get(localPlayer.chosenCards.size()-1));
-        localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
+        //localPlayer.chosenCards.remove(localPlayer.chosenCards.size()-1);
         localPlayer.updateDirection();
     }
-
-
 
 
     /**
@@ -153,6 +162,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
             localPlayer.render();
+
             if (!networkConnection.getNetworkPlayers().isEmpty()) {
                 for (Player player : networkConnection.getNetworkPlayers().values()) {
                     player.render();
