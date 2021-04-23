@@ -114,7 +114,6 @@ public class Player {
      * @param card the card/program you want to run
      */
     public void executeCard(Card card) {
-
         int distance = Math.max(1, card.getMoves());
         CellChecker checker = new CellChecker(this);
 
@@ -151,7 +150,7 @@ public class Player {
                 case HOLE: {
                     // Lose a life token
                     this.loseLifeToken();
-                    return;
+                    break;
                 }
                 case BLOCKED_BY_WALL: {
                     // Do nothing
@@ -265,8 +264,10 @@ public class Player {
     }
 
     public void loseLifeToken() {
+        if (this.connection == null) return;
         this.lifeTokens -= 1;
         System.out.println("You lost a life token and now have " + lifeTokens + " left");
+        System.out.println(this.connection);
         int x = (int) getStartingPosition(connection.getClientID()).x;
         int y = (int) getStartingPosition(connection.getClientID()).y;
 
