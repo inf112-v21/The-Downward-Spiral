@@ -128,6 +128,7 @@ You need to manually close main after.
 ## The graphics for the victory screen is somewhat broken.
 The buttons and functionality is working properly, but the screen is behaving strange.
 
-## Players who go into holes is not rendered before the end of the round for other players
-If a player dies, then the graphics for that player does not render properly for other players
-before the end of that round.
+## Players who lose a lifetoken is not rendered properly before the end of the round for other players
+This happens because the player is moved back to their starting position, 
+which causes some problems for the server.
+This can happen when you go into a hole, move out of the map or gets 10 damagetokens.
