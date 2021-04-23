@@ -42,6 +42,8 @@ Now you should be able to connect to the other pc by running and choosing client
 When you have collected all the flags you are greeted with a victory screen and a `restart` button.
 The restart button does however not shut down the server. So it's recommended to stop main and
 run the game again.
+Note that the colors is not the same for each client. The client bound to the player will always be blue,
+and then the rest is loaded accordingly. 
 
 If there are any problems try looking at [errorhandling](#known-bugs-and-possible-solutions).
 
@@ -93,11 +95,11 @@ Hit apply.
 ### Server does not update won/loss graphics for other players
 Other players can't see the updated graphics if you win or lose.
 
-### Game-logic does not apply twice
-There is only exectued one logic for each cell each round,
+### Game-logic does not apply twice for each card
+There is only exectued one logic for each cell each card,
 since there can not be two types of logic that applies to one cell in the current code.
-This is mainly a problem for 
-
+This is mainly a problem for the map Factory Rejects.
+This map has a lot more going on for each cell, which causes some logic to fail.
 
 ### The server never shuts down.
 The server never shuts down even if all the player have "won" and gone back to main menu.
