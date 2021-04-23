@@ -21,8 +21,6 @@ public class Player {
 
     private final Board board;
     private final TiledMapTileLayer.Cell playerCell;
-    private final TextureRegion[][] trRegionsPlayerStatus;
-    private final TextureRegion[][] trRegionsPlayerDir;
     private TextureRegion[][] trRegionsPlayer;
 
     private boolean flagOneConfirmed;
@@ -49,17 +47,13 @@ public class Player {
         position = new Vector2(0,0);
 
 
-        TextureRegion trStatus = new TextureRegion(new Texture("player_Status.png"));
-        trRegionsPlayerStatus = trStatus.split(300, 300);
-        TextureRegion trDir = new TextureRegion(new Texture("player_Directions.png"));
-        trRegionsPlayerDir = trDir.split(300, 300);
+
 
         playerCell = new TiledMapTileLayer.Cell();
-        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][0]));
 
         this.trRegionsPlayer = getPlayerTextures(id);
         //System.out.println(id);
-        //playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
+        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayer[0][0]));
 
         direction = Direction.NORTH; // starting direction
         this.chosenCards = new ArrayList<>();
@@ -150,7 +144,6 @@ public class Player {
                         System.out.println("Flag2");
                     }
                     if ((flagId == 71) && (flagTwoConfirmed)) {
-                        playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][2]));
                         System.out.println("Won");
                         GameScreen.getGame().setScreen(new EndScreen(GameScreen.getGame()));
                     }
@@ -287,7 +280,7 @@ public class Player {
 
         if (this.lifeTokens <= 0) {
             // The player loses
-            playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
+            //playerCell.setTile(new StaticTiledMapTile(trRegionsPlayerStatus[0][1]));
             System.out.println("You lost the game");
         } else {
             this.damageTokens = 0; // (Y/N)

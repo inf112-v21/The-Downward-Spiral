@@ -86,15 +86,17 @@ public class NetworkConnection {
 
                     if (packet.playerID == client.getID()) {
                         GameScreen.localPlayer.executeCard(packet.card);
+
+                        GameScreen.localPlayer.chosenCards.remove(0);
+                        if (GameScreen.localPlayer.chosenCards.size() < 1){
+                            GameScreen.hud.setCardsIsSent(false);
+                            GameScreen.localPlayer.selectableCards.clear();
+                            GameScreen.localPlayer.chosenCards.clear();
+                        }
                     } else {
                         networkPlayers.get(packet.playerID).executeCard(packet.card);
                     }
-                    GameScreen.localPlayer.chosenCards.remove(0);
-                    if (GameScreen.localPlayer.chosenCards.size() < 1){
-                        GameScreen.hud.setCardsIsSent(false);
-                        GameScreen.localPlayer.selectableCards.clear();
-                        GameScreen.localPlayer.chosenCards.clear();
-                    }
+
                 }
             }
         });
