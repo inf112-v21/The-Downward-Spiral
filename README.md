@@ -45,6 +45,7 @@ run the game again.
 Note that the colors is not the same for each client. The client bound to the player will always be blue,
 and then the rest is loaded accordingly. 
 
+Moving players with WASD is only availible in debug mode.
 If there are any problems try looking at [errorhandling](#known-bugs-and-possible-solutions).
 
 ___
