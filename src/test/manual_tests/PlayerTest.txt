@@ -2,51 +2,88 @@ Manuelle tester for spiller:
 NB! Hvis testen ikke utføres som beskrevet så står dette mest sannsynlig som en bug i README.
 
     * Roboten beveger seg i forventet rekkefølge:
-        * For å sjekke om roboten beveger seg i forventet starter man clienten som beskrevet i README.
-        * Da kan man bruke piltaster eller wasd for å bevege den. Roboten skal bevege seg en rute i den retningen du velger.
-        * Pil opp/W beveger den nord, Pil ned/S beveger den sør, Pil venstre/A beveger den vest og Pil høyre/D beveger den øst.
-    * Roboten kan ikke bevege seg utenfor brettet - Bug skrevet i readme.
-        * For å teste om roboten ikke kan flytte seg utenfor brettet kan man bevege seg til kanten av brettet og prøve å gå utenfor.
-        * Det skal komme opp en melding i konsollen at du ikke kan gå utenfor brettet og roboten skal forbli på posisjonen den er.
+        For å sjekke om roboten beveger seg i forventet starter man clienten som beskrevet i README.
+        Da kan man bruke piltaster eller wasd for å bevege den.
+
+    * Roboten skal bevege seg en rute i den retningen du velger.
+        Pil opp/W beveger den nord, Pil ned/S beveger den sør, Pil venstre/A beveger den vest og Pil høyre/D beveger den øst.
+
+    * Roboten mister en life token hvis den beveges utenfor brettet
+        For å teste om roboten mister en life token når den flytter seg utenfor brettet kan man bevege seg til kanten av brettet og prøve å gå utenfor.
+        Spilleren skal miste en life token (vises på høyre siden av vinduet) og flyttes tilbake til startposisjonen.
+
     * Roboten kan plukke opp flagg
-        * For å teste dette beveger man roboten til ruten hvor “Flagg 1” befinner seg.
-        * Deretter skal det komme opp en melding i konsollen at roboten har plukket opp flagget.
+        For å teste dette beveger man roboten til ruten hvor “Flagg 1” befinner seg.
+        Deretter skal det komme opp en melding i konsollen at roboten har plukket opp flagget.
+
     * Roboten vinner ved å plukke opp alle flaggene
-        * For å teste dette kan man fortsetter rett etter den forrige testen og plukke opp alle flaggene i nummerert rekkefølge.
-        * Når det tredje flagget er plukket opp skal det komme melding i konsollen at spilleren har vunnet og player spriten skal få blå konfekt rundt seg.
-    * Velge opp til 5 kort
-        * Trykk ENTER for å få delt ut 9 kort.
-        * Deretter kan man velge kort med det tilsvarende tallet.
-        * Hvis man prøver å velge mer enn 5 kort så vil det komme en melding i terminalen om at hånden er full.
+        For å teste dette kan man fortsetter rett etter den forrige testen og plukke opp alle flaggene i nummerert rekkefølge.
+        Når det tredje flagget er plukket skal det komme en victory screen som forteller deg at du har vunnet.
+
+    * Velge 5 kort
+        Trykk ENTER for å få delt ut 9 kort.
+        Disse skal være synlig på høyre side av skjermen.
+        Deretter kan man velge kort med å trykke på det ønskede kortet på skjermen.
+        Trykk execute når du har valgt 5 kort eller reset for å fjerne valgte kort.
+
     * Roboten kan bevege seg med programkort
-        * For å teste dette begynn et spill som beskrevet og trykk enter.
-        * Dette vil trekke 9 kort som vises i terminalen.
-        * Velg opp til fem kort på hånden og trykk space for å gjennomføre bevegelsene.
-        * Roboten skal bevege seg som kortene beskriver i rekkefølgen de ble valgt.
-        * Velg et movement kort (move_1, move_2, move_3 eller move_-1).
-        * Spilleren skal bevege seg i den retningen spilleren står tilsvarende tallet på kortet.
+        For å teste dette begynn et spill som beskrevet og trykk enter.
+        Dette vil trekke 9 kort som vises på skjermen.
+        Velg fem kort på hånden og trykk execute for å gjennomføre bevegelsene.
+
+    * Roboten skal bevege seg som kortene beskriver i rekkefølgen de ble valgt.
+        Velg et movement kort (move_1, move_2, move_3 eller move_-1).
+        Spilleren skal bevege seg i den retningen spilleren står tilsvarende tallet på kortet.
+
     * Roboten roteres av programkort
-        * Velg et roteringskort (u_turn, left_turn eller right_turn).
-        * Spilleren skal roteres i den retningen som står på kortet.
-        * u_turn skal rotere spilleren 180 grader.
-        * Roteringskort skal ikke flytte på spilleren, kun endre retning
-    * Roboten har riktig retning
-        * Roboten begynner foreløpig alltid i retning NORTH.
-        * Roboten skal da stå på en rød pil som peker oppover, se player_Status.png.
-        * Hvis robot endre retning enten med kort eller piltastene skal brikken oppdateres i henhold til spillerens nye retning.
-        * Når en spiller har retning WEST skal pilen peke mot venstre, EAST mot høyre og SOUTH nedover.
-        * Texture for det finnes i player_Directions.png
+        Velg et roteringskort (u_turn, left_turn eller right_turn).
+        Spilleren skal roteres i den retningen som står på kortet.
+        u_turn skal rotere spilleren 180 grader.
+        Roteringskort skal ikke flytte på spilleren, kun endre retning
+        Roboten har riktig retning
+        Roboten begynner foreløpig alltid i retning NORTH.
+        Roboten skal da stå på en pil som peker oppover.
+        Hvis robot endre retning enten med kort eller piltastene skal brikken oppdateres i henhold til spillerens nye retning.
+        Når en spiller har retning WEST skal pilen peke mot venstre, EAST mot høyre og SOUTH nedover.
     * Teste vegger
-        * For å teste dette må du starte et spill som beskrevet i README.
-        * Gå så deretter til en vegg.
-        * Hvis spilleren prøver å gå gjennom veggen skal dette forhindres og det vil komme opp en melding i terminalen.
-        * Spilleren skal kunne gå langs veggen, men ikke gjennom.
+        For å teste dette må du starte et spill som beskrevet i README.
+        Gå så deretter til en vegg.
+        Hvis spilleren prøver å gå gjennom veggen skal dette forhindres og det vil komme opp en melding i terminalen.
+        Spilleren skal kunne gå langs veggen, men ikke gjennom.
+
     * Belter skal flytte spilleren
-        * For å teste belter må man starte et spill og gå til en tile med belte på brettet (gul eller blå pil).
-        * Når spilleren står på et belte skal spilleren beveges i retningen pilen på beltet peker.
-        * Er beltet gult skal spilleren flyttes en tile i retningen pilen på beltet peker
-        * Er beltet blått skal spilleren beveges to tiles
-        * Spillerens retning skal ikke endres av belter
-    * Gears/tannhjul skal rotere spiller
-        * For å teste belter må man starte et spill og gå til en tile med gear/tannhjul på brettet (orange eller grønne piler).
-        * Når spilleren står på et gear/tannhjul skal spilleren roteres i retningen pilene går.
+        For å teste belter må man starte et spill og gå til en tile med belte på brettet (gul eller blå pil).
+        Når spilleren står på et belte skal spilleren beveges i retningen pilen på beltet peker.
+        Er beltet gult skal spilleren flyttes en tile i retningen pilen på beltet peker
+        Er beltet blått skal spilleren beveges to tiles
+        Spillerens retning skal ikke endres av belter
+
+    * Spilleren skal starte med tre life tokens og null damage tokens
+        Start et spill og se på den høyre delen av spillvinduet, der skal life tokens og damage tokens være representert.
+
+    * Hull skal fjerne en life token fra spilleren
+        Start et spill og flytt spilleren til et hull på brettet.
+        Spilleren skal miste en damage token og flyttes tilbake til startposisjonen.
+
+    * Laser skal gi spilleren en damage token per runde
+        For å teste dette må du starte et spill og flytte spilleren til en tile med laser.
+        Spilleren skal få en damage token for hver runde spilleren befinner seg på en laser tile
+
+    * Teste gears
+        Flytt spilleren til en gear tile på brettet
+        Rød gear skal rotere spilleren mot venstre, tilsvarende det et “left_turn” roteringskort gjør.
+        Grønne gears skal rotere spilleren mot høyre, slik “right_turn” roteringskort gjør.
+
+    * Teste wrenches
+        Start spillet som beskrevet i README og få en damage token med å gå på en laser tile.
+        Gå deretter til en wrench.
+        En damage token skal forsvinne
+
+    * Teste forskjellige player sprites
+        Start en client og trykk “Play & Host”
+        Start en ny client og trykk “connect” så “local”
+        Gjør dette helt opp til 6 clients
+        Det skal nå være 6 forskjellige player sprites i hver sin startposisjon
+        Spritsene er forskjellig for hver client
+        Alle spillere er Blå på sin egen client, men forskjellige på andre
+
