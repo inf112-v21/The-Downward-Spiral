@@ -16,6 +16,7 @@ public class GameScreen extends ScreenAdapter {
 
     static RoboRallyGame game;
     public static Board boardTiledMap;
+    private final Board gameBoard;
 
     private OrthogonalTiledMapRenderer render;
 
@@ -27,6 +28,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(RoboRallyGame game) {
         this.game = game;
         this.connectIP = "127.0.0.1";
+        this.gameBoard = new Board("assets/" + "serverString her" +".tmx");
     }
 
     public GameScreen(RoboRallyGame game, String IP){
@@ -35,13 +37,18 @@ public class GameScreen extends ScreenAdapter {
 
     }
 
+    public GameScreen(RoboRallyGame game, Board board) {
+        this.game = game;
+        this.gameBoard = board;
+    }
+
     /**
      * Creates all the necessary objects for the game
      * to later be displayed.
      */
     @Override
     public void show() {
-        boardTiledMap = new Board("assets/Risky_Exchange.tmx");
+        boardTiledMap = gameBoard;
 
         //Creates a bird's eye view of the board/game
         OrthographicCamera camera = new OrthographicCamera();
